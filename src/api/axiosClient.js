@@ -29,12 +29,13 @@ axiosClient.interceptors.request.use(
 // Response interceptor - Handle errors globally
 axiosClient.interceptors.response.use(
   (response) => {
-    return response.data; // Return only data part
+    // Return response as-is, let the API methods handle response.data
+    return response;
   },
   (error) => {
     if (error.response) {
       // Server responded with error
-      const message = error.response.data?.message || error.response.statusText;
+      const responseData = error.response.data;
       
       // Handle 401 Unauthorized - token expired
       if (error.response.status === 401) {
@@ -43,6 +44,16 @@ axiosClient.interceptors.response.use(
         window.location.href = '/login';
       }
       
+      // If backend returned error with isError flag
+      if (responseData?.isError) {
+        const errorMessage = responseData.error || responseData.message || error.response.statusText;
+        const apiError = new Error(errorMessage);
+        apiError.errorDetails = responseData.errorDetails;
+        throw apiError;
+      }
+      
+      // Fallback error message
+      const message = responseData?.message || error.response.statusText;
       throw new Error(message);
     } else if (error.request) {
       // Request made but no response

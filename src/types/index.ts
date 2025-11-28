@@ -1,25 +1,18 @@
 // TypeScript type definitions
-// Add your custom types here
+// Central export for all type definitions
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: 'ADMIN' | 'AGENT' | 'CLIENT';
-}
+// Export all type definitions
+export * from './Destination-models';
+export * from './auth-models';
+export * from './user-models';
 
+// Legacy types (consider moving to separate files)
 export interface AuthContextType {
   user: User | null;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   loading: boolean;
-}
-
-export interface LoginCredentials {
-  email: string;
-  password: string;
-  role?: string;
 }
 
 export interface Booking {

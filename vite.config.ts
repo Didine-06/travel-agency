@@ -4,4 +4,8 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    port: 4200,
+    host: '0.0.0.0', // Permet l'accès depuis d'autres appareils sur le réseau
+  },
 })
