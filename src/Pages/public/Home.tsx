@@ -7,14 +7,40 @@ import {
   Star,
   Plane,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { api } from "../../api";
 import type { DestinationResponse } from "../../types";
+import type { PackageResponse } from "../../types/Package-models";
+
+// Custom arrow components for carousel
+const NextArrow = ({ onClick }: any) => (
+  <button
+    onClick={onClick}
+    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition"
+  >
+    <ChevronRight className="w-5 h-5 text-gray-800" />
+  </button>
+);
+
+const PrevArrow = ({ onClick }: any) => (
+  <button
+    onClick={onClick}
+    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition"
+  >
+    <ChevronLeft className="w-5 h-5 text-gray-800" />
+  </button>
+);
 
 export default function TravelHomepage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [destinations, setDestinations] = useState<DestinationResponse[]>([]);
+  const [vacationPlans, setVacationPlans] = useState<PackageResponse[]>([]);
 
   const staticDestinations = [
     {
@@ -39,7 +65,7 @@ export default function TravelHomepage() {
     },
   ];
 
-  const vacationPlans = [
+  const staticvacationPlans = [
     {
       location: "Rome, Italy",
       image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=500",
@@ -75,14 +101,30 @@ export default function TravelHomepage() {
 
   const fetchDestinations = async () => {
     var result = await api.destinations.getAll();
-    if (result.isSuccess && result.data){
+    if (result.isSuccess && result.data) {
       setDestinations(result.data);
-    }else{
-      throw new Error(result.message || 'Failed to fetch destinations, please try Again !');
+    } else {
+      throw new Error(
+        result.message || "Failed to fetch destinations, please try Again !"
+      );
     }
-  }
+  };
+
+  const fetchVacationPlans = async () => {
+    var result = await api.packages.getAll();
+    if (result.isSuccess && result.data) {
+      setVacationPlans(result.data);
+    } else {
+      throw new Error(
+        result.message ||
+          "Failed to fetch the vacation plans, please try Again !"
+      );
+    }
+  };
+
   useEffect(() => {
     fetchDestinations();
+    fetchVacationPlans();
   }, []);
 
   return (
@@ -163,10 +205,7 @@ export default function TravelHomepage() {
           ))}
         </div>
         <div className="text-center">
-          <button
-
-            className="text-gray-600 hover:text-gray-900 font-medium"
-          >
+          <button className="text-gray-600 hover:text-gray-900 font-medium">
             See more
           </button>
         </div>
@@ -185,36 +224,90 @@ export default function TravelHomepage() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-8">
-          {vacationPlans.map((plan, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 cursor-pointer"
-            >
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={plan.image}
-                  alt={plan.location}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="font-bold text-gray-900">{plan.location}</h3>
-                  <span className="font-bold text-gray-900">{plan.price}</span>
+          {vacationPlans.map((plan) => {
+            const carouselSettings = {
+              dots: true,
+              infinite: true,
+              speed: 500,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              autoplay: true,
+              autoplaySpeed: 3000,
+              nextArrow: <NextArrow />,
+              prevArrow: <PrevArrow />,
+            };
+
+            const images = Array.isArray(plan.imagesUrls) 
+              ? plan.imagesUrls 
+              : plan.imagesUrls 
+                ? [plan.imagesUrls] 
+                : [plan.destination?.imageUrl || "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500"];
+
+            return (
+              <div
+                key={plan.id}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 cursor-pointer"
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <Slider {...carouselSettings}>
+                    {images.map((image: string, imgIdx: number) => (
+                      <div key={imgIdx} className="h-48">
+                        <img
+                          src={image}
+                          alt={`${plan.title} - Image ${imgIdx + 1}`}
+                          className="w-full h-48 object-cover"
+                        />
+                      </div>
+                    ))}
+                  </Slider>
                 </div>
-                <div className="flex justify-between items-center text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <Plane className="w-4 h-4" />
-                    <span>{plan.duration}</span>
+                <div className="p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-lg mb-1">
+                        {plan.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {plan.destination?.name || "Unknown"}
+                      </p>
+                    </div>
+                    <span className="font-bold text-[#0F8FC6] text-lg">
+                      ${plan.price}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span>{plan.rating}</span>
+                  {plan.description && (
+                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                      {plan.description}
+                    </p>
+                  )}
+                  <div className="flex justify-between items-center text-sm text-gray-600 pt-2 border-t border-gray-100">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      <span>{plan.duration} days</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="w-4 h-4" />
+                      <span className="text-xs">Max: {plan.maxCapacity}</span>
+                    </div>
                   </div>
+                  {plan.isActive ? (
+                    <div className="mt-3">
+                      <span className="inline-block px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                        Available
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="mt-3">
+                      <span className="inline-block px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
+                        Not Available
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="text-center">
           <button className="text-gray-600 hover:text-gray-900 font-medium">
