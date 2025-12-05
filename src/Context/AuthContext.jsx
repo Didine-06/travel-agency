@@ -54,14 +54,13 @@ export const AuthProvider = ({ children }) => {
       
       // Decode JWT to get role
       const tokenData = decodeToken(response.accessToken);
-      
       // Build user object
       const userData = {
-        id: response.user.id,
-        email: response.user.email,
-        firstName: response.user.firstName,
-        lastName: response.user.lastName,
-        name: `${response.user.firstName} ${response.user.lastName}`,
+        id: response.data.user.id,
+        email: response.data.user.email,
+        firstName: response.data.user.firstName,
+        lastName: response.data.user.lastName,
+        name: `${response.data.user.firstName} ${response.data.user.lastName}`,
         role: tokenData?.role || 'CLIENT',
       };
 

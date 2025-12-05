@@ -29,7 +29,6 @@ const getInitialTheme = (): Theme => {
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(getInitialTheme);
 
-  // Apply theme on mount and whenever it changes
   useEffect(() => {
     const root = window.document.documentElement;
     
@@ -41,20 +40,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     // Save to localStorage
     localStorage.setItem('theme', theme);
-    
-    // Debug log
-    console.log('✅ Theme applied:', theme);
-    console.log('📋 HTML element classes:', root.className);
-    console.log('💾 LocalStorage theme:', localStorage.getItem('theme'));
   }, [theme]);
 
   const toggleTheme = () => {
-    console.log('Toggle theme clicked!');
-    setThemeState(prev => {
-      const newTheme = prev === 'light' ? 'dark' : 'light';
-      console.log('Changing from', prev, 'to', newTheme);
-      return newTheme;
-    });
+    setThemeState(prev => prev === 'light' ? 'dark' : 'light');
   };
 
   const setTheme = (newTheme: Theme) => {

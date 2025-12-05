@@ -5,7 +5,9 @@ import TopBar from '../Components/common/TopBar';
 const ClientLayout = () => {
   const menuItems = [
     { path: '/client/dashboard', label: 'Dashboard' },
-    { path: '/client/profile', label: 'Profile' }
+    { path: '/client/reservations', label: 'Reservations' },
+    { path: '/client/visas', label: 'Visas' },
+    { path: '/client/planes', label: 'Planes' },
   ];
 
   return (

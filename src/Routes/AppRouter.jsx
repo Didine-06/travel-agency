@@ -19,6 +19,9 @@ import Unauthorized from '../Pages/public/Unauthorized';
 // Client Pages
 import ClientDashboard from '../Pages/client/Dashboard';
 import ClientProfile from '../Pages/client/Profile';
+import ClientReservation from '../Pages/client/Reservation';
+import ClientPlane from '../Pages/client/Plane';
+import ClientVisa from '../Pages/client/Visa';
 
 // Agent Pages
 import AgentDashboard from '../Pages/agent/Dashboard';
@@ -53,6 +56,9 @@ const AppRouter = () => {
       >
         <Route index element={<Navigate to="/client/dashboard" replace />} />
         <Route path="dashboard" element={<ClientDashboard />} />
+        <Route path="reservations" element={<ClientReservation />} />
+        <Route path="visas" element={<ClientVisa />} />
+        <Route path="planes" element={<ClientPlane />} />
         <Route path="profile" element={<ClientProfile />} />
       </Route>
 
