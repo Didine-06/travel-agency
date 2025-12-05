@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-import { Search, Heart, ShoppingCart, Bell, Menu, X } from "lucide-react";
+import { Search, Heart, Bell, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const ddRef = useRef(null);
+  const ddRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onClick = (e) => {
-      if (ddRef.current && !ddRef.current.contains(e.target)) {
+    const onClick = (e: MouseEvent) => {
+      if (ddRef.current && !ddRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
       }
     };
@@ -21,7 +21,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const getInitials = (name) => {
+  const getInitials = (name: string | undefined) => {
     if (!name) return "";
     const parts = name.split(" ");
     return (parts[0]?.[0] || "") + (parts[1]?.[0] || "");

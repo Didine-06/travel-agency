@@ -2,6 +2,17 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/constants';
 
+// Custom error class to include error details
+class ApiError extends Error {
+  errorDetails?: any;
+  
+  constructor(message: string, errorDetails?: any) {
+    super(message);
+    this.name = 'ApiError';
+    this.errorDetails = errorDetails;
+  }
+}
+
 // Create axios instance with default config
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
@@ -47,9 +58,7 @@ axiosClient.interceptors.response.use(
       // If backend returned error with isError flag
       if (responseData?.isError) {
         const errorMessage = responseData.error || responseData.message || error.response.statusText;
-        const apiError = new Error(errorMessage);
-        apiError.errorDetails = responseData.errorDetails;
-        throw apiError;
+        throw new ApiError(errorMessage, responseData.errorDetails);
       }
       
       // Fallback error message

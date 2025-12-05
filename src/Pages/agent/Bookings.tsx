@@ -16,7 +16,7 @@ const AgentBookings = () => {
             </thead>
             <tbody>
               <tr>
-                <td colSpan="4" className="text-center py-8 text-gray-500">
+                <td colSpan={4} className="text-center py-8 text-gray-500">
                   No bookings found
                 </td>
               </tr>

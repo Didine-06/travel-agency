@@ -1,24 +1,34 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../../api';
+
+interface RegisterFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: '',
+  const [formData, setFormData] = useState<RegisterFormData>({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
@@ -28,8 +38,8 @@ const Register = () => {
     }
 
     try {
-      // TODO: Replace with actual API call
-      await api.auth.register(formData);
+      const { confirmPassword, ...registerData } = formData;
+      await api.auth.register(registerData);
       navigate('/login');
     } catch (err) {
       setError('Registration failed. Please try again.');
@@ -47,11 +57,22 @@ const Register = () => {
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Name</label>
+            <label className="block text-sm font-medium text-gray-700">First Name</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
               onChange={handleChange}
               className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
               required

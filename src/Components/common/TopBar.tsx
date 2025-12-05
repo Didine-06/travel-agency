@@ -3,17 +3,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import { useTheme } from '../../Context/ThemeContext';
 
-const TopBar = ({ title }) => {
+interface TopBarProps {
+  title: string;
+}
+
+const TopBar: React.FC<TopBarProps> = ({ title }) => {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
       }
     };
@@ -29,7 +33,20 @@ const TopBar = ({ title }) => {
 
   const handleProfileClick = () => {
     setIsDropdownOpen(false);
-    navigate('/client/profile');
+    // Navigate to profile based on user role
+    const role = user?.role?.toUpperCase();
+    switch (role) {
+      case 'ADMIN':
+        navigate('/admin/profile');
+        break;
+      case 'AGENT':
+        navigate('/agent/profile');
+        break;
+      case 'CLIENT':
+      default:
+        navigate('/client/profile');
+        break;
+    }
   };
 
   return (

@@ -26,10 +26,12 @@ import ClientVisa from '../Pages/client/Visa';
 // Agent Pages
 import AgentDashboard from '../Pages/agent/Dashboard';
 import AgentBookings from '../Pages/agent/Bookings';
+import AgentProfile from '../Pages/agent/Profile';
 
 // Admin Pages
 import AdminDashboard from '../Pages/admin/Dashboard';
 import AdminUsers from '../Pages/admin/Users';
+import AdminProfile from '../Pages/admin/Profile';
 
 const AppRouter = () => {
   return (
@@ -74,6 +76,7 @@ const AppRouter = () => {
         <Route index element={<Navigate to="/agent/dashboard" replace />} />
         <Route path="dashboard" element={<AgentDashboard />} />
         <Route path="bookings" element={<AgentBookings />} />
+        <Route path="profile" element={<AgentProfile />} />
       </Route>
 
       {/* Admin Routes */}
@@ -88,6 +91,7 @@ const AppRouter = () => {
         <Route index element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="users" element={<AdminUsers />} />
+        <Route path="profile" element={<AdminProfile />} />
       </Route>
 
       {/* 404 Route */}

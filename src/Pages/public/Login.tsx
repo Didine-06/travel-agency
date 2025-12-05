@@ -9,14 +9,14 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
     try {
       await login({ email, password });
     } catch (err) {
-      setError(err.message || 'Login failed. Please check your credentials.');
+      setError(err instanceof Error ? err.message : 'Login failed. Please check your credentials.');
     } finally {
       setIsLoading(false);
     }
