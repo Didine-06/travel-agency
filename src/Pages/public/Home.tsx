@@ -128,7 +128,7 @@ export default function TravelHomepage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden mt-10">
         <div className="absolute inset-0 z-0">
@@ -138,19 +138,18 @@ export default function TravelHomepage() {
             className="w-full h-full object-cover"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent dark:from-gray-900/80 dark:via-gray-900/40" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10 text-start ">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900 dark:text-white">
             Your Journey to
             <span className="block mt-2" style={{ color: "#0F8FC6" }}>
               Paradise Awaits
             </span>
           </h1>
           <p
-            className="text-xl md:text-2xl mb-8 max-w-2xl"
-            style={{ color: "#0A4F6C" }}
+            className="text-xl md:text-2xl mb-8 max-w-2xl text-[#0A4F6C] dark:text-gray-300"
           >
             Discover extraordinary destinations and create unforgettable
             memories with our travel agency - your trusted travel partner.
@@ -176,10 +175,10 @@ export default function TravelHomepage() {
       {/* Find Your Best Destination */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Find Your Best <span className="text-gray-900">Destination</span>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Find Your Best <span className="text-gray-900 dark:text-white">Destination</span>
           </h2>
-          <p className="text-gray-600 text-lg mb-8">
+          <p className="text-gray-600 dark:text-gray-300 text-lg mb-8">
             We have more than 2000 destination you can choose
           </p>
         </div>
@@ -205,7 +204,7 @@ export default function TravelHomepage() {
           ))}
         </div>
         <div className="text-center">
-          <button className="text-gray-600 hover:text-gray-900 font-medium">
+          <button className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium">
             See more
           </button>
         </div>
@@ -214,10 +213,10 @@ export default function TravelHomepage() {
       {/* Best Vacation Plan */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            <span className="text-gray-900">Best</span> Vacation Plan
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <span className="text-gray-900 dark:text-white">Best</span> Vacation Plan
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
             Plan your perfect vacation with our travel agency. Choose among
             <br />
             hundreds of all-inclusive offers!
@@ -246,7 +245,7 @@ export default function TravelHomepage() {
             return (
               <div
                 key={plan.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 cursor-pointer"
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 cursor-pointer"
               >
                 <div className="h-48 overflow-hidden relative">
                   <Slider {...carouselSettings}>
@@ -264,10 +263,10 @@ export default function TravelHomepage() {
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex-1">
-                      <h3 className="font-bold text-gray-900 text-lg mb-1">
+                      <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-1">
                         {plan.title}
                       </h3>
-                      <p className="text-sm text-gray-500 flex items-center gap-1">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
                         <MapPin className="w-3 h-3" />
                         {plan.destination?.name || "Unknown"}
                       </p>
@@ -277,11 +276,11 @@ export default function TravelHomepage() {
                     </span>
                   </div>
                   {plan.description && (
-                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
                       {plan.description}
                     </p>
                   )}
-                  <div className="flex justify-between items-center text-sm text-gray-600 pt-2 border-t border-gray-100">
+                  <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-700">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       <span>{plan.duration} days</span>
@@ -310,7 +309,7 @@ export default function TravelHomepage() {
           })}
         </div>
         <div className="text-center">
-          <button className="text-gray-600 hover:text-gray-900 font-medium">
+          <button className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium">
             See more
           </button>
         </div>
@@ -319,14 +318,14 @@ export default function TravelHomepage() {
       {/* Our Blog */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our <span className="text-gray-900">Blog</span>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Our <span className="text-gray-900 dark:text-white">Blog</span>
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
             An insight the incredible experience in the world
           </p>
         </div>
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8 p-8">
             <div className="relative rounded-2xl overflow-hidden">
               <img
@@ -336,15 +335,15 @@ export default function TravelHomepage() {
               />
             </div>
             <div className="flex flex-col justify-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                 Beautiful Kashmir Let's Travel
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 We are ready to help you build and also realize the room design
                 that you dreamt of, with our experts and also the best category
                 recommendations from us.
               </p>
-              <button className="text-blue-600 hover:text-blue-700 font-medium text-left">
+              <button className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-left">
                 Read more →
               </button>
             </div>
@@ -357,17 +356,17 @@ export default function TravelHomepage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
                 We Make World
                 <br />
                 Travel Easy
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 dark:text-gray-300 mb-8">
                 Navigating the globe effortlessly, we transform wanderlust
                 dreams into seamless adventures. With us, the world becomes your
                 accessible playground, travel simplified.
               </p>
-              <button className="text-gray-900 hover:text-gray-700 font-medium">
+              <button className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium">
                 Explore Our Tour →
               </button>
             </div>
