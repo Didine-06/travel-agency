@@ -60,6 +60,28 @@ export const api = {
       const response = await axiosClient.get<ApiResponse<User>>("/auth/me");
       return response.data;
     },
+
+    updateProfile: async (
+      userId: string,
+      profileData: {
+        email?: string;
+        firstName?: string;
+        lastName?: string;
+        languageId?: string;
+        isActive?: boolean;
+        phone?: string;
+        address?: string;
+        city?: string;
+        country?: string;
+        dateOfBirth?: string;
+      }
+    ): Promise<ApiResponse<User>> => {
+      const response = await axiosClient.put<ApiResponse<User>>(
+        `/auth/profile/${userId}`,
+        profileData
+      );
+      return response.data;
+    },
   },
 
   users: {

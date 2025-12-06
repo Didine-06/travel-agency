@@ -67,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, role }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-gray-800 dark:bg-gray-900 text-white transition-all duration-300 ${isOpen ? 'w-64' : 'w-20'}`}>
+      <div className={`hidden md:flex flex-col bg-gray-800 dark:bg-gray-900 text-white transition-all duration-300 ${isOpen ? 'w-64' : 'w-20'} h-screen overflow-hidden`}>
         {/* Header */}
         <div className="p-4 border-b border-gray-700 dark:border-gray-800 flex items-center justify-between">
           {isOpen && (

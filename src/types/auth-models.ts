@@ -11,7 +11,11 @@ export interface RegisterData {
   firstName: string;
   lastName: string;
   phone?: string;
-  role?: 'client' | 'agent' | 'admin';
+  address?: string;
+  city?: string;
+  country?: string;
+  dateOfBirth?: string;
+  role?: 'CLIENT' | 'AGENT' | 'ADMIN';
 }
 
 export interface AuthTokens {
@@ -25,9 +29,16 @@ export interface User {
   firstName: string;
   lastName: string;
   phone?: string;
-  role: 'client' | 'agent' | 'admin';
+  address?: string;
+  city?: string;
+  country?: string;
+  dateOfBirth?: string;
+  role: 'CLIENT' | 'AGENT' | 'ADMIN';
+  isActive: boolean;
+  languageId: string;
   createdAt: string;
   updatedAt: string;
+  customer: any | null;
 }
 
 export interface LoginResponse {
