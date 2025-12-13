@@ -11,11 +11,11 @@ const ClientLayout = () => {
   ];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
       <Sidebar items={menuItems} role="Client" />
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar title="Client Dashboard" />
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 p-6 overflow-y-auto bg-gray-50 dark:bg-gray-900">
           <Outlet />
         </main>
       </div>

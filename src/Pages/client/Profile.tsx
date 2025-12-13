@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { User as UserIcon, MapPin, Calendar, Phone, Mail, Home, Globe } from 'lucide-react';
 import { api } from '../../api';
 import type { User } from '../../types';
-// import { User } from '../../types/auth-models';
+import { useTheme } from '../../Context/ThemeContext';
 
 const ClientProfile = () => {
+  const { theme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
@@ -36,8 +38,8 @@ const ClientProfile = () => {
           email: response.data.email || '',
           phone: response.data.customer.phone || '',
           address: response.data.customer.address || '',
-          city: response.data.city || '',
-          country: response.data.country || '',
+          city: response.data.customer.city || '',
+          country: response.data.customer.country || '',
           dateOfBirth: response.data.dateOfBirth ? response.data.dateOfBirth.split('T')[0] : ''
         });
       }
@@ -83,7 +85,6 @@ const ClientProfile = () => {
       if (response.isSuccess && response.data) {
         setUser(response.data);
         setIsEditing(false);
-        // Afficher un message de succès
         alert('Profil mis à jour avec succès!');
       }
     } catch (err: any) {
@@ -91,257 +92,326 @@ const ClientProfile = () => {
     }
   };
 
+  const handleCancel = () => {
+    setIsEditing(false);
+    loadUserProfile();
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-lg text-gray-600">Chargement...</div>
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-lg text-gray-600 dark:text-gray-400">Chargement...</div>
       </div>
     );
   }
 
-  if (error) {
+  if (error && !user) {
     return (
-      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-        {error}
+      <div className="flex items-center justify-center h-screen">
+        <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-400 px-4 py-3 rounded">
+          {error}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-        <h1 className="text-2xl font-bold text-gray-800">Mon Profil</h1>
+      <div className="flex items-center justify-between px-2 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+        <div className="flex items-center gap-1.5">
+          <div className="w-10 h-10 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center text-white text-base font-bold">
+            {user?.firstName?.[0]}{user?.lastName?.[0]}
+          </div>
+          <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+            {user?.firstName} {user?.lastName}
+          </h1>
+        </div>
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm"
-          >
+            className="bg-blue-600 dark:bg-blue-500 text-white px-2.5 py-1.5 rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium text-sm">
             Modifier le profil
           </button>
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
-        {/* Profile Header - Fixed */}
-        <div className="flex items-center gap-3 p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-white">
-          <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
-            {user?.firstName?.[0]}{user?.lastName?.[0]}
-          </div>
-          <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-semibold text-gray-800 truncate">
-              {user?.firstName} {user?.lastName}
-            </h2>
-            <p className="text-sm text-gray-600 truncate">{user?.email}</p>
-            <div className="flex items-center gap-2 mt-1 flex-wrap">
-              <span className={`px-2 py-0.5 text-xs font-semibold rounded ${
-                user?.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {user?.isActive ? 'Actif' : 'Inactif'}
-              </span>
-              <span className="px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800">
-                {user?.role}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-4">
-          {isEditing ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Grid Layout for Form */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* Informations Personnelles */}
-                <div className="space-y-3">
-                  <h3 className="text-base font-semibold text-gray-800 pb-2 border-b border-gray-200">
-                    Informations Personnelles
-                  </h3>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Prénom</label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Nom</label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-gray-50"
-                      disabled
-                    />
-                    <p className="text-xs text-gray-500 mt-0.5">L'email ne peut pas être modifié</p>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Téléphone</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+1234567890"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Date de Naissance</label>
-                    <input
-                      type="date"
-                      name="dateOfBirth"
-                      value={formData.dateOfBirth}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-
-                {/* Adresse */}
-                <div className="space-y-3">
-                  <h3 className="text-base font-semibold text-gray-800 pb-2 border-b border-gray-200">Adresse</h3>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Adresse</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      placeholder="123 Rue Principale"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Ville</label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      placeholder="Paris"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Pays</label>
-                    <input
-                      type="text"
-                      name="country"
-                      value={formData.country}
-                      onChange={handleChange}
-                      placeholder="France"
-                      className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
+      <div className="flex-1 overflow-y-auto px-2 py-6 pb-32 md:pb-6">
+        <div className="w-full max-w-6xl mx-auto">
+            {error && (
+              <div className="mb-2 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-400 px-2 py-2 rounded-lg">
+                {error}
               </div>
+            )}
 
-              {/* Action Buttons */}
-              <div className="flex gap-3 pt-3 border-t border-gray-200">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsEditing(false);
-                    loadUserProfile();
-                  }}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors text-sm"
-                >
-                  Annuler
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm"
-                >
-                  Enregistrer
-                </button>
-              </div>
-            </form>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Informations Personnelles */}
-              <div className="space-y-3">
-                <h3 className="text-base font-semibold text-gray-800 pb-2 border-b border-gray-200">
-                  Informations Personnelles
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-500">Prénom</label>
-                    <p className="mt-0.5 text-sm text-gray-900">{user?.firstName || '-'}</p>
+            {isEditing ? (
+              <>
+              <form onSubmit={handleSubmit} className="space-y-3 mb-28 md:mb-0">
+                {/* Personal Information Section */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <UserIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                      Informations Personnelles
+                    </h2>
                   </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-500">Nom</label>
-                    <p className="mt-0.5 text-sm text-gray-900">{user?.lastName || '-'}</p>
-                  </div>
-                  <div className="col-span-2">
-                    <label className="block text-xs font-medium text-gray-500">Email</label>
-                    <p className="mt-0.5 text-sm text-gray-900 break-all">{user?.email || '-'}</p>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-500">Téléphone</label>
-                    <p className="mt-0.5 text-sm text-gray-900">{user?.customer?.phone || '-'}</p>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-500">Date de Naissance</label>
-                    <p className="mt-0.5 text-sm text-gray-900">
-                      {user?.customer?.dateOfBirth ? new Date(user?.customer?.dateOfBirth).toLocaleDateString('fr-FR') : '-'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Adresse */}
-              <div className="space-y-3">
-                <h3 className="text-base font-semibold text-gray-800 pb-2 border-b border-gray-200">Adresse</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="col-span-2">
-                    <label className="block text-xs font-medium text-gray-500">Adresse</label>
-                    <p className="mt-0.5 text-sm text-gray-900">{user?.customer?.address || '-'}</p>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-500">Ville</label>
-                    <p className="mt-0.5 text-sm text-gray-900">{user?.customer?.city || '-'}</p>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-500">Pays</label>
-                    <p className="mt-0.5 text-sm text-gray-900">{user?.customer?.country || '-'}</p>
-                  </div>
-                </div>
-
-                {/* Informations du compte */}
-                <div className="pt-3">
-                  <h3 className="text-base font-semibold text-gray-800 pb-2 border-b border-gray-200 mb-3">
-                    Informations du compte
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     <div>
-                      <label className="block text-xs font-medium text-gray-500">Rôle</label>
-                      <p className="mt-0.5 text-sm text-gray-900">{user?.role || '-'}</p>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Prénom
+                      </label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-500">Langue</label>
-                      <p className="mt-0.5 text-sm text-gray-900">{user?.languageId || '-'}</p>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Nom
+                      </label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        disabled
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 cursor-not-allowed"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Téléphone
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="+1234567890"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Date de Naissance
+                      </label>
+                      <input
+                        type="date"
+                        name="dateOfBirth"
+                        value={formData.dateOfBirth}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
                     </div>
                   </div>
                 </div>
+
+                {/* Address Section */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                      Adresse
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <div className="md:col-span-2 lg:col-span-2">
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Adresse
+                      </label>
+                      <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        placeholder="123 Rue Principale"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Ville
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        placeholder="Paris"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Pays
+                      </label>
+                      <input
+                        type="text"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        placeholder="France"
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+              
+              {/* Action Buttons - Fixed on Mobile */}
+              <div className="fixed bottom-16 left-0 right-0 md:relative md:bottom-auto md:left-auto md:right-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 md:p-0 md:bg-transparent md:dark:bg-transparent md:border-t-0 md:pt-2 z-10 shadow-lg md:shadow-none">
+                <div className="flex justify-end gap-2 max-w-6xl mx-auto">
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="flex-1 md:flex-none px-4 py-2.5 md:py-2 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium text-gray-900 dark:text-gray-100 text-sm"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="flex-1 md:flex-none px-4 py-2.5 md:py-2 bg-green-600 dark:bg-green-500 text-white rounded hover:bg-green-700 dark:hover:bg-green-600 transition-colors font-medium text-sm"
+                  >
+                    Enregistrer
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+              </>
+            ) : (
+              <div className="space-y-3">
+                {/* Personal Information Section */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <UserIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                      Informations Personnelles
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <div className="flex items-start gap-2">
+                      <UserIcon className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Prénom
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.firstName || '-'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <UserIcon className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Nom
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.lastName || '-'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Mail className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Email
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.email || '-'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Phone className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Téléphone
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.customer?.phone || '-'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Calendar className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Date de Naissance
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.customer?.dateOfBirth 
+                            ? new Date(user.customer.dateOfBirth).toLocaleDateString('fr-FR') 
+                            : '-'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Section */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                      Adresse
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <div className="flex items-start gap-2 md:col-span-2 lg:col-span-2">
+                      <Home className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Adresse
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100">
+                          {user?.customer?.address || '-'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Ville
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.customer?.city || '-'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Globe className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+                          Pays
+                        </label>
+                        <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                          {user?.customer?.country || '-'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
         </div>
       </div>
     </div>

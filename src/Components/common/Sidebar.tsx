@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
+import { Calendar } from 'lucide-react';
 
 interface SidebarItem {
   path: string;
@@ -41,9 +42,7 @@ const getIcon = (label: string) => {
       </svg>
     ),
     'Reservation': (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-      </svg>
+      <Calendar/>
     ),
     'Visa': (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,18 +66,18 @@ const Sidebar: React.FC<SidebarProps> = ({ items, role }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-gray-800 dark:bg-gray-900 text-white transition-all duration-300 ${isOpen ? 'w-64' : 'w-20'} h-screen overflow-hidden`}>
+      <div className={`hidden md:flex flex-col bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ${isOpen ? 'w-64' : 'w-20'} h-screen overflow-hidden`}>
         {/* Header */}
-        <div className="p-4 border-b border-gray-700 dark:border-gray-800 flex items-center justify-between">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
           {isOpen && (
             <div className="flex-1">
-              <h2 className="text-xl font-bold">{role} Panel</h2>
-              <p className="text-sm text-gray-400 mt-1 truncate">{user?.email}</p>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{role} Panel</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">{user?.email}</p>
             </div>
           )}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-gray-700 dark:text-gray-300"
             aria-label="Toggle sidebar"
           >
             <svg 
@@ -101,8 +100,8 @@ const Sidebar: React.FC<SidebarProps> = ({ items, role }) => {
                   to={item.path}
                   className={`flex items-center ${isOpen ? 'px-4' : 'px-3 justify-center'} py-3 rounded-lg transition-colors ${
                     location.pathname === item.path
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 dark:hover:bg-gray-800'
+                      ? 'bg-blue-600 dark:bg-blue-500 text-white'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                   }`}
                   title={!isOpen ? item.label : ''}
                 >
@@ -120,7 +119,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, role }) => {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-800 dark:bg-gray-900 text-white border-t border-gray-700 dark:border-gray-800 z-50">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50 shadow-lg">
         <nav className="flex justify-around items-center h-16">
           {items.map((item) => (
             <Link
@@ -128,14 +127,14 @@ const Sidebar: React.FC<SidebarProps> = ({ items, role }) => {
               to={item.path}
               className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
                 location.pathname === item.path
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-700 dark:hover:bg-gray-800'
+                  ? 'bg-blue-600 dark:bg-blue-500 text-white'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
               <span className="flex-shrink-0">
                 {getIcon(item.label)}
               </span>
-              <span className="text-xs mt-1">{item.label}</span>
+              <span className="text-xs mt-1 font-medium">{item.label}</span>
             </Link>
           ))}
         </nav>
