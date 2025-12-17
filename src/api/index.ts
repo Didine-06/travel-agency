@@ -16,6 +16,7 @@ import type {
 import type { DestinationResponse } from "../types/Destination-models";
 import axiosClient from "./axiosClient";
 import type { PackageResponse } from "../types/Package-models";
+import type { Booking, BookingResponse } from "../types/booking-models";
 
 export const api = {
   auth: {
@@ -150,6 +151,21 @@ export const api = {
     getById: async (id: string): Promise<ApiResponse<PackageResponse>> => {
       const response = await axiosClient.get<ApiResponse<PackageResponse>>(
         `/packages/${id}`
+      );
+      return response.data;
+    },
+  },
+  
+  bookings: {
+    getMyBookings: async (): Promise<ApiResponse<Booking[]>> => {
+      const response = await axiosClient.get<ApiResponse<Booking[]>>(
+        "/bookings/my-bookings"
+      );
+      return response.data;
+    },
+    deleteBooking: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/bookings/${id}`
       );
       return response.data;
     },
