@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './Context/AuthContext';
+import { LanguageProvider } from './Context/LanguageContext';
 import { ThemeProvider } from './Context/ThemeContext';
 import AppRouter from './Routes/AppRouter';
 
@@ -9,7 +10,9 @@ function App() {
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <AppRouter />
+          <LanguageProvider>
+            <AppRouter />
+          </LanguageProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

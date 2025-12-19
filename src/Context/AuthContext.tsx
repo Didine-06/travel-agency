@@ -12,6 +12,7 @@ interface User {
   name: string;
   role: 'ADMIN' | 'AGENT' | 'CLIENT';
   avatarUrl?: string;
+  languageId?: string;
 }
 
 interface AuthContextType {
@@ -89,6 +90,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         lastName: response.data.user.lastName,
         name: `${response.data.user.firstName} ${response.data.user.lastName}`,
         role: response.data.user.role.toUpperCase() as 'ADMIN' | 'AGENT' | 'CLIENT',
+        languageId: response.data.user.languageId,
       };
 
       setUser(userData);

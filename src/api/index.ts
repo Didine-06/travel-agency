@@ -77,7 +77,7 @@ export const api = {
         dateOfBirth?: string;
       }
     ): Promise<ApiResponse<User>> => {
-      const response = await axiosClient.put<ApiResponse<User>>(
+      const response = await axiosClient.patch<ApiResponse<User>>(
         `/auth/profile/${userId}`,
         profileData
       );
@@ -141,6 +141,7 @@ export const api = {
       return response.data;
     },
   },
+
   packages: {
     getAll: async (): Promise<ApiResponse<PackageResponse[]>> => {
       const response = await axiosClient.get<ApiResponse<PackageResponse[]>>(
@@ -155,7 +156,7 @@ export const api = {
       return response.data;
     },
   },
-  
+
   bookings: {
     getMyBookings: async (): Promise<ApiResponse<Booking[]>> => {
       const response = await axiosClient.get<ApiResponse<Booking[]>>(
@@ -163,6 +164,21 @@ export const api = {
       );
       return response.data;
     },
+    deleteMyBooking: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/bookings/my-booking/${id}`
+      );
+      return response.data;
+    },
+
+    deleteMyBookings: async (ids: string[]): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/my-booking`,
+        { data: ids }
+      );
+      return response.data;
+    },
+
     deleteBooking: async (id: string): Promise<ApiResponse<void>> => {
       const response = await axiosClient.delete<ApiResponse<void>>(
         `/bookings/${id}`

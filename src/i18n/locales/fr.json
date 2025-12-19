@@ -1,0 +1,68 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "deleting": "Suppression...",
+    "confirmDelete": {
+      "title": "Confirmer la suppression",
+      "subtitle": "Cette action est irréversible.",
+      "confirm": "Supprimer",
+      "message_one": "Êtes-vous sûr de vouloir supprimer ce/cette {{entity}} ? Cette action est irréversible.",
+      "message_other": "Êtes-vous sûr de vouloir supprimer ces {{count}} {{entity}} ? Cette action est irréversible."
+    },
+    "editProfile": "Modifier le profil",
+    "errorLoadingProfile": "Erreur lors du chargement du profil",
+    "errorUpdatingProfile": "Erreur lors de la mise à jour du profil",
+    "profileUpdated": "Profil mis à jour avec succès !",
+    "missingUserId": "Erreur : ID utilisateur introuvable"
+  },
+  "profile": {
+    "sections": {
+      "personalInfo": "Informations Personnelles",
+      "address": "Adresse"
+    },
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "dateOfBirth": "Date de Naissance",
+      "address": "Adresse",
+      "city": "Ville",
+      "country": "Pays"
+    },
+    "placeholders": {
+      "phone": "+1234567890",
+      "address": "123 Rue Principale",
+      "city": "Paris",
+      "country": "France"
+    }
+  }
+  ,
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "bookings": "Réservations",
+    "profile": "Profil",
+    "plane": "Vols",
+    "visa": "Visas"
+  },
+  "entities": {
+    "booking": "réservation",
+    "bookings": "réservations"
+  },
+  "booking": {
+    "details": "Détails de la réservation",
+    "flight": "Vol",
+    "visa": "Visa",
+    "passenger": "Passager",
+    "seat": "Siège",
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmé",
+      "canceled": "Annulé"
+    }
+  }
+}

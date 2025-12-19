@@ -5,7 +5,7 @@ import TopBar from '../Components/common/TopBar';
 const ClientLayout = () => {
   const menuItems = [
     { path: '/client/dashboard', label: 'Dashboard' },
-    { path: '/client/reservations', label: 'Reservations' },
+    { path: '/client/reservations', label: 'Bookings' },
     { path: '/client/visas', label: 'Visas' },
     { path: '/client/planes', label: 'Planes' },
   ];
@@ -14,8 +14,8 @@ const ClientLayout = () => {
     <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
       <Sidebar items={menuItems} role="Client" />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar title="Client Dashboard" />
-        <main className="flex-1 p-6 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+        <TopBar />
+        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
           <Outlet />
         </main>
       </div>

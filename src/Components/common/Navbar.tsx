@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import { Search, Heart, Bell, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import LanguageSelect from "./LanguageSelect";
 
 const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -87,6 +88,9 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-4 ml-4">
           {/* Theme Toggle */}
           <ThemeToggle />
+
+          {/* Language */}
+          <LanguageSelect />
           
           {!isAuthenticated ? (
             <>
@@ -177,6 +181,8 @@ const Navbar: React.FC = () => {
         <div className="md:hidden flex items-center ml-auto space-x-2">
           {/* Theme Toggle - Mobile */}
           <ThemeToggle />
+          {/* Language - Mobile */}
+          <LanguageSelect />
           {/* Search Icon - Mobile */}
           <button
             className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition"

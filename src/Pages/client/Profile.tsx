@@ -3,9 +3,12 @@ import { User as UserIcon, MapPin, Calendar, Phone, Mail, Home, Globe } from 'lu
 import { api } from '../../api';
 import type { User } from '../../types';
 import { useTheme } from '../../Context/ThemeContext';
+import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const ClientProfile = () => {
-  const { theme } = useTheme();
+  useTheme();
+  const { t } = useTranslation();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
@@ -44,7 +47,7 @@ const ClientProfile = () => {
         });
       }
     } catch (err) {
-      setError('Erreur lors du chargement du profil');
+      setError(t('common.errorLoadingProfile'));
     } finally {
       setLoading(false);
     }
@@ -62,7 +65,7 @@ const ClientProfile = () => {
     setError('');
     
     if (!user?.id) {
-      setError('Erreur: ID utilisateur introuvable');
+      setError(t('common.missingUserId'));
       return;
     }
 
@@ -85,10 +88,12 @@ const ClientProfile = () => {
       if (response.isSuccess && response.data) {
         setUser(response.data);
         setIsEditing(false);
-        alert('Profil mis à jour avec succès!');
+        toast.success(t('common.profileUpdated'));
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Erreur lors de la mise à jour du profil');
+      const errorMessage = err.response?.data?.message || t('common.errorUpdatingProfile');
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -100,7 +105,7 @@ const ClientProfile = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-lg text-gray-600 dark:text-gray-400">Chargement...</div>
+        <div className="text-lg text-gray-600 dark:text-gray-400">{t('common.loading')}</div>
       </div>
     );
   }
@@ -131,14 +136,14 @@ const ClientProfile = () => {
           <button
             onClick={() => setIsEditing(true)}
             className="bg-blue-600 dark:bg-blue-500 text-white px-2.5 py-1.5 rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium text-sm">
-            Modifier le profil
+            {t('common.editProfile')}
           </button>
         )}
       </div>
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-2 py-6 pb-32 md:pb-6">
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full  mx-auto">
             {error && (
               <div className="mb-2 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-400 px-2 py-2 rounded-lg">
                 {error}
@@ -153,13 +158,13 @@ const ClientProfile = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <UserIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                      Informations Personnelles
+                      {t('profile.sections.personalInfo')}
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Prénom
+                        {t('profile.fields.firstName')}
                       </label>
                       <input
                         type="text"
@@ -171,7 +176,7 @@ const ClientProfile = () => {
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Nom
+                        {t('profile.fields.lastName')}
                       </label>
                       <input
                         type="text"
@@ -183,7 +188,7 @@ const ClientProfile = () => {
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Email
+                        {t('profile.fields.email')}
                       </label>
                       <input
                         type="email"
@@ -196,20 +201,20 @@ const ClientProfile = () => {
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Téléphone
+                        {t('profile.fields.phone')}
                       </label>
                       <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        placeholder="+1234567890"
+                        placeholder={t('profile.placeholders.phone')}
                         className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Date de Naissance
+                        {t('profile.fields.dateOfBirth')}
                       </label>
                       <input
                         type="date"
@@ -227,46 +232,46 @@ const ClientProfile = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                      Adresse
+                      {t('profile.sections.address')}
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     <div className="md:col-span-2 lg:col-span-2">
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Adresse
+                        {t('profile.fields.address')}
                       </label>
                       <input
                         type="text"
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
-                        placeholder="123 Rue Principale"
+                        placeholder={t('profile.placeholders.address')}
                         className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Ville
+                        {t('profile.fields.city')}
                       </label>
                       <input
                         type="text"
                         name="city"
                         value={formData.city}
                         onChange={handleChange}
-                        placeholder="Paris"
+                        placeholder={t('profile.placeholders.city')}
                         className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Pays
+                        {t('profile.fields.country')}
                       </label>
                       <input
                         type="text"
                         name="country"
                         value={formData.country}
                         onChange={handleChange}
-                        placeholder="France"
+                        placeholder={t('profile.placeholders.country')}
                         className="w-full border border-gray-300 dark:border-gray-600 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       />
                     </div>
@@ -283,14 +288,14 @@ const ClientProfile = () => {
                     onClick={handleCancel}
                     className="flex-1 md:flex-none px-4 py-2.5 md:py-2 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium text-gray-900 dark:text-gray-100 text-sm"
                   >
-                    Annuler
+                    {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     onClick={handleSubmit}
                     className="flex-1 md:flex-none px-4 py-2.5 md:py-2 bg-green-600 dark:bg-green-500 text-white rounded hover:bg-green-700 dark:hover:bg-green-600 transition-colors font-medium text-sm"
                   >
-                    Enregistrer
+                    {t('common.save')}
                   </button>
                 </div>
               </div>
@@ -302,7 +307,7 @@ const ClientProfile = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <UserIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                      Informations Personnelles
+                      {t('profile.sections.personalInfo')}
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -310,7 +315,7 @@ const ClientProfile = () => {
                       <UserIcon className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Prénom
+                          {t('profile.fields.firstName')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
                           {user?.firstName || '-'}
@@ -321,7 +326,7 @@ const ClientProfile = () => {
                       <UserIcon className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Nom
+                          {t('profile.fields.lastName')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
                           {user?.lastName || '-'}
@@ -332,7 +337,7 @@ const ClientProfile = () => {
                       <Mail className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Email
+                          {t('profile.fields.email')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
                           {user?.email || '-'}
@@ -343,7 +348,7 @@ const ClientProfile = () => {
                       <Phone className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Téléphone
+                          {t('profile.fields.phone')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
                           {user?.customer?.phone || '-'}
@@ -354,11 +359,11 @@ const ClientProfile = () => {
                       <Calendar className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Date de Naissance
+                          {t('profile.fields.dateOfBirth')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
-                          {user?.customer?.dateOfBirth 
-                            ? new Date(user.customer.dateOfBirth).toLocaleDateString('fr-FR') 
+                          {user?.dateOfBirth 
+                            ? new Date(user.dateOfBirth).toLocaleDateString('fr-FR') 
                             : '-'}
                         </p>
                       </div>
@@ -371,7 +376,7 @@ const ClientProfile = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                      Adresse
+                      {t('profile.sections.address')}
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -379,7 +384,7 @@ const ClientProfile = () => {
                       <Home className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Adresse
+                          {t('profile.fields.address')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100">
                           {user?.customer?.address || '-'}
@@ -390,7 +395,7 @@ const ClientProfile = () => {
                       <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Ville
+                          {t('profile.fields.city')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
                           {user?.customer?.city || '-'}
@@ -401,7 +406,7 @@ const ClientProfile = () => {
                       <Globe className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
-                          Pays
+                          {t('profile.fields.country')}
                         </label>
                         <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
                           {user?.customer?.country || '-'}
