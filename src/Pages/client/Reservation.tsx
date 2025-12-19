@@ -102,24 +102,52 @@ function ClientReservation() {
     setOpenDropdown(null);
   };
 
-  const confirmDelete = async () => {
-    if (deleteTargetIds.length === 0) return;
-
+  const deleteOne = async (id: string) => {
     try {
       setDeleteBusy(true);
-      await Promise.all(deleteTargetIds.map(id => api.bookings.deleteMyBooking(id)));
+      const response = await api.bookings.deleteMyBooking(id);
       setSelectedBookings(new Set());
       setConfirmDeleteOpen(false);
       setDeleteTargetIds([]);
 
-      toast.success('Réservation(s) supprimée(s) avec succès !');
+      if (response?.message) toast.success(response.message);
+      else toast.success('Deleted successfully');
 
       await loadBookings();
     } catch (err) {
-      setError('Erreur lors de la suppression');
+      const message = err instanceof Error ? err.message : 'Error while deleting';
+      setError(message);
+      toast.error(message);
     } finally {
       setDeleteBusy(false);
     }
+  };
+
+  const deleteMany = async (ids: string[]) => {
+    try {
+      setDeleteBusy(true);
+      const response = await api.bookings.deleteMyBookings(ids);
+      setSelectedBookings(new Set());
+      setConfirmDeleteOpen(false);
+      setDeleteTargetIds([]);
+
+      if (response?.message) toast.success(response.message);
+      else toast.success('Deleted successfully');
+
+      await loadBookings();
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Error while deleting';
+      setError(message);
+      toast.error(message);
+    } finally {
+      setDeleteBusy(false);
+    }
+  };
+
+  const onConfirmDelete = async () => {
+    if (deleteTargetIds.length === 0) return;
+    if (deleteTargetIds.length === 1) return deleteOne(deleteTargetIds[0]);
+    return deleteMany(deleteTargetIds);
   };
 
   const getStatusColor = (status: string) => {
@@ -478,7 +506,7 @@ function ClientReservation() {
           setConfirmDeleteOpen(false);
           setDeleteTargetIds([]);
         }}
-        onConfirm={confirmDelete}
+        onConfirm={onConfirmDelete}
         entityLabel={t(deleteTargetIds.length > 1 ? 'entities.bookings' : 'entities.booking')}
         count={deleteTargetIds.length}
         loading={deleteBusy}

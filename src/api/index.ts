@@ -173,8 +173,8 @@ export const api = {
 
     deleteMyBookings: async (ids: string[]): Promise<ApiResponse<void>> => {
       const response = await axiosClient.delete<ApiResponse<void>>(
-        `/my-booking`,
-        { data: ids }
+        `/bookings/my-bookings`,
+        { data: { ids } }
       );
       return response.data;
     },
