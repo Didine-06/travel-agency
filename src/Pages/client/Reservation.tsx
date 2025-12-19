@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Search, MoreVertical, Calendar, MapPin, Users, Trash2, Edit, DollarSign } from 'lucide-react';
+import { Search, MoreVertical, Calendar, MapPin, Users, Trash2, Edit, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { api } from '../../api';
 import type { Booking } from '../../types/booking-models';
 import ConfirmDeleteModal from '../../Components/common/ConfirmDeleteModal';
+import { LoadingSpinner } from '../../Components/common/LoadingSpinner';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { ReservationContext } from './reservations/ReservationContext';
 
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50] as const;
 
 function ClientReservation() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
@@ -72,8 +76,7 @@ function ClientReservation() {
   };
 
   const handleEdit = (id: string) => {
-    // TODO: Implement edit functionality
-    console.log('Edit booking:', id);
+    navigate(`/client/reservations/${id}`);
     setOpenDropdown(null);
   };
 
@@ -170,16 +173,8 @@ function ClientReservation() {
   const endIndex = startIndex + pageSize;
   const currentBookings = filteredBookings.slice(startIndex, endIndex);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-lg text-gray-600 dark:text-gray-400">Chargement...</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative">
       {/* Header - Fixed */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex-shrink-0 bg-white dark:bg-gray-900 sticky top-0 z-20">
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
@@ -232,7 +227,7 @@ function ClientReservation() {
           </div>
         )}
 
-        {filteredBookings.length === 0 ? (
+        {filteredBookings.length === 0 && !loading ? (
           <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
             <Calendar className="w-16 h-16 mb-4 opacity-50" />
             <p className="text-lg font-medium">Aucune réservation trouvée</p>
@@ -281,7 +276,16 @@ function ClientReservation() {
                   </tr>
                     </thead>
                     <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {currentBookings.map((booking) => (
+                  {loading ? (
+                    <tr>
+                      <td colSpan={8} className="px-4 py-16 text-center">
+                        <div className="flex justify-center items-center">
+                          <LoadingSpinner />
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    currentBookings.map((booking) => (
                     <tr key={booking.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                       <td className="px-4 py-4">
                         <input
@@ -363,7 +367,7 @@ function ClientReservation() {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  )))}
                     </tbody>
                   </table>
                 </div>
@@ -372,7 +376,12 @@ function ClientReservation() {
 
             {/* Mobile Card View */}
             <div className="md:hidden space-y-4">
-              {currentBookings.map((booking) => (
+              {loading ? (
+                <div className="flex items-center justify-center h-64">
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                currentBookings.map((booking) => (
                 <div
                   key={booking.id}
                   className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4"
@@ -448,7 +457,7 @@ function ClientReservation() {
                     </span>
                   </div>
                 </div>
-              ))}
+              )))}
             </div>
           </>
         )}
@@ -483,16 +492,18 @@ function ClientReservation() {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                 disabled={safeCurrentPage === 1}
-                className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                title="Précédent"
               >
-                Précédent
+                <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                 disabled={safeCurrentPage === totalPages}
-                className="px-4 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                title="Suivant"
               >
-                Suivant
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -511,6 +522,11 @@ function ClientReservation() {
         count={deleteTargetIds.length}
         loading={deleteBusy}
       />
+
+      {/* Child route renders the drawer */}
+      <ReservationContext.Provider value={{ reloadBookings: loadBookings }}>
+        <Outlet />
+      </ReservationContext.Provider>
     </div>
   );
 }
