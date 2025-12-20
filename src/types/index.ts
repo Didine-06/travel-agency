@@ -6,6 +6,7 @@ export * from './Destination-models';
 export * from './auth-models';
 export * from './user-models';
 export * from './booking-models';
+export * from './flight-ticket-models';
 
 // Legacy types (consider moving to separate files)
 export interface AuthContextType {

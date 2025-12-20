@@ -1,38 +1,38 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import { Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 // Layouts
-import PublicLayout from '../Layouts/PublicLayout';
-import ClientLayout from '../Layouts/ClientLayout';
-import AgentLayout from '../Layouts/AgentLayout';
-import AdminLayout from '../Layouts/AdminLayout';
+import PublicLayout from "../Layouts/PublicLayout";
+import ClientLayout from "../Layouts/ClientLayout";
+import AgentLayout from "../Layouts/AgentLayout";
+import AdminLayout from "../Layouts/AdminLayout";
 
 // Public Pages
-import Home from '../Pages/public/Home';
-import About from '../Pages/public/About';
-import Services from '../Pages/public/Services';
-import Destinations from '../Pages/public/Destinations';
-import Login from '../Pages/public/Login';
-import Register from '../Pages/public/Register';
-import Unauthorized from '../Pages/public/Unauthorized';
+import Home from "../Pages/public/Home";
+import About from "../Pages/public/About";
+import Services from "../Pages/public/Services";
+import Destinations from "../Pages/public/Destinations";
+import Login from "../Pages/public/Login";
+import Register from "../Pages/public/Register";
+import Unauthorized from "../Pages/public/Unauthorized";
 
 // Client Pages
-import ClientDashboard from '../Pages/client/Dashboard';
-import ClientProfile from '../Pages/client/Profile';
-import ClientReservation from '../Pages/client/reservations/Reservation';
-import EditBooking from '../Pages/client/reservations/EditBooking';
-import ClientPlane from '../Pages/client/Plane';
-import ClientVisa from '../Pages/client/Visa';
+import ClientDashboard from "../Pages/client/Dashboard";
+import ClientProfile from "../Pages/client/Profile";
+import ClientReservation from "../Pages/client/reservations/Reservation";
+import EditBooking from "../Pages/client/reservations/EditBooking";
+import ClientPlane from "../Pages/client/planes/Plane";
 
 // Agent Pages
-import AgentDashboard from '../Pages/agent/Dashboard';
-import AgentBookings from '../Pages/agent/Bookings';
-import AgentProfile from '../Pages/agent/Profile';
+import AgentDashboard from "../Pages/agent/Dashboard";
+import AgentBookings from "../Pages/agent/Bookings";
+import AgentProfile from "../Pages/agent/Profile";
 
 // Admin Pages
-import AdminDashboard from '../Pages/admin/Dashboard';
-import AdminUsers from '../Pages/admin/Users';
-import AdminProfile from '../Pages/admin/Profile';
+import AdminDashboard from "../Pages/admin/Dashboard";
+import AdminUsers from "../Pages/admin/Users";
+import AdminProfile from "../Pages/admin/Profile";
+import EditPlane from "../Pages/client/planes/EditPlane";
 
 const AppRouter = () => {
   return (
@@ -52,7 +52,7 @@ const AppRouter = () => {
       <Route
         path="/client"
         element={
-          <ProtectedRoute allowedRoles={['CLIENT']}>
+          <ProtectedRoute allowedRoles={["CLIENT"]}>
             <ClientLayout />
           </ProtectedRoute>
         }
@@ -63,7 +63,11 @@ const AppRouter = () => {
         <Route path="reservations" element={<ClientReservation />}>
           <Route path=":id" element={<EditBooking />} />
         </Route>
-        <Route path="visas" element={<ClientVisa />} />
+
+        <Route path="planes" element={<ClientPlane />} >
+          <Route path=":id" element={<EditPlane />} />
+        </Route>
+        
         <Route path="planes" element={<ClientPlane />} />
         <Route path="profile" element={<ClientProfile />} />
       </Route>
@@ -72,7 +76,7 @@ const AppRouter = () => {
       <Route
         path="/agent"
         element={
-          <ProtectedRoute allowedRoles={['AGENT']}>
+          <ProtectedRoute allowedRoles={["AGENT"]}>
             <AgentLayout />
           </ProtectedRoute>
         }
@@ -87,7 +91,7 @@ const AppRouter = () => {
       <Route
         path="/admin"
         element={
-          <ProtectedRoute allowedRoles={['ADMIN']}>
+          <ProtectedRoute allowedRoles={["ADMIN"]}>
             <AdminLayout />
           </ProtectedRoute>
         }

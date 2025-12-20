@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { Search, MoreVertical, Calendar, MapPin, Users, Trash2, Edit, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { api } from '../../api';
 import type { Booking } from '../../types/booking-models';
@@ -29,6 +29,7 @@ function ClientReservation() {
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [deleteTargetIds, setDeleteTargetIds] = useState<string[]>([]);
   const [deleteBusy, setDeleteBusy] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 });
 
   useEffect(() => {
     loadBookings();
@@ -54,9 +55,9 @@ function ClientReservation() {
     return Array.from(selectedBookings).filter(id => filteredIds.has(id));
   }, [filteredBookings, selectedBookings]);
 
-  const loadBookings = async () => {
+  const loadBookings = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const response = await api.bookings.getMyBookings();
       if (response.isSuccess && response.data) {
         setBookings(response.data);
@@ -65,7 +66,7 @@ function ClientReservation() {
     } catch (err) {
       setError('Erreur lors du chargement des réservations');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
@@ -78,6 +79,19 @@ function ClientReservation() {
   const handleEdit = (id: string) => {
     navigate(`/client/reservations/${id}`);
     setOpenDropdown(null);
+  };
+
+  const toggleDropdown = (id: string, event: React.MouseEvent<HTMLButtonElement>) => {
+    if (openDropdown === id) {
+      setOpenDropdown(null);
+    } else {
+      const rect = event.currentTarget.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 4,
+        right: window.innerWidth - rect.right
+      });
+      setOpenDropdown(id);
+    }
   };
 
   const handleSelectBooking = (id: string) => {
@@ -333,37 +347,13 @@ function ClientReservation() {
                         </span>
                       </td>
                       <td className="px-4 py-4 text-right">
-                        <div className="flex justify-end items-center relative">
+                        <div className="flex justify-end items-center">
                           <button
-                            onClick={() => setOpenDropdown(openDropdown === String(booking.id) ? null : String(booking.id))}
+                            onClick={(e) => toggleDropdown(String(booking.id), e)}
                             className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded transition-colors text-gray-700 dark:text-gray-300"
                           >
                             <MoreVertical className="w-5 h-5" />
                           </button>
-                          {openDropdown === String(booking.id) && (
-                            <>
-                              <div 
-                                className="fixed inset-0 z-30" 
-                                onClick={() => setOpenDropdown(null)}
-                              />
-                              <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-40">
-                                <button
-                                  onClick={() => handleEdit(String(booking.id))}
-                                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-t-lg"
-                                >
-                                  <Edit className="w-4 h-4" />
-                                  Modifier
-                                </button>
-                                <button
-                                  onClick={() => requestDeleteOne(String(booking.id))}
-                                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors rounded-b-lg"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                  Supprimer
-                                </button>
-                              </div>
-                            </>
-                          )}
                         </div>
                       </td>
                     </tr>
@@ -510,6 +500,38 @@ function ClientReservation() {
         </div>
       )}
 
+      {/* Dropdown global - positionné en fixed pour sortir de l'overflow */}
+      {openDropdown && (
+        <>
+          <div 
+            className="fixed inset-0 z-30" 
+            onClick={() => setOpenDropdown(null)}
+          />
+          <div 
+            className="fixed bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-40 w-48"
+            style={{ 
+              top: `${dropdownPosition.top}px`,
+              right: `${dropdownPosition.right}px`
+            }}
+          >
+            <button
+              onClick={() => handleEdit(openDropdown)}
+              className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-t-lg"
+            >
+              <Edit className="w-4 h-4" />
+              Modifier
+            </button>
+            <button
+              onClick={() => requestDeleteOne(openDropdown)}
+              className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors rounded-b-lg"
+            >
+              <Trash2 className="w-4 h-4" />
+              Supprimer
+            </button>
+          </div>
+        </>
+      )}
+
       <ConfirmDeleteModal
         open={confirmDeleteOpen}
         onClose={() => {
@@ -524,7 +546,7 @@ function ClientReservation() {
       />
 
       {/* Child route renders the drawer */}
-      <ReservationContext.Provider value={{ reloadBookings: loadBookings }}>
+      <ReservationContext.Provider value={{ reloadBookings: () => loadBookings(true) }}>
         <Outlet />
       </ReservationContext.Provider>
     </div>

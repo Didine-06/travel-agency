@@ -126,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
                   className={`flex items-center ${
                     isOpen ? "px-4" : "px-3 justify-center"
                   } py-3 rounded-lg transition-colors ${
-                    location.pathname === item.path
+                    location.pathname.includes(item.path)
                       ? "bg-blue-600 dark:bg-blue-500 text-white"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   }`}

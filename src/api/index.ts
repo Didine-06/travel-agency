@@ -17,12 +17,32 @@ import type { DestinationResponse } from "../types/Destination-models";
 import axiosClient from "./axiosClient";
 import type { PackageResponse } from "../types/Package-models";
 import type { Booking } from "../types/booking-models";
+import type { FlightTicket, SeatClass } from "../types/flight-ticket-models";
 
 export type UpdateMyBookingDto = {
   numberOfAdults: number;
   numberOfChildren: number;
   totalPrice: number;
   travelDate: string;
+};
+
+export type CreateFlightTicketDto = {
+  bookingId: string;
+  departureDateTime: string;
+  arrivalDateTime: string;
+  seatClass: SeatClass;
+  ticketPrice: number;
+};
+
+export type UpdateFlightTicketDto = {
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  seatClass?: SeatClass;
+  ticketPrice?: number;
+};
+
+export type CancelFlightTicketDto = {
+  cancelReason: string;
 };
 
 export const api = {
@@ -207,6 +227,76 @@ export const api = {
     deleteBooking: async (id: string): Promise<ApiResponse<void>> => {
       const response = await axiosClient.delete<ApiResponse<void>>(
         `/bookings/${id}`
+      );
+      return response.data;
+    },
+  },
+
+  flightTickets: {
+    // Get all flight tickets for the authenticated client
+    getMyTickets: async (): Promise<ApiResponse<FlightTicket[]>> => {
+      const response = await axiosClient.get<ApiResponse<FlightTicket[]>>(
+        "/flight-tickets/my-tickets"
+      );
+      return response.data;
+    },
+
+    // Get a specific flight ticket by ID
+    getMyTicketById: async (id: string): Promise<ApiResponse<FlightTicket>> => {
+      const response = await axiosClient.get<ApiResponse<FlightTicket>>(
+        `/flight-tickets/my-tickets/${id}`
+      );
+      return response.data;
+    },
+
+    // Create a new flight ticket
+    createMyTicket: async (
+      ticketData: CreateFlightTicketDto
+    ): Promise<ApiResponse<FlightTicket>> => {
+      const response = await axiosClient.post<ApiResponse<FlightTicket>>(
+        "/flight-tickets/my-tickets",
+        ticketData
+      );
+      return response.data;
+    },
+
+    // Update an existing flight ticket (only RESERVED status)
+    updateMyTicket: async (
+      id: string,
+      ticketData: UpdateFlightTicketDto
+    ): Promise<ApiResponse<FlightTicket>> => {
+      const response = await axiosClient.patch<ApiResponse<FlightTicket>>(
+        `/flight-tickets/my-tickets/${id}`,
+        ticketData
+      );
+      return response.data;
+    },
+
+    // Cancel a flight ticket with reason
+    cancelMyTicket: async (
+      id: string,
+      cancelData: CancelFlightTicketDto
+    ): Promise<ApiResponse<FlightTicket>> => {
+      const response = await axiosClient.patch<ApiResponse<FlightTicket>>(
+        `/flight-tickets/my-tickets/${id}/cancel`,
+        cancelData
+      );
+      return response.data;
+    },
+
+    // Delete a single flight ticket (only RESERVED or CANCELLED)
+    deleteMyTicket: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/flight-tickets/my-tickets/${id}`
+      );
+      return response.data;
+    },
+
+    // Delete multiple flight tickets at once
+    deleteMyTickets: async (ids: string[]): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/flight-tickets/my-tickets`,
+        { data: { ids } }
       );
       return response.data;
     },
