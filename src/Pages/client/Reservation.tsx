@@ -64,7 +64,7 @@ function ClientReservation() {
         setFilteredBookings(response.data);
       }
     } catch (err) {
-      setError('Erreur lors du chargement des réservations');
+      setError(t('reservations.messages.loadError'));
     } finally {
       if (!silent) setLoading(false);
     }
@@ -128,11 +128,11 @@ function ClientReservation() {
       setDeleteTargetIds([]);
 
       if (response?.message) toast.success(response.message);
-      else toast.success('Deleted successfully');
+      else toast.success(t('reservations.messages.deleteSuccess'));
 
       await loadBookings();
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Error while deleting';
+      const message = err instanceof Error ? err.message : t('reservations.messages.deleteError');
       setError(message);
       toast.error(message);
     } finally {
@@ -149,11 +149,11 @@ function ClientReservation() {
       setDeleteTargetIds([]);
 
       if (response?.message) toast.success(response.message);
-      else toast.success('Deleted successfully');
+      else toast.success(t('reservations.messages.deleteSuccess'));
 
       await loadBookings();
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Error while deleting';
+      const message = err instanceof Error ? err.message : t('reservations.messages.deleteError');
       setError(message);
       toast.error(message);
     } finally {
@@ -192,17 +192,17 @@ function ClientReservation() {
       {/* Header - Fixed */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex-shrink-0 bg-white dark:bg-gray-900 sticky top-0 z-20">
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-          Mes Réservations
+          {t('reservations.title')}
         </h1>
         <div className="hidden md:flex items-center gap-3">
           {selectedCount > 0 && (
             <button
               onClick={requestBulkDelete}
               className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              title="Supprimer la sélection"
+              title={t('reservations.delete')}
             >
               <Trash2 className="w-4 h-4" />
-              Supprimer ({selectedCount})
+              {t('reservations.deleteSelected', { count: selectedCount })}
             </button>
           )}
 
@@ -210,7 +210,7 @@ function ClientReservation() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
             <input
               type="text"
-              placeholder="Rechercher..."
+              placeholder={t('reservations.search')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -225,7 +225,7 @@ function ClientReservation() {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
-            placeholder="Rechercher..."
+            placeholder={t('reservations.search')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -244,9 +244,9 @@ function ClientReservation() {
         {filteredBookings.length === 0 && !loading ? (
           <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
             <Calendar className="w-16 h-16 mb-4 opacity-50" />
-            <p className="text-lg font-medium">Aucune réservation trouvée</p>
+            <p className="text-lg font-medium">{t('reservations.noReservations')}</p>
             {searchQuery && (
-              <p className="text-sm mt-2">Essayez de modifier votre recherche</p>
+              <p className="text-sm mt-2">{t('reservations.modifySearch')}</p>
             )}
           </div>
         ) : (
@@ -267,25 +267,25 @@ function ClientReservation() {
                       />
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Package
+                      {t('reservations.columns.package')}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Destination
+                      {t('reservations.columns.destination')}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Date de voyage
+                      {t('reservations.columns.travelDate')}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Voyageurs
+                      {t('reservations.columns.travelers')}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Prix total
+                      {t('reservations.columns.totalPrice')}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Statut
+                      {t('reservations.columns.status')}
                     </th>
                     <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                      Actions
+                      {t('reservations.columns.actions')}
                     </th>
                   </tr>
                     </thead>
@@ -314,7 +314,7 @@ function ClientReservation() {
                           {booking.package.title}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          {booking.package.duration} jours
+                          {t('reservations.duration', { count: booking.package.duration })}
                         </div>
                       </td>
                       <td className="px-4 py-4">
@@ -330,11 +330,11 @@ function ClientReservation() {
                       </td>
                       <td className="px-4 py-4">
                         <div className="text-sm text-gray-900 dark:text-gray-100">
-                          {booking.numberOfAdults} adulte{booking.numberOfAdults > 1 ? 's' : ''}
+                          {t('reservations.travelers.adult', { count: booking.numberOfAdults })}
                         </div>
                         {booking.numberOfChildren > 0 && (
                           <div className="text-xs text-gray-500 dark:text-gray-400">
-                            {booking.numberOfChildren} enfant{booking.numberOfChildren > 1 ? 's' : ''}
+                            {t('reservations.travelers.child', { count: booking.numberOfChildren })}
                           </div>
                         )}
                       </td>
@@ -382,7 +382,7 @@ function ClientReservation() {
                         {booking.package.title}
                       </h3>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        {booking.package.duration} jours
+                        {t('reservations.duration', { count: booking.package.duration })}
                       </p>
                     </div>
                     <div className="relative">
@@ -399,14 +399,14 @@ function ClientReservation() {
                             className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-t-lg"
                           >
                             <Edit className="w-4 h-4" />
-                            Modifier
+                            {t('reservations.actions.edit')}
                           </button>
                           <button
                             onClick={() => requestDeleteOne(String(booking.id))}
                             className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors rounded-b-lg"
                           >
                             <Trash2 className="w-4 h-4" />
-                            Supprimer
+                            {t('reservations.actions.delete')}
                           </button>
                         </div>
                       )}
@@ -429,8 +429,8 @@ function ClientReservation() {
                     <div className="flex items-center gap-2 text-sm">
                       <Users className="w-4 h-4 text-gray-400" />
                       <span className="text-gray-900 dark:text-gray-100">
-                        {booking.numberOfAdults} adulte{booking.numberOfAdults > 1 ? 's' : ''}
-                        {booking.numberOfChildren > 0 && `, ${booking.numberOfChildren} enfant${booking.numberOfChildren > 1 ? 's' : ''}`}
+                        {t('reservations.travelers.adult', { count: booking.numberOfAdults })}
+                        {booking.numberOfChildren > 0 && `, ${t('reservations.travelers.child', { count: booking.numberOfChildren })}`}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
@@ -458,9 +458,9 @@ function ClientReservation() {
         <div className="fixed bottom-16 md:bottom-0 left-0 right-0 md:left-auto md:right-auto md:relative bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-3 shadow-lg md:shadow-sm z-10 flex-shrink-0">
           <div className="flex items-center justify-between max-w-full">
             <div className="text-sm text-gray-700 dark:text-gray-300">
-              Affichage: <span className="font-semibold">{pageSize}</span> / page
+              {t('reservations.pagination.showing')} <span className="font-semibold">{pageSize}</span> {t('reservations.pagination.perPage')}
               <span className="hidden md:inline ml-2 text-gray-500 dark:text-gray-400">
-                ({filteredBookings.length} résultat{filteredBookings.length > 1 ? 's' : ''})
+                ({filteredBookings.length} {t(`reservations.pagination.${filteredBookings.length > 1 ? 'results_plural' : 'results'}`)})
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -483,7 +483,7 @@ function ClientReservation() {
                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                 disabled={safeCurrentPage === 1}
                 className="p-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                title="Précédent"
+                title={t('reservations.pagination.previous')}
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -491,7 +491,7 @@ function ClientReservation() {
                 onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                 disabled={safeCurrentPage === totalPages}
                 className="p-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                title="Suivant"
+                title={t('reservations.pagination.next')}
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -519,14 +519,14 @@ function ClientReservation() {
               className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-t-lg"
             >
               <Edit className="w-4 h-4" />
-              Modifier
+              {t('reservations.actions.edit')}
             </button>
             <button
               onClick={() => requestDeleteOne(openDropdown)}
               className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors rounded-b-lg"
             >
               <Trash2 className="w-4 h-4" />
-              Supprimer
+              {t('reservations.actions.delete')}
             </button>
           </div>
         </>

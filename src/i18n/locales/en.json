@@ -51,7 +51,215 @@
   },
   "entities": {
     "booking": "Booking",
-    "bookings": "Bookings"
+    "bookings": "Bookings",
+    "ticket": "ticket",
+    "tickets": "tickets",
+    "consultation": "consultation",
+    "consultations": "consultations"
+  },
+  "reservations": {
+    "title": "My Reservations",
+    "search": "Search...",
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noReservations": "No reservations found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "package": "Package",
+      "destination": "Destination",
+      "travelDate": "Travel date",
+      "travelers": "Travelers",
+      "totalPrice": "Total price",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "status": {
+      "confirmed": "CONFIRMED",
+      "pending": "PENDING",
+      "cancelled": "CANCELLED"
+    },
+    "travelers": {
+      "adult_one": "{{count}} adult",
+      "adult_other": "{{count}} adults",
+      "child_one": "{{count}} child",
+      "child_other": "{{count}} children"
+    },
+    "duration": "{{count}} days",
+    "pagination": {
+      "showing": "Showing:",
+      "perPage": "/ page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "messages": {
+      "loadError": "Error loading reservations",
+      "deleteSuccess": "Deleted successfully",
+      "deleteError": "Error while deleting"
+    },
+    "edit": {
+      "title": "Edit reservation",
+      "packageInfo": "Package information",
+      "fields": {
+        "travelDate": "Travel date",
+        "adults": "Adults",
+        "children": "Children",
+        "totalPrice": "Total price"
+      },
+      "status": "Status:",
+      "saving": "Saving...",
+      "save": "Save",
+      "cancel": "Cancel",
+      "loadError": "Error loading reservation",
+      "updateSuccess": "Update successful",
+      "updateError": "Error updating reservation"
+    }
+  },
+  "flightTickets": {
+    "title": "My Flight Tickets",
+    "search": "Search...",
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noTickets": "No flight tickets found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "flight": "Flight",
+      "departure": "Departure",
+      "arrival": "Arrival",
+      "class": "Class",
+      "price": "Price",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "seatClass": {
+      "economy": "Economy",
+      "business": "Business",
+      "first": "First Class"
+    },
+    "status": {
+      "paid": "Paid",
+      "reserved": "Reserved",
+      "cancelled": "Cancelled"
+    },
+    "pagination": {
+      "showing": "Showing:",
+      "perPage": "/ page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "messages": {
+      "loadError": "Error loading tickets",
+      "cancelSuccess": "Ticket cancelled successfully",
+      "cancelError": "Failed to cancel ticket",
+      "deleteSuccess": "Ticket deleted successfully",
+      "deleteError": "Failed to delete ticket",
+      "deleteManySuccess": "Tickets deleted successfully",
+      "deleteManyError": "Failed to delete tickets"
+    },
+    "edit": {
+      "title": "Edit Ticket",
+      "ticketInfo": "Ticket Information",
+      "fields": {
+        "departureDateTime": "Departure date and time",
+        "arrivalDateTime": "Arrival date and time",
+        "seatClass": "Seat class",
+        "ticketPrice": "Ticket price"
+      },
+      "status": "Status:",
+      "restrictionWarning": "⚠️ Only RESERVED tickets can be modified",
+      "saving": "Saving...",
+      "save": "Save",
+      "cancel": "Cancel",
+      "loadError": "Error loading ticket",
+      "loadErrorToast": "Unable to load ticket",
+      "updateSuccess": "Ticket updated successfully",
+      "updateError": "Error updating ticket"
+    }
+  },
+  "consultations": {
+    "title": "My Consultations",
+    "search": "Search...",
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noConsultations": "No consultations found",
+    "modifySearch": "Try modifying your search",
+    "noAgent": "No agent assigned",
+    "minutes": "min",
+    "columns": {
+      "subject": "Subject",
+      "agent": "Agent",
+      "consultationDate": "Consultation date",
+      "duration": "Duration",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "pagination": {
+      "showing": "Showing:",
+      "perPage": "/ page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "messages": {
+      "loadError": "Error loading consultations",
+      "cancelSuccess": "Consultation cancelled successfully",
+      "cancelError": "Failed to cancel consultation",
+      "deleteSuccess": "Consultation deleted successfully",
+      "deleteError": "Failed to delete consultation"
+    },
+    "edit": {
+      "title": "Edit Consultation",
+      "agent": "Agent",
+      "status": "Status",
+      "fields": {
+        "subject": "Subject",
+        "description": "Description",
+        "date": "Date",
+        "time": "Time",
+        "duration": "Duration"
+      },
+      "placeholders": {
+        "subject": "Consultation subject",
+        "description": "Describe your request..."
+      },
+      "hints": {
+        "duration": "Minimum 15 minutes, in 15-minute increments"
+      },
+      "errors": {
+        "subjectRequired": "Subject is required",
+        "dateTimeRequired": "Date and time are required"
+      },
+      "saving": "Saving...",
+      "save": "Save",
+      "cancel": "Cancel",
+      "loadError": "Error loading consultation",
+      "updateSuccess": "Consultation updated successfully",
+      "updateError": "Error updating consultation"
+    }
   }
-  }
+}
 

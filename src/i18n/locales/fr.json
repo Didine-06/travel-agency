@@ -51,7 +51,11 @@
   },
   "entities": {
     "booking": "réservation",
-    "bookings": "réservations"
+    "bookings": "réservations",
+    "ticket": "billet",
+    "tickets": "billets",
+    "consultation": "consultation",
+    "consultations": "consultations"
   },
   "booking": {
     "details": "Détails de la réservation",
@@ -63,6 +67,210 @@
       "pending": "En attente",
       "confirmed": "Confirmé",
       "canceled": "Annulé"
+    }
+  },
+  "reservations": {
+    "title": "Mes Réservations",
+    "search": "Rechercher...",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noReservations": "Aucune réservation trouvée",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "package": "Package",
+      "destination": "Destination",
+      "travelDate": "Date de voyage",
+      "travelers": "Voyageurs",
+      "totalPrice": "Prix total",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "status": {
+      "confirmed": "CONFIRMED",
+      "pending": "PENDING",
+      "cancelled": "CANCELLED"
+    },
+    "travelers": {
+      "adult_one": "{{count}} adulte",
+      "adult_other": "{{count}} adultes",
+      "child_one": "{{count}} enfant",
+      "child_other": "{{count}} enfants"
+    },
+    "duration": "{{count}} jours",
+    "pagination": {
+      "showing": "Affichage:",
+      "perPage": "/ page",
+      "results": "résultat",
+      "results_plural": "résultats",
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "messages": {
+      "loadError": "Erreur lors du chargement des réservations",
+      "deleteSuccess": "Deleted successfully",
+      "deleteError": "Error while deleting"
+    },
+    "edit": {
+      "title": "Modifier réservation",
+      "packageInfo": "Informations du package",
+      "fields": {
+        "travelDate": "Date de voyage",
+        "adults": "Adultes",
+        "children": "Enfants",
+        "totalPrice": "Prix total"
+      },
+      "status": "Statut:",
+      "saving": "Enregistrement...",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "loadError": "Erreur lors du chargement de la réservation",
+      "updateSuccess": "Mise à jour effectuée",
+      "updateError": "Erreur lors de la mise à jour"
+    }
+  },
+  "flightTickets": {
+    "title": "Mes Billets d'Avion",
+    "search": "Rechercher...",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noTickets": "Aucun billet d'avion trouvé",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "flight": "Vol",
+      "departure": "Départ",
+      "arrival": "Arrivée",
+      "class": "Classe",
+      "price": "Prix",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
+    },
+    "seatClass": {
+      "economy": "Économique",
+      "business": "Affaires",
+      "first": "Première classe"
+    },
+    "status": {
+      "paid": "Payé",
+      "reserved": "Réservé",
+      "cancelled": "Annulé"
+    },
+    "pagination": {
+      "showing": "Affichage:",
+      "perPage": "/ page",
+      "results": "résultat",
+      "results_plural": "résultats",
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "messages": {
+      "loadError": "Erreur lors du chargement des billets",
+      "cancelSuccess": "Billet annulé avec succès",
+      "cancelError": "Échec de l'annulation du billet",
+      "deleteSuccess": "Billet supprimé avec succès",
+      "deleteError": "Échec de la suppression du billet",
+      "deleteManySuccess": "Billets supprimés avec succès",
+      "deleteManyError": "Échec de la suppression des billets"
+    },
+    "edit": {
+      "title": "Modifier le billet",
+      "ticketInfo": "Informations du billet",
+      "fields": {
+        "departureDateTime": "Date et heure de départ",
+        "arrivalDateTime": "Date et heure d'arrivée",
+        "seatClass": "Classe de siège",
+        "ticketPrice": "Prix du billet"
+      },
+      "status": "Statut:",
+      "restrictionWarning": "⚠️ Seuls les billets RESERVED peuvent être modifiés",
+      "saving": "Enregistrement...",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "loadError": "Erreur lors du chargement du billet",
+      "loadErrorToast": "Impossible de charger le billet",
+      "updateSuccess": "Billet modifié avec succès",
+      "updateError": "Erreur lors de la modification"
+    }
+  },
+  "consultations": {
+    "title": "Mes Consultations",
+    "search": "Rechercher...",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noConsultations": "Aucune consultation trouvée",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "noAgent": "Aucun agent assigné",
+    "minutes": "min",
+    "columns": {
+      "subject": "Sujet",
+      "agent": "Agent",
+      "consultationDate": "Date de consultation",
+      "duration": "Durée",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
+    },
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmé",
+      "cancelled": "Annulé",
+      "completed": "Terminé"
+    },
+    "pagination": {
+      "showing": "Affichage:",
+      "perPage": "/ page",
+      "results": "résultat",
+      "results_plural": "résultats",
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "messages": {
+      "loadError": "Erreur lors du chargement des consultations",
+      "cancelSuccess": "Consultation annulée avec succès",
+      "cancelError": "Échec de l'annulation de la consultation",
+      "deleteSuccess": "Consultation supprimée avec succès",
+      "deleteError": "Échec de la suppression de la consultation"
+    },
+    "edit": {
+      "title": "Modifier la consultation",
+      "agent": "Agent",
+      "status": "Statut",
+      "fields": {
+        "subject": "Sujet",
+        "description": "Description",
+        "date": "Date",
+        "time": "Heure",
+        "duration": "Durée"
+      },
+      "placeholders": {
+        "subject": "Sujet de la consultation",
+        "description": "Décrivez votre demande..."
+      },
+      "hints": {
+        "duration": "Minimum 15 minutes, par paliers de 15 minutes"
+      },
+      "errors": {
+        "subjectRequired": "Le sujet est requis",
+        "dateTimeRequired": "La date et l'heure sont requises"
+      },
+      "saving": "Enregistrement...",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "loadError": "Erreur lors du chargement de la consultation",
+      "updateSuccess": "Consultation modifiée avec succès",
+      "updateError": "Erreur lors de la modification"
     }
   }
 }

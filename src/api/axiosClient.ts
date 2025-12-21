@@ -53,17 +53,12 @@ axiosClient.interceptors.response.use(
         localStorage.removeItem('accessToken');
         localStorage.removeItem('user');
         window.location.href = '/login';
+        return Promise.reject(error);
       }
       
-      // If backend returned error with isError flag
-      if (responseData?.isError) {
-        const errorMessage = responseData.error || responseData.message || error.response.statusText;
-        throw new ApiError(errorMessage, responseData.errorDetails);
-      }
-      
-      // Fallback error message
-      const message = responseData?.message || error.response.statusText;
-      throw new Error(message);
+      // Pour les erreurs 400 et autres, retourner la réponse au lieu de lancer une exception
+      // Cela permet au code appelant de gérer l'erreur normalement
+      return { data: responseData };
     } else if (error.request) {
       // Request made but no response
       throw new Error('No response from server. Please check your connection.');

@@ -4,64 +4,80 @@ import { toast } from "sonner";
 import { useTranslation } from 'react-i18next';
 
 import { api } from "../../../api";
-import type { Booking } from "../../../types/booking-models";
-import { useReservationContext } from "./ReservationContext";
+import type { Consultation } from "../../../types/consultation-models";
+import { useConsultationContext } from "./ConsultationContext";
 import { X } from "lucide-react";
 
-export default function EditBooking() {
+export default function EditConsultation() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { reloadBookings } = useReservationContext();
+  const { reloadConsultations } = useConsultationContext();
 
-  const bookingId = id ?? "";
+  const consultationId = id ?? "";
 
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
-  const [booking, setBooking] = useState<Booking | null>(null);
+  const [consultation, setConsultation] = useState<Consultation | null>(null);
 
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
 
   const [form, setForm] = useState({
-    numberOfAdults: 1,
-    numberOfChildren: 0,
-    totalPrice: 0,
-    travelDate: "",
+    subject: "",
+    description: "",
+    consultationDate: "",
+    consultationTime: "",
+    duration: 30,
   });
 
   const close = async () => {
     setOpen(false);
     setTimeout(async () => {
       setMounted(false);
-      await reloadBookings();
-      navigate("/client/reservations");
+      await reloadConsultations();
+      navigate("/client/consultations");
     }, 220);
   };
 
   const submit = async () => {
-    if (!bookingId) return;
+    if (!consultationId) return;
+    
+    // Validate required fields
+    if (!form.subject.trim()) {
+      setError(t('consultations.edit.errors.subjectRequired'));
+      toast.error(t('consultations.edit.errors.subjectRequired'));
+      return;
+    }
+
+    if (!form.consultationDate || !form.consultationTime) {
+      setError(t('consultations.edit.errors.dateTimeRequired'));
+      toast.error(t('consultations.edit.errors.dateTimeRequired'));
+      return;
+    }
+
     try {
       setBusy(true);
       setError("");
 
-      const travelDateIso = form.travelDate
-        ? new Date(`${form.travelDate}T00:00:00.000Z`).toISOString()
-        : new Date().toISOString();
+      // Combine date and time into ISO string
+      const consultationDateTimeIso = new Date(
+        `${form.consultationDate}T${form.consultationTime}:00.000Z`
+      ).toISOString();
 
-      const response = await api.bookings.updateMyBooking(bookingId, {
-        numberOfAdults: Number(form.numberOfAdults),
-        numberOfChildren: Number(form.numberOfChildren),
-        totalPrice: Number(form.totalPrice),
-        travelDate: travelDateIso,
+      const response = await api.consultations.updateMyConsultation(consultationId, {
+        subject: form.subject,
+        description: form.description || undefined,
+        consultationDate: consultationDateTimeIso,
+        duration: Number(form.duration),
       });
 
-      toast.success(response.message || t('reservations.edit.updateSuccess'));
+      toast.success(response.message || t('consultations.edit.updateSuccess'));
       close();
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : t('reservations.edit.updateError');
+        err instanceof Error ? err.message : t('consultations.edit.updateError');
       setError(message);
       toast.error(message);
     } finally {
@@ -70,7 +86,7 @@ export default function EditBooking() {
   };
 
   useEffect(() => {
-    if (!bookingId) return;
+    if (!consultationId) return;
 
     setMounted(true);
     const openTimer = setTimeout(() => setOpen(true), 10);
@@ -80,35 +96,40 @@ export default function EditBooking() {
       try {
         setLoading(true);
         setError("");
-        const response = await api.bookings.getMyBookingById(bookingId);
+        const response = await api.consultations.getMyConsultationById(consultationId);
         if (cancelled) return;
 
         if (!response.isSuccess || !response.data) {
           setError(
-            response.message || t('reservations.edit.loadError')
+            response.message || t('consultations.edit.loadError')
           );
-          setBooking(null);
+          setConsultation(null);
           return;
         }
 
-        const bookingData = response.data;
-        setBooking(bookingData);
+        const consultationData = response.data;
+        setConsultation(consultationData);
+
+        // Parse ISO date to date and time inputs
+        const consultationDateTime = new Date(consultationData.consultationDate);
+        const dateStr = consultationDateTime.toISOString().slice(0, 10);
+        const timeStr = consultationDateTime.toISOString().slice(11, 16);
+
         setForm({
-          numberOfAdults: bookingData.numberOfAdults ?? 1,
-          numberOfChildren: bookingData.numberOfChildren ?? 0,
-          totalPrice: Number(bookingData.totalPrice ?? 0),
-          travelDate: bookingData.travelDate
-            ? new Date(bookingData.travelDate).toISOString().slice(0, 10)
-            : "",
+          subject: consultationData.subject || "",
+          description: consultationData.description || "",
+          consultationDate: dateStr,
+          consultationTime: timeStr,
+          duration: consultationData.duration ?? 30,
         });
       } catch (err) {
         if (cancelled) return;
         const message =
           err instanceof Error
             ? err.message
-            : t('reservations.edit.loadError');
+            : t('consultations.edit.loadError');
         setError(message);
-        setBooking(null);
+        setConsultation(null);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -120,7 +141,7 @@ export default function EditBooking() {
       clearTimeout(openTimer);
       cancelled = true;
     };
-  }, [bookingId]);
+  }, [consultationId, t]);
 
   if (!mounted) return null;
 
@@ -142,15 +163,19 @@ export default function EditBooking() {
         <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              {t('reservations.edit.title')}
+              {t('consultations.edit.title')}
             </h2>
           </div>
-          <X
+          <button
             onClick={() => {
               if (busy) return;
               close();
             }}
-          />
+            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors text-gray-700 dark:text-gray-300"
+            disabled={busy}
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -166,17 +191,22 @@ export default function EditBooking() {
             </div>
           ) : (
             <>
-              {booking && (
+              {consultation && (
                 <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/40">
                   <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {booking.package.title}
+                    {consultation.subject}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {booking.package.destination.city},{" "}
-                    {booking.package.destination.country}
-                  </div>
+                  {consultation.agent ? (
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {t('consultations.edit.agent')}: {consultation.agent.user?.firstName} {consultation.agent.user?.lastName}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-gray-400 dark:text-gray-500 mt-1 italic">
+                      {t('consultations.noAgent')}
+                    </div>
+                  )}
                   <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    {t('reservations.edit.status')} {booking.status}
+                    {t('consultations.edit.status')}: {consultation.status}
                   </div>
                 </div>
               )}
@@ -184,69 +214,84 @@ export default function EditBooking() {
               <div className="grid grid-cols-1 gap-4">
                 <label className="block">
                   <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {t('reservations.edit.fields.travelDate')}
+                    {t('consultations.edit.fields.subject')} <span className="text-red-500">*</span>
                   </span>
                   <input
-                    type="date"
-                    value={form.travelDate}
+                    type="text"
+                    value={form.subject}
                     onChange={(e) =>
-                      setForm({ ...form, travelDate: e.target.value })
+                      setForm({ ...form, subject: e.target.value })
                     }
+                    placeholder={t('consultations.edit.placeholders.subject')}
                     className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('consultations.edit.fields.description')}
+                  </span>
+                  <textarea
+                    value={form.description}
+                    onChange={(e) =>
+                      setForm({ ...form, description: e.target.value })
+                    }
+                    placeholder={t('consultations.edit.placeholders.description')}
+                    rows={4}
+                    className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                   />
                 </label>
 
                 <div className="grid grid-cols-2 gap-3">
                   <label className="block">
                     <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {t('reservations.edit.fields.adults')}
+                      {t('consultations.edit.fields.date')} <span className="text-red-500">*</span>
                     </span>
                     <input
-                      type="number"
-                      min={1}
-                      value={form.numberOfAdults}
+                      type="date"
+                      value={form.consultationDate}
                       onChange={(e) =>
-                        setForm({
-                          ...form,
-                          numberOfAdults: Number(e.target.value),
-                        })
+                        setForm({ ...form, consultationDate: e.target.value })
                       }
                       className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
                     />
                   </label>
 
                   <label className="block">
                     <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {t('reservations.edit.fields.children')}
+                      {t('consultations.edit.fields.time')} <span className="text-red-500">*</span>
                     </span>
                     <input
-                      type="number"
-                      min={0}
-                      value={form.numberOfChildren}
+                      type="time"
+                      value={form.consultationTime}
                       onChange={(e) =>
-                        setForm({
-                          ...form,
-                          numberOfChildren: Number(e.target.value),
-                        })
+                        setForm({ ...form, consultationTime: e.target.value })
                       }
                       className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
                     />
                   </label>
                 </div>
 
                 <label className="block">
                   <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {t('reservations.edit.fields.totalPrice')}
+                    {t('consultations.edit.fields.duration')} ({t('consultations.minutes')})
                   </span>
                   <input
                     type="number"
-                    min={0}
-                    value={form.totalPrice}
+                    min={15}
+                    step={15}
+                    value={form.duration}
                     onChange={(e) =>
-                      setForm({ ...form, totalPrice: Number(e.target.value) })
+                      setForm({ ...form, duration: Number(e.target.value) })
                     }
                     className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {t('consultations.edit.hints.duration')}
+                  </p>
                 </label>
               </div>
             </>
@@ -259,7 +304,7 @@ export default function EditBooking() {
             disabled={busy || loading}
             className="px-4 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {busy ? t('reservations.edit.saving') : t('reservations.edit.save')}
+            {busy ? t('consultations.edit.saving') : t('consultations.edit.save')}
           </button>
 
           <button
@@ -270,7 +315,7 @@ export default function EditBooking() {
             className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             disabled={busy}
           >
-            {t('reservations.edit.cancel')}
+            {t('consultations.edit.cancel')}
           </button>
         </div>
       </div>

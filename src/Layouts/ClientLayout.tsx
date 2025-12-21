@@ -6,7 +6,7 @@ const ClientLayout = () => {
   const menuItems = [
     { path: '/client/dashboard', label: 'Dashboard' },
     { path: '/client/reservations', label: 'Bookings' },
-    { path: '/client/visas', label: 'Visas' },
+    { path: '/client/consultations', label: 'Consultations' },
     { path: '/client/planes', label: 'Planes' },
   ];
 

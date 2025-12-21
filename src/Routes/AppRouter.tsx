@@ -22,6 +22,9 @@ import ClientProfile from "../Pages/client/Profile";
 import ClientReservation from "../Pages/client/reservations/Reservation";
 import EditBooking from "../Pages/client/reservations/EditBooking";
 import ClientPlane from "../Pages/client/planes/Plane";
+import EditPlane from "../Pages/client/planes/EditPlane";
+import ClientConsultation from "../Pages/client/consultations/Consultation";
+import EditConsultation from "../Pages/client/consultations/EditConsultation";
 
 // Agent Pages
 import AgentDashboard from "../Pages/agent/Dashboard";
@@ -32,7 +35,6 @@ import AgentProfile from "../Pages/agent/Profile";
 import AdminDashboard from "../Pages/admin/Dashboard";
 import AdminUsers from "../Pages/admin/Users";
 import AdminProfile from "../Pages/admin/Profile";
-import EditPlane from "../Pages/client/planes/EditPlane";
 
 const AppRouter = () => {
   return (
@@ -64,11 +66,15 @@ const AppRouter = () => {
           <Route path=":id" element={<EditBooking />} />
         </Route>
 
+        {/* Consultations parent */}
+        <Route path="consultations" element={<ClientConsultation />}>
+          <Route path=":id" element={<EditConsultation />} />
+        </Route>
+
         <Route path="planes" element={<ClientPlane />} >
           <Route path=":id" element={<EditPlane />} />
         </Route>
         
-        <Route path="planes" element={<ClientPlane />} />
         <Route path="profile" element={<ClientProfile />} />
       </Route>
 

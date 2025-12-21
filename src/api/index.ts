@@ -18,6 +18,11 @@ import axiosClient from "./axiosClient";
 import type { PackageResponse } from "../types/Package-models";
 import type { Booking } from "../types/booking-models";
 import type { FlightTicket, SeatClass } from "../types/flight-ticket-models";
+import type {
+  Consultation,
+  UpdateConsultationDto,
+  CancelConsultationDto,
+} from "../types/consultation-models";
 
 export type UpdateMyBookingDto = {
   numberOfAdults: number;
@@ -296,6 +301,67 @@ export const api = {
     deleteMyTickets: async (ids: string[]): Promise<ApiResponse<void>> => {
       const response = await axiosClient.delete<ApiResponse<void>>(
         `/flight-tickets/my-tickets`,
+        { data: { ids } }
+      );
+      return response.data;
+    },
+  },
+
+  consultations: {
+    // Get all consultations for the authenticated client
+    getMyConsultations: async (): Promise<ApiResponse<Consultation[]>> => {
+      const response = await axiosClient.get<ApiResponse<Consultation[]>>(
+        "/consultations/my-consultations"
+      );
+      return response.data;
+    },
+
+    // Get a specific consultation by ID
+    getMyConsultationById: async (
+      id: string
+    ): Promise<ApiResponse<Consultation>> => {
+      const response = await axiosClient.get<ApiResponse<Consultation>>(
+        `/consultations/my-consultations/${id}`
+      );
+      return response.data;
+    },
+
+    // Update a consultation (only PENDING or CONFIRMED)
+    updateMyConsultation: async (
+      id: string,
+      data: UpdateConsultationDto
+    ): Promise<ApiResponse<Consultation>> => {
+      const response = await axiosClient.patch<ApiResponse<Consultation>>(
+        `/consultations/my-consultations/${id}`,
+        data
+      );
+      return response.data;
+    },
+
+    // Cancel a consultation with reason
+    cancelMyConsultation: async (
+      id: string,
+      data: CancelConsultationDto
+    ): Promise<ApiResponse<Consultation>> => {
+      const response = await axiosClient.patch<ApiResponse<Consultation>>(
+        `/consultations/my-consultations/${id}/cancel`,
+        data
+      );
+      return response.data;
+    },
+
+    // Delete a consultation
+    deleteMyConsultation: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/consultations/my-consultations/${id}`
+      );
+      return response.data;
+    },
+
+    // Delete multiple consultations at once
+    deleteMyConsultations: async (ids: string[]): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/consultations/my-consultations`,
         { data: { ids } }
       );
       return response.data;

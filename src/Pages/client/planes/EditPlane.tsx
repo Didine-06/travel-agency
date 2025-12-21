@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { X, Calendar, DollarSign, Loader2 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../../api';
 import type { FlightTicket, SeatClass } from '../../../types/flight-ticket-models';
 import { toast } from 'sonner';
@@ -9,6 +10,7 @@ import { PlaneContext } from './PlaneContext';
 function EditPlane() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { reloadTickets } = useContext(PlaneContext);
 
   const [ticket, setTicket] = useState<FlightTicket | null>(null);
@@ -16,12 +18,21 @@ function EditPlane() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     departureDateTime: '',
     arrivalDateTime: '',
     seatClass: 'ECONOMY' as SeatClass,
     ticketPrice: '',
   });
+
+  useEffect(() => {
+    setMounted(true);
+    const timer = setTimeout(() => setOpen(true), 10);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -43,15 +54,20 @@ function EditPlane() {
         });
       }
     } catch (err) {
-      setError('Erreur lors du chargement du billet');
-      toast.error('Impossible de charger le billet');
+      setError(t('flightTickets.edit.loadError'));
+      toast.error(t('flightTickets.edit.loadErrorToast'));
     } finally {
       setLoading(false);
     }
   };
 
   const handleClose = () => {
-    navigate('/client/planes');
+    setOpen(false);
+    setTimeout(() => {
+      setMounted(false);
+      reloadTickets();
+      navigate('/client/planes');
+    }, 220);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,12 +84,12 @@ function EditPlane() {
       });
 
       if (response.isSuccess) {
-        toast.success(response.message || 'Billet modifié avec succès');
+        toast.success(response.message || t('flightTickets.edit.updateSuccess'));
         reloadTickets();
         handleClose();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur lors de la modification';
+      const message = err instanceof Error ? err.message : t('flightTickets.edit.updateError');
       setError(message);
       toast.error(message);
     } finally {
@@ -86,166 +102,168 @@ function EditPlane() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  if (!mounted) return null;
+
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-40"
-        onClick={handleClose}
+        className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-200 ${
+          open ? "opacity-100" : "opacity-0"
+        }`}
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full md:w-[500px] bg-white dark:bg-gray-800 shadow-xl z-50 overflow-y-auto">
+      <div
+        className={`fixed top-0 right-0 h-full w-[500px] max-w-[100vw] bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700 z-50 flex flex-col transform transition-transform duration-200 ease-out ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+        role="dialog"
+        aria-modal="true"
+      >
         {/* Header */}
-        <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between z-10">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-            Modifier le billet
-          </h2>
+        <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {t('flightTickets.edit.title')}
+            </h2>
+          </div>
           <button
-            onClick={handleClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            onClick={() => {
+              if (saving) return;
+              handleClose();
+            }}
+            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+            disabled={saving}
           >
             <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-            </div>
-          ) : error ? (
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {error && (
             <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
               {error}
             </div>
+          )}
+
+          {loading ? (
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              {t('common.loading')}
+            </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <>
               {/* Ticket Info */}
               {ticket && (
-                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-2">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    <span className="font-medium">Vol:</span> {ticket.booking?.package?.title || 'N/A'}
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    <span className="font-medium">Destination:</span> {ticket.booking?.package?.destination?.city || 'N/A'}
-                  </p>
-                  <p className="text-sm">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      ticket.status === 'PAID' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
-                      ticket.status === 'RESERVED' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                      'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                    }`}>
-                      {ticket.status}
-                    </span>
-                  </p>
+                <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/40">
+                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {ticket.booking?.package?.title || 'N/A'}
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {ticket.booking?.package?.destination?.city || 'N/A'}
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {t('flightTickets.edit.status')} {ticket.status}
+                  </div>
                   {ticket.status !== 'RESERVED' && (
-                    <p className="text-xs text-red-600 dark:text-red-400 mt-2">
-                      ⚠️ Seuls les billets avec le statut RESERVED peuvent être modifiés
-                    </p>
+                    <div className="text-xs text-red-600 dark:text-red-400 mt-2">
+                      {t('flightTickets.edit.restrictionWarning')}
+                    </div>
                   )}
                 </div>
               )}
 
-              {/* Departure DateTime */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-1" />
-                  Date et heure de départ
+              <div className="grid grid-cols-1 gap-4">
+                {/* Departure DateTime */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('flightTickets.edit.fields.departureDateTime')}
+                  </span>
+                  <input
+                    type="datetime-local"
+                    name="departureDateTime"
+                    value={formData.departureDateTime}
+                    onChange={handleChange}
+                    disabled={ticket?.status !== 'RESERVED'}
+                    className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
                 </label>
-                <input
-                  type="datetime-local"
-                  name="departureDateTime"
-                  value={formData.departureDateTime}
-                  onChange={handleChange}
-                  required
-                  disabled={ticket?.status !== 'RESERVED'}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                />
-              </div>
 
-              {/* Arrival DateTime */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-1" />
-                  Date et heure d'arrivée
+                {/* Arrival DateTime */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('flightTickets.edit.fields.arrivalDateTime')}
+                  </span>
+                  <input
+                    type="datetime-local"
+                    name="arrivalDateTime"
+                    value={formData.arrivalDateTime}
+                    onChange={handleChange}
+                    disabled={ticket?.status !== 'RESERVED'}
+                    className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
                 </label>
-                <input
-                  type="datetime-local"
-                  name="arrivalDateTime"
-                  value={formData.arrivalDateTime}
-                  onChange={handleChange}
-                  required
-                  disabled={ticket?.status !== 'RESERVED'}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                />
-              </div>
 
-              {/* Seat Class */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Classe de siège
+                {/* Seat Class */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('flightTickets.edit.fields.seatClass')}
+                  </span>
+                  <select
+                    name="seatClass"
+                    value={formData.seatClass}
+                    onChange={handleChange}
+                    disabled={ticket?.status !== 'RESERVED'}
+                    className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <option value="ECONOMY">{t('flightTickets.seatClass.economy')}</option>
+                    <option value="BUSINESS">{t('flightTickets.seatClass.business')}</option>
+                    <option value="FIRST">{t('flightTickets.seatClass.first')}</option>
+                  </select>
                 </label>
-                <select
-                  name="seatClass"
-                  value={formData.seatClass}
-                  onChange={handleChange}
-                  required
-                  disabled={ticket?.status !== 'RESERVED'}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <option value="ECONOMY">Économique</option>
-                  <option value="BUSINESS">Affaires</option>
-                  <option value="FIRST">Première</option>
-                </select>
-              </div>
 
-              {/* Ticket Price */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  <DollarSign className="w-4 h-4 inline mr-1" />
-                  Prix du billet
+                {/* Ticket Price */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('flightTickets.edit.fields.ticketPrice')}
+                  </span>
+                  <input
+                    type="number"
+                    name="ticketPrice"
+                    min="0"
+                    step="0.01"
+                    value={formData.ticketPrice}
+                    onChange={handleChange}
+                    disabled={ticket?.status !== 'RESERVED'}
+                    className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
                 </label>
-                <input
-                  type="number"
-                  name="ticketPrice"
-                  value={formData.ticketPrice}
-                  onChange={handleChange}
-                  required
-                  min="0"
-                  step="0.01"
-                  disabled={ticket?.status !== 'RESERVED'}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  placeholder="500.00"
-                />
               </div>
-
-              {/* Actions */}
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                >
-                  Annuler
-                </button>
-                <button
-                  type="submit"
-                  disabled={saving || ticket?.status !== 'RESERVED'}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
-                >
-                  {saving ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Enregistrement...
-                    </>
-                  ) : (
-                    'Enregistrer'
-                  )}
-                </button>
-              </div>
-            </form>
+            </>
           )}
+        </div>
+
+        {/* Footer Actions */}
+        <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-start gap-3">
+          <button
+            onClick={handleSubmit}
+            disabled={saving || loading || ticket?.status !== 'RESERVED'}
+            className="px-4 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {saving ? t('flightTickets.edit.saving') : t('flightTickets.edit.save')}
+          </button>
+
+          <button
+            onClick={() => {
+              if (saving) return;
+              handleClose();
+            }}
+            className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            disabled={saving}
+          >
+            {t('flightTickets.edit.cancel')}
+          </button>
         </div>
       </div>
     </>
