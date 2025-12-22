@@ -49,6 +49,46 @@
     "plane": "Flights",
     "visa": "Visas"
   },
+  "dashboard": {
+    "welcome": "Hello",
+    "subtitle": "Welcome to your dashboard",
+    "refresh": "Refresh",
+    "lastUpdate": "Last update",
+    "loading": "Loading your dashboard...",
+    "error": {
+      "title": "Loading Error",
+      "message": "Unable to load dashboard data. Please try again.",
+      "retry": "Retry"
+    },
+    "stats": {
+      "totalBookings": "Total Bookings",
+      "totalConsultations": "Total Consultations",
+      "totalTickets": "Total Tickets",
+      "ticketsPaid": "Tickets Paid",
+      "confirmed": "confirmed",
+      "pending": "pending",
+      "paid": "paid"
+    },
+    "charts": {
+      "spending": "Spending over 6 months",
+      "ticketsPayment": "Paid vs Unpaid Tickets",
+      "bookingsStatus": "Bookings Distribution"
+    },
+    "nextAppointment": {
+      "title": "Next Appointment",
+      "noAppointment": "No appointment scheduled",
+      "subject": "Subject",
+      "dateTime": "Date and time",
+      "agent": "Agent",
+      "viewDetails": "View details",
+      "modify": "Modify",
+      "status": {
+        "confirmed": "Confirmed",
+        "pending": "Pending",
+        "cancelled": "Cancelled"
+      }
+    }
+  },
   "entities": {
     "booking": "Booking",
     "bookings": "Bookings",

@@ -49,6 +49,46 @@
     "plane": "Vols",
     "visa": "Visas"
   },
+  "dashboard": {
+    "welcome": "Bonjour",
+    "subtitle": "Bienvenue sur votre tableau de bord",
+    "refresh": "Actualiser",
+    "lastUpdate": "Dernière mise à jour",
+    "loading": "Chargement de votre dashboard...",
+    "error": {
+      "title": "Erreur de chargement",
+      "message": "Impossible de charger les données du dashboard. Veuillez réessayer.",
+      "retry": "Réessayer"
+    },
+    "stats": {
+      "totalBookings": "Total Réservations",
+      "totalConsultations": "Total Consultations",
+      "totalTickets": "Total Billets",
+      "ticketsPaid": "Billets Payés",
+      "confirmed": "confirmées",
+      "pending": "en attente",
+      "paid": "payés"
+    },
+    "charts": {
+      "spending": "Dépenses sur 6 mois",
+      "ticketsPayment": "Billets Payés vs Non Payés",
+      "bookingsStatus": "Répartition des Réservations"
+    },
+    "nextAppointment": {
+      "title": "Prochain Rendez-vous",
+      "noAppointment": "Aucun rendez-vous prévu",
+      "subject": "Sujet",
+      "dateTime": "Date et heure",
+      "agent": "Agent",
+      "viewDetails": "Voir détails",
+      "modify": "Modifier",
+      "status": {
+        "confirmed": "Confirmé",
+        "pending": "En attente",
+        "cancelled": "Annulé"
+      }
+    }
+  },
   "entities": {
     "booking": "réservation",
     "bookings": "réservations",

@@ -1,1 +1,56 @@
-{}
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق"
+  },
+  "sidebar": {
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "bookings": "الحجوزات",
+    "profile": "الملف الشخصي",
+    "plane": "الرحلات",
+    "visa": "التأشيرات"
+  },
+  "dashboard": {
+    "welcome": "مرحبا",
+    "subtitle": "مرحبا بك في لوحة التحكم",
+    "refresh": "تحديث",
+    "lastUpdate": "آخر تحديث",
+    "loading": "تحميل لوحة التحكم...",
+    "error": {
+      "title": "خطأ في التحميل",
+      "message": "تعذر تحميل بيانات لوحة التحكم. يرجى المحاولة مرة أخرى.",
+      "retry": "إعادة المحاولة"
+    },
+    "stats": {
+      "totalBookings": "إجمالي الحجوزات",
+      "totalConsultations": "إجمالي الاستشارات",
+      "totalTickets": "إجمالي التذاكر",
+      "ticketsPaid": "التذاكر المدفوعة",
+      "confirmed": "مؤكدة",
+      "pending": "قيد الانتظار",
+      "paid": "مدفوعة"
+    },
+    "charts": {
+      "spending": "النفقات على مدى 6 أشهر",
+      "ticketsPayment": "التذاكر المدفوعة مقابل غير المدفوعة",
+      "bookingsStatus": "توزيع الحجوزات"
+    },
+    "nextAppointment": {
+      "title": "الموعد القادم",
+      "noAppointment": "لا يوجد موعد مجدول",
+      "subject": "الموضوع",
+      "dateTime": "التاريخ والوقت",
+      "agent": "الوكيل",
+      "viewDetails": "عرض التفاصيل",
+      "modify": "تعديل",
+      "status": {
+        "confirmed": "مؤكد",
+        "pending": "قيد الانتظار",
+        "cancelled": "ملغى"
+      }
+    }
+  }
+}

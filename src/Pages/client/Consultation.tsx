@@ -69,23 +69,23 @@ function ClientConsultation() {
   }, [filteredConsultations, selectedConsultations]);
 
   const loadConsultations = async (silent = false) => {
-    try {
-      if (!silent) setLoading(true);
-      const response = await api.consultations.getMyConsultations();
-      if (response.isSuccess && response.data) {
-        const consultationsData = Array.isArray(response.data) ? response.data : [];
-        setConsultations(consultationsData);
-        setFilteredConsultations(consultationsData);
-      } else {
-        setConsultations([]);
-        setFilteredConsultations([]);
-      }
-    } catch (err) {
-      setError(t('consultations.messages.loadError'));
+    if (!silent) setLoading(true);
+
+    const response = await api.consultations.getMyConsultations();
+
+    if (!silent) setLoading(false);
+
+    if (response.isSuccess && response.data) {
+      const consultationsData = Array.isArray(response.data) ? response.data : [];
+      setConsultations(consultationsData);
+      setFilteredConsultations(consultationsData);
+    } else {
       setConsultations([]);
       setFilteredConsultations([]);
-    } finally {
-      if (!silent) setLoading(false);
+      if (response?.message) {
+        setError(response.message);
+        toast.error(response.message);
+      }
     }
   };
 
@@ -145,69 +145,65 @@ function ClientConsultation() {
   };
 
   const deleteOne = async (id: string) => {
-    try {
-      setDeleteBusy(true);
-      const response = await api.consultations.deleteMyConsultation(id);
+    setDeleteBusy(true);
+
+    const response = await api.consultations.deleteMyConsultation(id);
+
+    setDeleteBusy(false);
+
+    if (response.isSuccess) {
+      const message = response?.message || t('consultations.messages.deleteSuccess');
+      toast.success(message);
       setSelectedConsultations(new Set());
       setConfirmDeleteOpen(false);
       setDeleteTargetIds([]);
-
-      if (response?.message) toast.success(response.message);
-      else toast.success(t('consultations.messages.deleteSuccess'));
-
       await loadConsultations();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : t('consultations.messages.deleteError');
-      setError(message);
-      toast.error(message);
-    } finally {
-      setDeleteBusy(false);
+    } else {
+      const errorMessage = response?.message || t('consultations.messages.deleteError');
+      toast.error(errorMessage);
     }
   };
 
   const deleteMany = async (ids: string[]) => {
-    try {
-      setDeleteBusy(true);
-      const response = await api.consultations.deleteMyConsultations(ids);
+    setDeleteBusy(true);
+
+    const response = await api.consultations.deleteMyConsultations(ids);
+
+    setDeleteBusy(false);
+
+    if (response.isSuccess) {
+      const message = response?.message || t('consultations.messages.deleteManySuccess');
+      toast.success(message);
       setSelectedConsultations(new Set());
       setConfirmDeleteOpen(false);
       setDeleteTargetIds([]);
-
-      if (response?.message) toast.success(response.message);
-      else toast.success(t('consultations.messages.deleteSuccess'));
-
       await loadConsultations();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : t('consultations.messages.deleteError');
-      setError(message);
-      toast.error(message);
-    } finally {
-      setDeleteBusy(false);
+    } else {
+      const errorMessage = response?.message || t('consultations.messages.deleteManyError');
+      toast.error(errorMessage);
     }
   };
 
   const cancelConsultation = async (reason: string) => {
     if (!cancelTargetId) return;
-    
-    try {
-      setCancelBusy(true);
-      const response = await api.consultations.cancelMyConsultation(cancelTargetId, {
-        cancellationReason: reason
-      });
 
-      setConfirmCancelOpen(false);
+    setCancelBusy(true);
+
+    const response = await api.consultations.cancelMyConsultation(cancelTargetId, {
+      cancellationReason: reason
+    });
+
+    setCancelBusy(false);
+
+    if (response.isSuccess) {
+      const message = response?.message || t('consultations.messages.cancelSuccess');
+      toast.success(message);
       setCancelTargetId(null);
-
-      if (response?.data) toast.success(t('consultations.messages.cancelSuccess'));
-      else toast.success(t('consultations.messages.cancelSuccess'));
-
+      setConfirmCancelOpen(false);
       await loadConsultations();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : t('consultations.messages.cancelError');
-      setError(message);
-      toast.error(message);
-    } finally {
-      setCancelBusy(false);
+    } else {
+      const errorMessage = response?.message || t('consultations.messages.cancelError');
+      toast.error(errorMessage);
     }
   };
 

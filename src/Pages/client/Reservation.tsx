@@ -56,17 +56,22 @@ function ClientReservation() {
   }, [filteredBookings, selectedBookings]);
 
   const loadBookings = async (silent = false) => {
-    try {
-      if (!silent) setLoading(true);
-      const response = await api.bookings.getMyBookings();
-      if (response.isSuccess && response.data) {
-        setBookings(response.data);
-        setFilteredBookings(response.data);
+    if (!silent) setLoading(true);
+
+    const response = await api.bookings.getMyBookings();
+
+    if (!silent) setLoading(false);
+
+    if (response.isSuccess && response.data) {
+      setBookings(response.data);
+      setFilteredBookings(response.data);
+    } else {
+      setBookings([]);
+      setFilteredBookings([]);
+      if (response?.message) {
+        setError(response.message);
+        toast.error(response.message);
       }
-    } catch (err) {
-      setError(t('reservations.messages.loadError'));
-    } finally {
-      if (!silent) setLoading(false);
     }
   };
 
@@ -120,44 +125,42 @@ function ClientReservation() {
   };
 
   const deleteOne = async (id: string) => {
-    try {
-      setDeleteBusy(true);
-      const response = await api.bookings.deleteMyBooking(id);
+    setDeleteBusy(true);
+
+    const response = await api.bookings.deleteMyBooking(id);
+
+    setDeleteBusy(false);
+
+    if (response.isSuccess) {
+      const message = response?.message || t('reservations.messages.deleteSuccess');
+      toast.success(message);
       setSelectedBookings(new Set());
       setConfirmDeleteOpen(false);
       setDeleteTargetIds([]);
-
-      if (response?.message) toast.success(response.message);
-      else toast.success(t('reservations.messages.deleteSuccess'));
-
       await loadBookings();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : t('reservations.messages.deleteError');
-      setError(message);
-      toast.error(message);
-    } finally {
-      setDeleteBusy(false);
+    } else {
+      const errorMessage = response?.message || t('reservations.messages.deleteError');
+      toast.error(errorMessage);
     }
   };
 
   const deleteMany = async (ids: string[]) => {
-    try {
-      setDeleteBusy(true);
-      const response = await api.bookings.deleteMyBookings(ids);
+    setDeleteBusy(true);
+
+    const response = await api.bookings.deleteMyBookings(ids);
+
+    setDeleteBusy(false);
+
+    if (response.isSuccess) {
+      const message = response?.message || t('reservations.messages.deleteManySuccess');
+      toast.success(message);
       setSelectedBookings(new Set());
       setConfirmDeleteOpen(false);
       setDeleteTargetIds([]);
-
-      if (response?.message) toast.success(response.message);
-      else toast.success(t('reservations.messages.deleteSuccess'));
-
       await loadBookings();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : t('reservations.messages.deleteError');
-      setError(message);
-      toast.error(message);
-    } finally {
-      setDeleteBusy(false);
+    } else {
+      const errorMessage = response?.message || t('reservations.messages.deleteManyError');
+      toast.error(errorMessage);
     }
   };
 
