@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   BarChart,
   Bar,
@@ -16,6 +17,8 @@ interface SpendingBarChartProps {
 }
 
 export const SpendingBarChart: React.FC<SpendingBarChartProps> = ({ data }) => {
+  const { t } = useTranslation();
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
@@ -30,7 +33,7 @@ export const SpendingBarChart: React.FC<SpendingBarChartProps> = ({ data }) => {
       transition={{ duration: 0.5, delay: 0.7 }}
       className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-gray-700"
     >
-      <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">💰 Dépenses sur 6 mois</h3>
+      <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">💰 {t('dashboard.charts.spending')}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <defs>

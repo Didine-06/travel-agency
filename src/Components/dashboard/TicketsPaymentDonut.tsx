@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface TicketsPaymentDonutProps {
@@ -15,9 +16,11 @@ export const TicketsPaymentDonut: React.FC<TicketsPaymentDonutProps> = ({
   totalPaid,
   totalUnpaid,
 }) => {
+  const { t } = useTranslation();
+
   const data = [
-    { name: 'Payés', value: totalPaid, percentage: paidPercentage, color: '#10b981' },
-    { name: 'Non payés', value: totalUnpaid, percentage: unpaidPercentage, color: '#f59e0b' },
+    { name: t('dashboard.status.paid'), value: totalPaid, percentage: paidPercentage, color: '#10b981' },
+    { name: t('dashboard.status.unpaid'), value: totalUnpaid, percentage: unpaidPercentage, color: '#f59e0b' },
   ];
 
   return (
@@ -27,7 +30,7 @@ export const TicketsPaymentDonut: React.FC<TicketsPaymentDonutProps> = ({
       transition={{ duration: 0.5, delay: 0.5 }}
       className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-gray-700"
     >
-      <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">💳 Billets Payés vs Non Payés</h3>
+      <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4">💳 {t('dashboard.charts.ticketsPayment')}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -53,8 +56,8 @@ export const TicketsPaymentDonut: React.FC<TicketsPaymentDonutProps> = ({
             }}
             labelStyle={{ color: '#fff' }}
             itemStyle={{ color: '#93c5fd' }}
-            formatter={(value: number, name: string, props: any) => [
-              `${value} billets (${props.payload.percentage.toFixed(1)}%)`,
+            formatter={(value: number | undefined, name: string, props: any) => [
+              `${value || 0} ${t('dashboard.charts.tickets')} (${props.payload.percentage.toFixed(1)}%)`,
               name,
             ]}
           />
@@ -75,7 +78,7 @@ export const TicketsPaymentDonut: React.FC<TicketsPaymentDonutProps> = ({
             dominantBaseline="middle"
             className="text-sm fill-gray-500 dark:fill-gray-400"
           >
-            Payés
+            {t('dashboard.status.paid')}
           </text>
         </PieChart>
       </ResponsiveContainer>
