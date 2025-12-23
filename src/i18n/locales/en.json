@@ -72,7 +72,9 @@
     "charts": {
       "spending": "Spending over 6 months",
       "ticketsPayment": "Paid vs Unpaid Tickets",
-      "bookingsStatus": "Bookings Distribution"
+      "bookingsStatus": "Bookings Distribution",
+      "total": "Total",
+      "tickets": "tickets"
     },
     "nextAppointment": {
       "title": "Next Appointment",
@@ -81,12 +83,15 @@
       "dateTime": "Date and time",
       "agent": "Agent",
       "viewDetails": "View details",
-      "modify": "Modify",
-      "status": {
-        "confirmed": "Confirmed",
-        "pending": "Pending",
-        "cancelled": "Cancelled"
-      }
+      "modify": "Modify"
+    },
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "paid": "Paid",
+      "unpaid": "Unpaid"
     }
   },
   "entities": {

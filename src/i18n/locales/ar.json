@@ -36,7 +36,9 @@
     "charts": {
       "spending": "النفقات على مدى 6 أشهر",
       "ticketsPayment": "التذاكر المدفوعة مقابل غير المدفوعة",
-      "bookingsStatus": "توزيع الحجوزات"
+      "bookingsStatus": "توزيع الحجوزات",
+      "total": "الإجمالي",
+      "tickets": "تذاكر"
     },
     "nextAppointment": {
       "title": "الموعد القادم",
@@ -45,12 +47,15 @@
       "dateTime": "التاريخ والوقت",
       "agent": "الوكيل",
       "viewDetails": "عرض التفاصيل",
-      "modify": "تعديل",
-      "status": {
-        "confirmed": "مؤكد",
-        "pending": "قيد الانتظار",
-        "cancelled": "ملغى"
-      }
+      "modify": "تعديل"
+    },
+    "status": {
+      "confirmed": "مؤكد",
+      "pending": "قيد الانتظار",
+      "cancelled": "ملغى",
+      "completed": "مكتمل",
+      "paid": "مدفوعة",
+      "unpaid": "غير مدفوعة"
     }
   }
 }

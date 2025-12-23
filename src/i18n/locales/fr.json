@@ -72,7 +72,9 @@
     "charts": {
       "spending": "Dépenses sur 6 mois",
       "ticketsPayment": "Billets Payés vs Non Payés",
-      "bookingsStatus": "Répartition des Réservations"
+      "bookingsStatus": "Répartition des Réservations",
+      "total": "Total",
+      "tickets": "billets"
     },
     "nextAppointment": {
       "title": "Prochain Rendez-vous",
@@ -81,12 +83,15 @@
       "dateTime": "Date et heure",
       "agent": "Agent",
       "viewDetails": "Voir détails",
-      "modify": "Modifier",
-      "status": {
-        "confirmed": "Confirmé",
-        "pending": "En attente",
-        "cancelled": "Annulé"
-      }
+      "modify": "Modifier"
+    },
+    "status": {
+      "confirmed": "Confirmé",
+      "pending": "En attente",
+      "cancelled": "Annulé",
+      "completed": "Terminé",
+      "paid": "Payés",
+      "unpaid": "Non payés"
     }
   },
   "entities": {
