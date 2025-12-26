@@ -45,10 +45,12 @@ const AppRouter = () => {
         <Route path="about" element={<About />} />
         <Route path="services" element={<Services />} />
         <Route path="destinations" element={<Destinations />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
         <Route path="unauthorized" element={<Unauthorized />} />
       </Route>
+
+      {/* Auth Routes (without layout) */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* Client Routes */}
       <Route

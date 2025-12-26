@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <div className="container mx-auto px-4 py-12">
@@ -10,7 +13,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl font-bold mb-4">WanderVoyage</h3>
             <p className="text-sm mb-4 opacity-90">
-              Your trusted travel partner for creating unforgettable vacation experiences across the world's most amazing destinations.
+              {t('footer.description')}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -30,26 +33,26 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/services" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Services
+                  {t('footer.links.services')}
                 </Link>
               </li>
               <li>
                 <Link to="/portfolio" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Destinations
+                  {t('footer.links.destinations')}
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  About Us
+                  {t('footer.links.about')}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Blog
+                  {t('footer.links.blog')}
                 </Link>
               </li>
             </ul>
@@ -57,26 +60,26 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">Our Services</h4>
+            <h4 className="font-semibold mb-4">{t('footer.services')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/services" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Luxury Packages
+                  {t('footer.serviceList.luxury')}
                 </Link>
               </li>
               <li>
                 <Link to="/services" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Adventure Tours
+                  {t('footer.serviceList.adventure')}
                 </Link>
               </li>
               <li>
                 <Link to="/services" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Family Vacations
+                  {t('footer.serviceList.family')}
                 </Link>
               </li>
               <li>
                 <Link to="/services" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Honeymoon Getaways
+                  {t('footer.serviceList.honeymoon')}
                 </Link>
               </li>
             </ul>
@@ -84,7 +87,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
+            <h4 className="font-semibold mb-4">{t('footer.contact')}</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start space-x-2">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
@@ -101,9 +104,9 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
-        <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-center text-sm opacity-80">
-          <p>&copy; {new Date().getFullYear()} WanderVoyage Travel Agency. All rights reserved.</p>
+        
+        <div className="border-t border-gray-200 dark:border-gray-700 mt-12 pt-8 text-center text-sm opacity-75">
+          <p>&copy; {new Date().getFullYear()} WanderVoyage. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

@@ -16,7 +16,157 @@
     "errorLoadingProfile": "Erreur lors du chargement du profil",
     "errorUpdatingProfile": "Erreur lors de la mise à jour du profil",
     "profileUpdated": "Profil mis à jour avec succès !",
-    "missingUserId": "Erreur : ID utilisateur introuvable"
+    "missingUserId": "Erreur : ID utilisateur introuvable",
+    "back": "Retour"
+  },
+  "home": {
+    "hero": {
+      "title1": "Votre Voyage vers",
+      "title2": "Le Paradis Vous Attend",
+      "subtitle": "Découvrez des destinations extraordinaires et créez des souvenirs inoubliables avec notre agence de voyage - votre partenaire de confiance.",
+      "searchTitle": "Trouvez Votre Destination de Rêve",
+      "searchPlaceholder": "Où voulez-vous aller?",
+      "destination": "Destination",
+      "month": "Mois",
+      "all": "Toutes",
+      "search": "Rechercher",
+      "exploreDestinations": "Explorer Destinations",
+      "planTrip": "Planifier un Voyage"
+    },
+    "features": {
+      "safe": { "title": "Sûr & Sécurisé", "desc": "Votre sécurité est notre priorité" },
+      "price": { "title": "Meilleurs Prix", "desc": "Tarifs compétitifs garantis" },
+      "guides": { "title": "Guides Experts", "desc": "Guides locaux professionnels" },
+      "support": { "title": "Support 24/7", "desc": "Nous sommes toujours là pour aider" }
+    },
+    "destinations": {
+      "badge": "DESTINATIONS POPULAIRES",
+      "title": "Meilleures Destinations",
+      "subtitle": "Découvrez des lieux à couper le souffle qui rendront votre voyage inoubliable",
+      "viewAll": "Voir Toutes les Destinations",
+      "toursAvailable": "Circuits Disponibles"
+    },
+    "packages": {
+      "badge": "FORFAITS SÉLECTIONNÉS",
+      "title": "Meilleurs Plans Vacances",
+      "subtitle": "Des forfaits triés sur le volet conçus pour vous offrir l'expérience de voyage parfaite",
+      "available": "Disponible",
+      "soldOut": "Épuisé",
+      "days": "jours",
+      "max": "Max",
+      "from": "À partir de",
+      "bookNow": "Réserver",
+      "exploreAll": "Explorer Tous les Forfaits"
+    },
+    "whyChooseUs": {
+      "badge": "POURQUOI NOUS CHOISIR",
+      "title": "Nous Facilitons les Voyages",
+      "subtitle": "Transformez vos rêves de voyage en réalité avec notre expérience de réservation fluide, nos conseils d'experts et nos solutions de voyage complètes adaptées juste pour vous.",
+      "priceGuarantee": { "title": "Garantie du Meilleur Prix", "desc": "Obtenez les meilleures offres sur tous les forfaits voyage" },
+      "safeSecure": { "title": "Sûr & Sécurisé", "desc": "Voyagez en toute confiance et tranquillité d'esprit" },
+      "exploreTours": "Explorer Nos Circuits"
+    },
+    "blog": {
+      "badge": "RÉCITS DE VOYAGE",
+      "title": "Dernières Nouvelles du Blog",
+      "subtitle": "Découvrez des histoires inspirantes et des conseils d'experts de nos aventures de voyage",
+      "readFull": "Lire l'Histoire Complète",
+      "readMore": "Lire Plus",
+      "guide": "Guide de Voyage",
+      "minRead": "min de lecture"
+    },
+    "newsletter": {
+      "title": "Prêt pour Votre Prochaine Aventure ?",
+      "subtitle": "Abonnez-vous à notre newsletter et recevez des offres de voyage exclusives, des conseils et de l'inspiration directement dans votre boîte de réception",
+      "placeholder": "Entrez votre adresse email",
+      "subscribe": "S'abonner Maintenant",
+      "join": "Rejoignez 50 000+ voyageurs qui nous font confiance pour leurs aventures"
+    },
+    "stats": {
+      "destinations": "Destinations",
+      "travelers": "Voyageurs Heureux",
+      "packages": "Forfaits Voyage",
+      "satisfaction": "Taux de Satisfaction"
+    },
+    "cta": {
+      "title": "Commencez Votre Voyage Aujourd'hui",
+      "subtitle": "N'attendez pas le moment parfait. Créez-le avec nous et faites des souvenirs qui dureront toute une vie.",
+      "browse": "Parcourir les Forfaits",
+      "contact": "Contactez-nous"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Accédez à votre espace personnel",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "submitting": "Connexion en cours...",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUp": "Inscrivez-vous",
+      "heroTitle": "Bienvenue !",
+      "heroSubtitle": "Connectez-vous pour accéder à votre compte et découvrir le monde",
+      "errors": {
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "passwordRequired": "Le mot de passe est requis",
+        "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+        "loginFailed": "Échec de la connexion. Vérifiez vos identifiants."
+      }
+    },
+    "register": {
+      "title": "Inscription",
+      "subtitle": "Créez votre compte en quelques étapes",
+      "step1Title": "Informations Personnelles",
+      "step2Title": "Adresse",
+      "step3Title": "Identifiants",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "phone": "Téléphone",
+      "dateOfBirth": "Date de Naissance",
+      "address": "Adresse",
+      "city": "Ville",
+      "country": "Pays",
+      "email": "Email",
+      "password": "Mot de Passe",
+      "confirmPassword": "Confirmer le Mot de Passe",
+      "next": "Suivant",
+      "previous": "Retour",
+      "submit": "S'inscrire",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "signIn": "Se connecter",
+      "heroTitle": "Rejoignez-nous !",
+      "heroSubtitle": "Créez votre compte et commencez votre voyage extraordinaire",
+      "placeholders": {
+        "firstName": "Jean",
+        "lastName": "Dupont",
+        "phone": "+33 6 12 34 56 78",
+        "address": "123 Rue de la Paix",
+        "city": "Paris",
+        "country": "France",
+        "email": "votre@email.com",
+        "password": "••••••••"
+      },
+      "errors": {
+        "firstNameRequired": "Le prénom est requis",
+        "firstNameTooShort": "Le prénom doit contenir au moins 2 caractères",
+        "lastNameRequired": "Le nom est requis",
+        "lastNameTooShort": "Le nom doit contenir au moins 2 caractères",
+        "phoneRequired": "Le téléphone est requis",
+        "phoneInvalid": "Format de téléphone invalide (min. 10 chiffres)",
+        "dateOfBirthRequired": "La date de naissance est requise",
+        "ageRestriction": "Vous devez avoir au moins 18 ans",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "passwordRequired": "Le mot de passe est requis",
+        "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+        "confirmPasswordRequired": "Veuillez confirmer le mot de passe",
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "emailExists": "Cet email existe déjà. Veuillez en utiliser un autre.",
+        "registrationFailed": "Échec de l'inscription. Veuillez réessayer."
+      }
+    }
   },
   "profile": {
     "sections": {
@@ -317,5 +467,89 @@
       "updateSuccess": "Consultation modifiée avec succès",
       "updateError": "Erreur lors de la modification"
     }
-  }
+  },
+  "footer": {
+    "description": "Votre partenaire de voyage de confiance pour créer des expériences de vacances inoubliables dans les destinations les plus étonnantes du monde.",
+    "quickLinks": "Liens Rapides",
+    "services": "Nos Services",
+    "contact": "Contactez-nous",
+    "links": {
+      "services": "Services",
+      "destinations": "Destinations",
+      "about": "À Propos",
+      "blog": "Blog"
+    },
+    "serviceList": {
+      "luxury": "Forfaits de Luxe",
+      "adventure": "Tours d'Aventure",
+      "family": "Vacances en Famille",
+      "honeymoon": "Escapades Lune de Miel"
+    },
+    "rights": "Tous droits réservés."
+  },
+  "navbar": {
+    "home": "Accueil",
+    "destinations": "Destinations",
+    "services": "Services",
+    "about": "À Propos",
+    "search": "Rechercher...",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "logout": "Déconnexion"
+  },
+  "services": {
+    "hero": {
+      "title": "Nos Services",
+      "subtitle": "Des solutions complètes pour tous vos besoins de voyage"
+    },
+    "intro": {
+      "title": "Votre Partenaire de Confiance",
+      "description": "Notre agence vous accompagne à chaque étape de votre voyage. De la réservation de billets à l'organisation complète de séjours, nous mettons notre expertise à votre service pour vous garantir une expérience de voyage sereine et inoubliable."
+    },
+    "list": {
+      "title": "Nos Services",
+      "subtitle": "Découvrez notre gamme complète de services"
+    },
+    "items": {
+      "ticketing": {
+        "title": "Billetterie",
+        "description": "Nous réservons vos billets d'avion pour toutes destinations. Si vous ne savez pas comment procéder ou n'avez pas le temps, nous nous occupons de tout pour vous."
+      },
+      "organized": {
+        "title": "Voyages Organisés",
+        "description": "Profitez de voyages clé en main avec itinéraires préparés, hébergements réservés et activités planifiées. Voyagez l'esprit tranquille."
+      },
+      "consultation": {
+        "title": "Consultation Gratuite",
+        "description": "Besoin de conseils pour organiser votre voyage ? Nous vous offrons une consultation gratuite pour vous orienter et répondre à toutes vos questions."
+      },
+      "visaTourist": {
+        "title": "Visa Touristique",
+        "description": "Nous vous accompagnons dans toutes vos démarches pour obtenir votre visa touristique. Constitution du dossier, suivi et conseils personnalisés."
+      },
+      "omraHajj": {
+        "title": "Omra / Hajj",
+        "description": "Organisation complète de vos voyages religieux. Packages tout compris avec hébergement, transport et accompagnement spirituel."
+      },
+      "visaStudy": {
+        "title": "Visa d'Études",
+        "description": "Assistance pour votre projet d'études à l'étranger. Nous vous aidons à constituer votre dossier et à obtenir votre visa étudiant."
+      },
+      "visaResidence": {
+        "title": "Visa d'Installation",
+        "description": "Accompagnement pour vos démarches de visa de long séjour ou d'installation. Nous vous guidons à travers toutes les étapes administratives."
+      }
+    },
+    "cta": {
+      "title": "Besoin d'Aide ?",
+      "description": "Notre équipe est disponible pour répondre à toutes vos questions et vous accompagner dans votre projet de voyage.",
+      "button": "Nous Contacter"
+    }
+  },
+  "months": [
+    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+  ]
 }

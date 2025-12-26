@@ -16,7 +16,176 @@
     "errorLoadingProfile": "Error loading profile",
     "errorUpdatingProfile": "Error updating profile",
     "profileUpdated": "Profile updated successfully!",
-    "missingUserId": "Error: user ID not found"
+    "missingUserId": "Error: user ID not found",
+    "back": "Back"
+  },
+  "home": {
+    "hero": {
+      "title1": "Your Journey to",
+      "title2": "Paradise Awaits",
+      "subtitle": "Discover extraordinary destinations and create unforgettable memories with our travel agency - your trusted partner.",
+      "searchTitle": "Find Your Dream Destination",
+      "searchPlaceholder": "Where do you want to go?",
+      "destination": "Destination",
+      "month": "Month",
+      "all": "All",
+      "search": "Search",
+      "exploreDestinations": "Explore Destinations",
+      "planTrip": "Plan a Trip"
+    },
+    "features": {
+      "safe": { "title": "Safe & Secure", "desc": "Your safety is our priority" },
+      "price": { "title": "Best Prices", "desc": "Guaranteed competitive rates" },
+      "guides": { "title": "Expert Guides", "desc": "Professional local guides" },
+      "support": { "title": "24/7 Support", "desc": "We're always here to help" }
+    },
+    "destinations": {
+      "badge": "POPULAR DESTINATIONS",
+      "title": "Top Destinations",
+      "subtitle": "Discover breathtaking locations that will make your journey unforgettable",
+      "viewAll": "View All Destinations",
+      "toursAvailable": "Tours Available"
+    },
+    "packages": {
+      "badge": "CURATED PACKAGES",
+      "title": "Best Vacation Plans",
+      "subtitle": "Handpicked packages designed to give you the perfect travel experience",
+      "available": "Available",
+      "soldOut": "Sold Out",
+      "days": "days",
+      "max": "Max",
+      "from": "From",
+      "bookNow": "Book Now",
+      "exploreAll": "Explore All Packages"
+    },
+    "whyChooseUs": {
+      "badge": "WHY CHOOSE US",
+      "title": "We Make World Travel Easy",
+      "subtitle": "Transform your travel dreams into reality with our seamless booking experience, expert guidance, and comprehensive travel solutions tailored just for you.",
+      "priceGuarantee": { "title": "Best Price Guarantee", "desc": "Get the best deals on all travel packages" },
+      "safeSecure": { "title": "Safe & Secure", "desc": "Travel with confidence and peace of mind" },
+      "exploreTours": "Explore Our Tours"
+    },
+    "blog": {
+      "badge": "TRAVEL STORIES",
+      "title": "Latest from Our Blog",
+      "subtitle": "Discover inspiring stories and expert tips from our travel adventures",
+      "readFull": "Read Full Story",
+      "readMore": "Read More",
+      "guide": "Travel Guide",
+      "minRead": "min read"
+    },
+    "newsletter": {
+      "title": "Ready for Your Next Adventure?",
+      "subtitle": "Subscribe to our newsletter and get exclusive travel deals, tips, and inspiration delivered to your inbox",
+      "placeholder": "Enter your email address",
+      "subscribe": "Subscribe Now",
+      "join": "Join 50,000+ travelers who trust us for their adventures"
+    },
+    "stats": {
+      "destinations": "Destinations",
+      "travelers": "Happy Travelers",
+      "packages": "Travel Packages",
+      "satisfaction": "Satisfaction Rate"
+    },
+    "cta": {
+      "title": "Start Your Journey Today",
+      "subtitle": "Don't wait for the perfect moment. Create it with us and make memories that last a lifetime.",
+      "browse": "Browse Packages",
+      "contact": "Contact Us"
+    }
+  },
+  "footer": {
+    "description": "Your trusted travel partner for creating unforgettable vacation experiences across the world's most amazing destinations.",
+    "quickLinks": "Quick Links",
+    "services": "Our Services",
+    "contact": "Contact Us",
+    "links": {
+      "services": "Services",
+      "destinations": "Destinations",
+      "about": "About Us",
+      "blog": "Blog"
+    },
+    "serviceList": {
+      "luxury": "Luxury Packages",
+      "adventure": "Adventure Tours",
+      "family": "Family Vacations",
+      "honeymoon": "Honeymoon Getaways"
+    },
+    "rights": "All rights reserved."
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Access your personal space",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "heroTitle": "Welcome!",
+      "heroSubtitle": "Sign in to access your account and discover the world",
+      "errors": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email format",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "loginFailed": "Login failed. Please check your credentials."
+      }
+    },
+    "register": {
+      "title": "Registration",
+      "subtitle": "Create your account in a few steps",
+      "step1Title": "Personal Information",
+      "step2Title": "Address",
+      "step3Title": "Credentials",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phone": "Phone",
+      "dateOfBirth": "Date of Birth",
+      "address": "Address",
+      "city": "City",
+      "country": "Country",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "next": "Next",
+      "previous": "Back",
+      "submit": "Sign up",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "heroTitle": "Join us!",
+      "heroSubtitle": "Create your account and start your extraordinary journey",
+      "placeholders": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone": "+1 234 567 890",
+        "address": "123 Main Street",
+        "city": "New York",
+        "country": "USA",
+        "email": "your@email.com",
+        "password": "••••••••"
+      },
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "firstNameTooShort": "First name must be at least 2 characters",
+        "lastNameRequired": "Last name is required",
+        "lastNameTooShort": "Last name must be at least 2 characters",
+        "phoneRequired": "Phone is required",
+        "phoneInvalid": "Invalid phone format (min. 10 digits)",
+        "dateOfBirthRequired": "Date of birth is required",
+        "ageRestriction": "You must be at least 18 years old",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email format",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "confirmPasswordRequired": "Please confirm password",
+        "passwordMismatch": "Passwords do not match",
+        "emailExists": "This email already exists. Please use another one.",
+        "registrationFailed": "Registration failed. Please try again."
+      }
+    }
   },
   "profile": {
     "sections": {
@@ -305,6 +474,71 @@
       "updateSuccess": "Consultation updated successfully",
       "updateError": "Error updating consultation"
     }
-  }
+  },
+  "navbar": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "services": "Services",
+    "about": "About",
+    "search": "Search...",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "services": {
+    "hero": {
+      "title": "Our Services",
+      "subtitle": "Complete solutions for all your travel needs"
+    },
+    "intro": {
+      "title": "Your Trusted Partner",
+      "description": "Our agency supports you at every step of your journey. From ticket booking to complete trip organization, we put our expertise at your service to guarantee you a peaceful and unforgettable travel experience."
+    },
+    "list": {
+      "title": "Our Services",
+      "subtitle": "Discover our complete range of services"
+    },
+    "items": {
+      "ticketing": {
+        "title": "Ticketing",
+        "description": "We book your flight tickets to all destinations. If you don't know how to proceed or don't have the time, we take care of everything for you."
+      },
+      "organized": {
+        "title": "Organized Tours",
+        "description": "Enjoy turnkey trips with prepared itineraries, reserved accommodations and planned activities. Travel with peace of mind."
+      },
+      "consultation": {
+        "title": "Free Consultation",
+        "description": "Need advice to organize your trip? We offer you a free consultation to guide you and answer all your questions."
+      },
+      "visaTourist": {
+        "title": "Tourist Visa",
+        "description": "We support you in all your steps to obtain your tourist visa. File preparation, follow-up and personalized advice."
+      },
+      "omraHajj": {
+        "title": "Umrah / Hajj",
+        "description": "Complete organization of your religious trips. All-inclusive packages with accommodation, transport and spiritual guidance."
+      },
+      "visaStudy": {
+        "title": "Study Visa",
+        "description": "Assistance for your study abroad project. We help you build your file and obtain your student visa."
+      },
+      "visaResidence": {
+        "title": "Residence Visa",
+        "description": "Support for your long-stay or residence visa procedures. We guide you through all administrative steps."
+      }
+    },
+    "cta": {
+      "title": "Need Help?",
+      "description": "Our team is available to answer all your questions and support you in your travel project.",
+      "button": "Contact Us"
+    }
+  },
+  "months": [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ]
 }
 

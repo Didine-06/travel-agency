@@ -4,6 +4,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { Search, Heart, Bell, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSelect from "./LanguageSelect";
+import { useTranslation } from "react-i18next";
 
 const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -11,6 +12,7 @@ const Navbar: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const ddRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -33,7 +35,7 @@ const Navbar: React.FC = () => {
   const profileLink = roleSegment ? `/${roleSegment}/profile` : "/profile";
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 shadow-sm z-50 border-b border-gray-100 dark:border-gray-800 transition-colors duration-200">
+    <nav className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 shadow-sm z-50 border-b border-gray-100 dark:border-gray-800 transition-colors duration-200 mb-10">
       <div className="flex items-center h-16 px-4 mx-auto">
         {/* Logo - Always on Left */}
         <Link
@@ -50,38 +52,26 @@ const Navbar: React.FC = () => {
             to="/"
             className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
-            Home
+            {t('navbar.home')}
           </Link>
           <Link
             to="/destinations"
             className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
-            Destinations
+            {t('navbar.destinations')}
           </Link>
           <Link
             to="/services"
             className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
-            Services
+            {t('navbar.services')}
           </Link>
           <Link
             to="/about"
             className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
-            About
+            {t('navbar.about')}
           </Link>
-        </div>
-
-        {/* Search Bar - Desktop (Right of links) */}
-        <div className="hidden md:flex items-center ml-6">
-          <div className="relative w-48">
-            <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full pl-8 pr-3 py-1.5 text-xs border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 transition"
-            />
-          </div>
         </div>
 
         {/* Actions - Desktop */}
@@ -98,13 +88,13 @@ const Navbar: React.FC = () => {
                 to="/login"
                 className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 px-3 py-1 rounded transition"
               >
-                Sign In
+                {t('navbar.login')}
               </Link>
               <Link
                 to="/register"
                 className="text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 px-4 py-1 rounded transition"
               >
-                Sign Up
+                {t('navbar.register')}
               </Link>
             </>
           ) : (
@@ -151,14 +141,14 @@ const Navbar: React.FC = () => {
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                       onClick={() => setDropdownOpen(false)}
                     >
-                      Go to dashboard
+                      {t('navbar.dashboard')}
                     </Link>
                     <Link
                       to={profileLink}
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                       onClick={() => setDropdownOpen(false)}
                     >
-                      Profile
+                      {t('navbar.profile')}
                     </Link>
                     <hr className="my-1 border-gray-200 dark:border-gray-700" />
                     <button
@@ -168,7 +158,7 @@ const Navbar: React.FC = () => {
                         logout();
                       }}
                     >
-                      Log out
+                      {t('navbar.logout')}
                     </button>
                   </div>
                 )}
@@ -183,14 +173,6 @@ const Navbar: React.FC = () => {
           <ThemeToggle />
           {/* Language - Mobile */}
           <LanguageSelect />
-          {/* Search Icon - Mobile */}
-          <button
-            className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition"
-            onClick={() => setSearchOpen(!searchOpen)}
-            aria-label="Search"
-          >
-            <Search className="w-5 h-5" />
-          </button>
 
           {/* Notifications & Favorites - Only if authenticated */}
           {isAuthenticated && (
@@ -226,27 +208,6 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Search Bar - Expandable */}
-      {searchOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 px-4 py-3 animate-slideDown">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
-            <input
-              type="text"
-              placeholder="Search destinations..."
-              autoFocus
-              className="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-transparent transition"
-            />
-            <button
-              onClick={() => setSearchOpen(false)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 shadow-lg animate-slideDown">
@@ -258,28 +219,28 @@ const Navbar: React.FC = () => {
                 className="text-base text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-3 rounded-lg transition font-medium"
                 onClick={() => setMobileOpen(false)}
               >
-                🏠 Home
+                🏠 {t('navbar.home')}
               </Link>
               <Link
                 to="/about"
                 className="text-base text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-3 rounded-lg transition font-medium"
                 onClick={() => setMobileOpen(false)}
               >
-                ℹ️ About
+                ℹ️ {t('navbar.about')}
               </Link>
               <Link
                 to="/services"
                 className="text-base text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-3 rounded-lg transition font-medium"
                 onClick={() => setMobileOpen(false)}
               >
-                ⚙️ Services
+                ⚙️ {t('navbar.services')}
               </Link>
               <Link
                 to="/destinations"
                 className="text-base text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-3 rounded-lg transition font-medium"
                 onClick={() => setMobileOpen(false)}
               >
-                🌍 Destinations
+                🌍 {t('navbar.destinations')}
               </Link>
             </div>
 
@@ -292,14 +253,14 @@ const Navbar: React.FC = () => {
                     className="flex-1 text-center text-base font-medium text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-800 px-4 py-3 rounded-xl transition"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Sign In
+                    {t('navbar.login')}
                   </Link>
                   <Link
                     to="/register"
                     className="flex-1 text-center text-base font-medium bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-xl transition shadow-md"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Sign Up
+                    {t('navbar.register')}
                   </Link>
                 </div>
               ) : (
@@ -309,14 +270,14 @@ const Navbar: React.FC = () => {
                     className="block w-full text-center text-base font-medium bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-xl transition shadow-md"
                     onClick={() => setMobileOpen(false)}
                   >
-                    📊 Go to Dashboard
+                    📊 {t('navbar.dashboard')}
                   </Link>
                   <Link
                     to={profileLink}
                     className="block w-full text-center text-base font-medium text-gray-700 dark:text-gray-200 border-2 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-3 rounded-xl transition"
                     onClick={() => setMobileOpen(false)}
                   >
-                    👤 Profile
+                    👤 {t('navbar.profile')}
                   </Link>
                   <button
                     className="w-full text-center text-base font-medium text-red-600 dark:text-red-400 border-2 border-red-600 dark:border-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-3 rounded-xl transition"
@@ -325,7 +286,7 @@ const Navbar: React.FC = () => {
                       logout();
                     }}
                   >
-                    🚪 Log out
+                    🚪 {t('navbar.logout')}
                   </button>
                 </div>
               )}
