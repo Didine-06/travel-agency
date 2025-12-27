@@ -12,6 +12,7 @@ import Home from "../Pages/public/Home";
 import About from "../Pages/public/About";
 import Services from "../Pages/public/Services";
 import Destinations from "../Pages/public/Destinations";
+import DestinationDetails from "../Pages/public/DestinationDetails";
 import Login from "../Pages/public/Login";
 import Register from "../Pages/public/Register";
 import Unauthorized from "../Pages/public/Unauthorized";
@@ -45,6 +46,7 @@ const AppRouter = () => {
         <Route path="about" element={<About />} />
         <Route path="services" element={<Services />} />
         <Route path="destinations" element={<Destinations />} />
+        <Route path="destination-details/:packageId" element={<DestinationDetails />} />
         <Route path="unauthorized" element={<Unauthorized />} />
       </Route>
 

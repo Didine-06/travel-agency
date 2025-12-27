@@ -117,7 +117,7 @@ export default function TravelHomepage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-200 pt-16">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
       {/* Hero Section - Professional Layout with Navbar/Footer Space */}
       <section className="relative h-[calc(100vh-64px)] min-h-[700px] flex items-center overflow-hidden">
         {/* Background Images with Smooth Transition */}

@@ -1,266 +1,184 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   Plane,
   Globe,
-  Hotel,
+  MessageCircle,
   FileText,
-  MapPin,
-  Calendar,
-  Users,
-  Shield,
-  Clock,
-  CheckCircle,
-  Star,
-  Ticket,
-  GraduationCap,
-  UserCheck,
   Building,
+  GraduationCap,
+  Home as HomeIcon,
   ArrowRight,
-  Phone,
-  Mail
+  CheckCircle,
+  Sparkles
 } from 'lucide-react';
 
 const Services = () => {
+  const { t } = useTranslation();
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
   const stagger = {
-    visible: { transition: { staggerChildren: 0.15 } }
-  };
-
-  const scaleIn = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
+    visible: { transition: { staggerChildren: 0.1 } }
   };
 
   const services = [
     {
-      icon: FileText,
-      title: "Services Visa",
-      description: "Assistance complète pour l'obtention de vos visas touristiques, d'affaires ou de transit. Traitement rapide et suivi personnalisé.",
-      features: ["Visa Touristique", "Visa d'Affaires", "Visa de Transit", "Documentation Complète"],
-      color: "blue",
-      gradient: "from-blue-500 to-blue-600",
-      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop"
+      icon: Plane,
+      title: t('services.items.ticketing.title'),
+      description: t('services.items.ticketing.description'),
+      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=500&fit=crop",
+      gradient: "from-blue-500 to-cyan-500",
     },
     {
       icon: Globe,
-      title: "Voyages Organisés",
-      description: "Des circuits tout compris avec guides experts, hébergements de qualité et expériences authentiques dans le monde entier.",
-      features: ["Circuits Guidés", "Transport Inclus", "Hébergement Premium", "Activités Exclusives"],
-      color: "green",
-      gradient: "from-green-500 to-green-600",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop"
+      title: t('services.items.organized.title'),
+      description: t('services.items.organized.description'),
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=500&fit=crop",
+      gradient: "from-green-500 to-emerald-500",
     },
     {
-      icon: MapPin,
-      title: "Destinations Diverses",
-      description: "Plus de 50 destinations à travers le monde. Europe, Asie, Amérique, Afrique - nous connaissons chaque recoin du globe.",
-      features: ["Europe", "Asie", "Amérique", "Afrique & Océanie"],
-      color: "purple",
-      gradient: "from-purple-500 to-purple-600",
-      image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&h=400&fit=crop"
+      icon: MessageCircle,
+      title: t('services.items.consultation.title'),
+      description: t('services.items.consultation.description'),
+      image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&h=500&fit=crop",
+      gradient: "from-purple-500 to-pink-500",
     },
     {
-      icon: GraduationCap,
-      title: "Visa d'Étude",
-      description: "Accompagnement complet pour vos études à l'étranger : inscription universitaire, visa étudiant et logement.",
-      features: ["Inscription Universitaire", "Visa Étudiant", "Logement Étudiant", "Support Continu"],
-      color: "indigo",
-      gradient: "from-indigo-500 to-indigo-600",
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop"
-    },
-    {
-      icon: UserCheck,
-      title: "Visa Visiteur",
-      description: "Facilitez vos visites familiales et touristiques avec notre service d'assistance visa visiteur rapide et efficace.",
-      features: ["Visite Familiale", "Tourisme", "Documentation Rapide", "Suivi Personnel"],
-      color: "teal",
-      gradient: "from-teal-500 to-teal-600",
-      image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&h=400&fit=crop"
+      icon: FileText,
+      title: t('services.items.visaTourist.title'),
+      description: t('services.items.visaTourist.description'),
+      image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=500&fit=crop",
+      gradient: "from-orange-500 to-red-500",
     },
     {
       icon: Building,
-      title: "Omra & Hajj",
-      description: "Organisez votre pèlerinage en toute sérénité. Packages tout compris avec guides spirituels et services premium.",
-      features: ["Packages Omra", "Hajj Organisé", "Hôtels près Haram", "Guide Spirituel"],
-      color: "amber",
-      gradient: "from-amber-500 to-amber-600",
-      image: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=600&h=400&fit=crop"
+      title: t('services.items.omraHajj.title'),
+      description: t('services.items.omraHajj.description'),
+      image: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&h=500&fit=crop",
+      gradient: "from-amber-500 to-yellow-500",
     },
     {
-      icon: Hotel,
-      title: "Réservation d'Hôtels",
-      description: "Accès à plus de 500,000 hôtels dans le monde entier. Des auberges économiques aux resorts 5 étoiles.",
-      features: ["500K+ Hôtels", "Meilleurs Prix", "Confirmation Instantanée", "Annulation Flexible"],
-      color: "rose",
-      gradient: "from-rose-500 to-rose-600",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop"
+      icon: GraduationCap,
+      title: t('services.items.visaStudy.title'),
+      description: t('services.items.visaStudy.description'),
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=500&fit=crop",
+      gradient: "from-indigo-500 to-blue-500",
     },
     {
-      icon: Ticket,
-      title: "Billetterie Avions",
-      description: "Réservez vos vols aux meilleurs tarifs. Vols directs, avec escale, classe économique ou affaires.",
-      features: ["Meilleurs Tarifs", "Vols Directs", "Multi-destinations", "Business Class"],
-      color: "cyan",
-      gradient: "from-cyan-500 to-cyan-600",
-      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop"
-    }
-  ];
-
-  const benefits = [
-    {
-      icon: Shield,
-      title: "Sécurité Garantie",
-      description: "Tous nos services sont assurés et conformes aux normes internationales"
+      icon: HomeIcon,
+      title: t('services.items.visaResidence.title'),
+      description: t('services.items.visaResidence.description'),
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop",
+      gradient: "from-teal-500 to-cyan-500",
     },
-    {
-      icon: Clock,
-      title: "Service 24/7",
-      description: "Support client disponible jour et nuit pour toutes vos urgences"
-    },
-    {
-      icon: Star,
-      title: "Expertise 15+ ans",
-      description: "Plus de 15 ans d'expérience dans l'industrie du voyage"
-    },
-    {
-      icon: Users,
-      title: "5000+ Clients",
-      description: "Des milliers de voyageurs satisfaits nous font confiance"
-    }
   ];
 
   return (
-    <div className="min-h-screen bg-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
       {/* Hero Section */}
       <motion.div
         initial="hidden"
         animate="visible"
         variants={stagger}
-        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden"
       >
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        {/* Background with overlay */}
+        <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop"
             alt="Travel Services"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F8FC6]/90 via-[#0F8FC6]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-cyan-900/80 to-blue-800/90" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        {/* Content */}
+        <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-20 text-center">
           <motion.div variants={fadeInUp}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight">
-              Nos Services
-              <span className="block text-2xl sm:text-3xl lg:text-4xl font-normal mt-4 text-white/90">
-                Des Solutions Complètes pour Tous Vos Besoins de Voyage
-              </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-6 leading-tight drop-shadow-2xl">
+              {t('services.hero.title')}
             </h1>
-            <p className="text-lg xl:text-xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
-              De la planification de voyage à l'obtention de visas, nous vous accompagnons à chaque étape
-              pour faire de votre voyage une expérience inoubliable.
+
+            <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full mb-6"></div>
+
+            <p className="text-lg lg:text-xl text-gray-100 mb-8 leading-relaxed">
+              {t('services.list.subtitle')}
             </p>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300"
+            >
+              <Sparkles className="w-5 h-5" />
+              {t('services.cta.button')}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </motion.button>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Benefits Section */}
+      {/* Services Grid */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
-        className="py-12 xl:py-16 px-4 sm:px-6 lg:px-8 bg-gray-50"
+        className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8"
       >
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                variants={scaleIn}
-                className="text-center p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow"
-              >
-                <benefit.icon className="w-12 h-12 text-[#0F8FC6] mx-auto mb-4" />
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{benefit.title}</h3>
-                <p className="text-sm text-gray-600">{benefit.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
 
-      {/* Services Grid Section */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={stagger}
-        className="py-16 xl:py-20 px-4 sm:px-6 lg:px-8"
-      >
-        <div className="container mx-auto">
-          <motion.div variants={fadeInUp} className="text-center mb-12 xl:mb-16">
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4">
-              Découvrez Nos Services
-            </h2>
-            <div className="w-24 h-1 bg-[#0F8FC6] mx-auto mb-6"></div>
-            <p className="text-lg xl:text-xl text-gray-600 max-w-3xl mx-auto">
-              Une gamme complète de services pour répondre à tous vos besoins de voyage,
-              du visa à la réservation d'hôtels.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${service.gradient} opacity-60`}></div>
-                  <div className="absolute bottom-4 left-4 flex items-center gap-3">
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                      <service.icon className={`w-6 h-6 text-${service.color}-600`} />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">{service.title}</h3>
-                  </div>
+        {/* Services Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInUp}
+              whileHover={{ y: -10 }}
+              className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              {/* Image with gradient overlay */}
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t ${service.gradient} opacity-60`} />
+                
+                {/* Icon */}
+                <div className="absolute top-4 right-4 w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
+                  <service.icon className="w-7 h-7 text-white" />
                 </div>
+              </div>
 
-                <div className="p-6">
-                  <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-                  
-                  <div className="space-y-3 mb-6">
-                    {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
-                        <CheckCircle className={`w-5 h-5 text-${service.color}-600 flex-shrink-0`} />
-                        <span className="text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                  {service.description}
+                </p>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-full bg-gradient-to-r ${service.gradient} text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-shadow`}
-                  >
-                    En Savoir Plus
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                {/* CTA Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r ${service.gradient} text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300`}
+                >
+                  <span>{t('services.cta.button')}</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </motion.button>
+              </div>
+
+              {/* Decorative element */}
+              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+            </motion.div>
+          ))}
         </div>
       </motion.div>
 
@@ -270,123 +188,93 @@ const Services = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
-        className="py-16 xl:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#0F8FC6] to-[#0A4F6C]"
+        className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 dark:from-blue-800 dark:via-cyan-800 dark:to-blue-900"
       >
-        <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-6">
-                Pourquoi Choisir Nos Services ?
-              </h2>
-              <p className="text-lg text-white/90 mb-8 leading-relaxed">
-                Avec plus de 15 ans d'expérience dans l'industrie du voyage, nous sommes votre partenaire
-                de confiance pour tous vos besoins de voyage. Notre équipe d'experts travaille sans relâche
-                pour vous offrir les meilleurs services au meilleur prix.
-              </p>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <motion.div variants={fadeInUp}>
+            <h2 className="text-3xl lg:text-5xl font-extrabold text-white mb-6">
+              {t('services.intro.title')}
+            </h2>
+            <p className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed">
+              {t('services.cta.description')}
+            </p>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="space-y-4">
+              {[
+                'Accompagnement personnalisé',
+                'Expertise professionnelle',
+                'Service disponible 24/7',
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={fadeInUp}
+                  className="flex items-center gap-4"
+                >
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-white mb-2">Prix Compétitifs</h4>
-                    <p className="text-white/80">Les meilleurs tarifs du marché garantis</p>
-                  </div>
-                </div>
+                  <span className="text-lg text-white font-medium">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-white mb-2">Service Personnalisé</h4>
-                    <p className="text-white/80">Chaque voyage est adapté à vos besoins</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-white mb-2">Support 24/7</h4>
-                    <p className="text-white/80">Assistance disponible à tout moment</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInUp} className="relative">
-              <div className="grid grid-cols-2 gap-4">
-                <motion.img
-                  whileHover={{ scale: 1.05 }}
-                  src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&h=300&fit=crop"
-                  alt="Travel Service"
-                  className="w-full h-48 object-cover rounded-xl shadow-xl"
-                />
-                <motion.img
-                  whileHover={{ scale: 1.05 }}
-                  src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop"
-                  alt="Destination"
-                  className="w-full h-48 object-cover rounded-xl shadow-xl mt-8"
-                />
-                <motion.img
-                  whileHover={{ scale: 1.05 }}
-                  src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=300&fit=crop"
-                  alt="Beach"
-                  className="w-full h-48 object-cover rounded-xl shadow-xl -mt-8"
-                />
-                <motion.img
-                  whileHover={{ scale: 1.05 }}
-                  src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&h=300&fit=crop"
-                  alt="Adventure"
-                  className="w-full h-48 object-cover rounded-xl shadow-xl"
-                />
-              </div>
-            </motion.div>
-          </div>
+          {/* Right Image Grid */}
+          <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-4">
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&h=300&fit=crop"
+              alt="Service 1"
+              className="w-full h-48 object-cover rounded-2xl shadow-2xl"
+            />
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop"
+              alt="Service 2"
+              className="w-full h-48 object-cover rounded-2xl shadow-2xl mt-8"
+            />
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=300&fit=crop"
+              alt="Service 3"
+              className="w-full h-48 object-cover rounded-2xl shadow-2xl -mt-8"
+            />
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&h=300&fit=crop"
+              alt="Service 4"
+              className="w-full h-48 object-cover rounded-2xl shadow-2xl"
+            />
+          </motion.div>
         </div>
       </motion.div>
 
-      {/* CTA Section */}
+      {/* Final CTA */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeInUp}
-        className="py-16 xl:py-20 px-4 sm:px-6 lg:px-8"
+        className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
       >
-        <div className="container mx-auto">
-          <div className="bg-gradient-to-r from-[#0F8FC6] to-[#0A4F6C] rounded-3xl p-8 lg:p-12 text-center">
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-6">
-              Prêt à Commencer Votre Aventure ?
-            </h2>
-            <p className="text-lg xl:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-              Contactez-nous dès aujourd'hui et laissez nos experts créer le voyage parfait pour vous.
-              Que ce soit pour un visa, un circuit organisé ou une simple réservation, nous sommes là pour vous.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white text-[#0F8FC6] px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:shadow-xl transition-shadow"
-              >
-                <Phone className="w-5 h-5" />
-                Appelez-nous
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-[#0F8FC6] transition-all"
-              >
-                <Mail className="w-5 h-5" />
-                Envoyez un Email
-              </motion.button>
-            </div>
-          </div>
+        <div className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-3xl p-12 lg:p-16 text-center shadow-2xl">
+          <h2 className="text-3xl lg:text-5xl font-extrabold text-white mb-6">
+            {t('services.cta.title')}
+          </h2>
+          <p className="text-lg lg:text-xl text-white/90 mb-10">
+            {t('services.cta.description')}
+          </p>
+          
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-blue-600 rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-300"
+          >
+            <Sparkles className="w-6 h-6" />
+            {t('services.cta.button')}
+            <ArrowRight className="w-6 h-6" />
+          </motion.button>
         </div>
       </motion.div>
     </div>
