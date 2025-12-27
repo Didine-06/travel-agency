@@ -539,6 +539,49 @@
   "months": [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
-  ]
+  ],
+  "destinations": {
+    "title": "Our Destinations",
+    "subtitle": "Discover unforgettable journeys around the world",
+    "search": "Search...",
+    "filters": "Filters",
+    "filters_short": "Filter",
+    "results": "results",
+    "showing": "Showing",
+    "perPage": "per page",
+    "results_plural": "results",
+    "previous": "Previous",
+    "next": "Next",
+    "sortBy": "Sort by",
+    "bestSelling": "Best selling",
+    "priceLowHigh": "Price: Low to High",
+    "priceHighLow": "Price: High to Low",
+    "country": "Country",
+    "allCountries": "All countries",
+    "destination": "Destination",
+    "allDestinations": "All destinations",
+    "departure": "Departure date",
+    "return": "Return date",
+    "clearFilters": "Clear filters",
+    "advancedFilters": "Advanced Filters",
+    "reset": "Reset",
+    "close": "Close",
+    "dateFrom": "Departure date",
+    "dateTo": "Return date",
+    "priceRange": "Price range",
+    "packagesFound": "packages found",
+    "activeFilters": "active filter(s)",
+    "noResults": "No results found",
+    "tryDifferentFilters": "Try modifying your search criteria",
+    "resetFilters": "Reset filters",
+    "days": "days",
+    "maxCapacity": "Max capacity",
+    "persons": "persons",
+    "from": "From",
+    "viewDetails": "View",
+    "packageType": "Trip type",
+    "allTypes": "All types"
+  }
 }
+
 
