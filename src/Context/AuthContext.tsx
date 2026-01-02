@@ -79,49 +79,41 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
-    try {
-      // Call real API
-      const response = await api.auth.login(credentials);
-      // Build user object
-      const userData: User = {
-        id: response.data.user.id,
-        email: response.data.user.email,
-        firstName: response.data.user.firstName,
-        lastName: response.data.user.lastName,
-        name: `${response.data.user.firstName} ${response.data.user.lastName}`,
-        role: response.data.user.role.toUpperCase() as 'ADMIN' | 'AGENT' | 'CLIENT',
-        languageId: response.data.user.languageId,
-      };
+    // Call real API
+    const response = await api.auth.login(credentials);
+    
+    // Build user object
+    const userData: User = {
+      id: response.data.user.id,
+      email: response.data.user.email,
+      firstName: response.data.user.firstName,
+      lastName: response.data.user.lastName,
+      name: `${response.data.user.firstName} ${response.data.user.lastName}`,
+      role: response.data.user.role.toUpperCase() as 'ADMIN' | 'AGENT' | 'CLIENT',
+      languageId: response.data.user.languageId,
+    };
 
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
 
-      // Navigate based on role from JWT
-      switch (userData.role) {
-        case 'ADMIN':
-          navigate('/admin/dashboard');
-          break;
-        case 'AGENT':
-          navigate('/agent/dashboard');
-          break;
-        case 'CLIENT':
-          navigate('/client/dashboard');
-          break;
-        default:
-          navigate('/');
-      }
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
+    // Navigate based on role from JWT
+    switch (userData.role) {
+      case 'ADMIN':
+        navigate('/admin/dashboard');
+        break;
+      case 'AGENT':
+        navigate('/agent/dashboard');
+        break;
+      case 'CLIENT':
+        navigate('/client/dashboard');
+        break;
+      default:
+        navigate('/');
     }
   };
 
   const logout = async () => {
-    try {
-      await api.auth.logout();
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+    await api.auth.logout();
     setUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');

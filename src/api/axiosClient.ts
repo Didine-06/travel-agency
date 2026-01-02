@@ -45,20 +45,19 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      // Server responded with error
-      const responseData = error.response.data;
       
       // Handle 401 Unauthorized - token expired
       if (error.response.status === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('user');
-        window.location.href = '/login';
+        // Ne rediriger vers /login que si on n'est pas déjà sur la page de login
+        if (!window.location.pathname.includes('/login') || !window.location.pathname.includes('/register')) {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }
         return Promise.reject(error);
-      }
-      
-      // Pour les erreurs 400 et autres, retourner la réponse au lieu de lancer une exception
-      // Cela permet au code appelant de gérer l'erreur normalement
-      return { data: responseData };
+      }  
+      // Pour les autres erreurs, les rejeter pour que le composant puisse les gérer
+      return Promise.reject(error);
     } else if (error.request) {
       // Request made but no response
       throw new Error('No response from server. Please check your connection.');

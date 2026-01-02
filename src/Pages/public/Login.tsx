@@ -52,8 +52,13 @@ const Login = () => {
     setIsLoading(true);
     try {
       await login({ email, password });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t('auth.login.errors.loginFailed'));
+    } catch (err: any) {
+      // Récupérer le message d'erreur du backend
+      const errorMessage = err.response?.data?.message || 
+                          err.response?.data?.error || 
+                          err.message || 
+                          t('auth.login.errors.loginFailed');
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

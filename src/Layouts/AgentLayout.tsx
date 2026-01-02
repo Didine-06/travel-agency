@@ -12,7 +12,7 @@ const AgentLayout = () => {
     <div className="flex h-screen overflow-hidden bg-gray-100">
       <Sidebar items={menuItems} role="Agent" />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar title="Agent Dashboard" />
+        <TopBar />
         <main className="flex-1 p-6 overflow-y-auto">
           <Outlet />
         </main>
