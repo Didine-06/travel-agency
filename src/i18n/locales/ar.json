@@ -4,7 +4,19 @@
     "save": "حفظ",
     "cancel": "إلغاء",
     "close": "إغلاق",
-    "back": "رجوع"
+    "back": "رجوع",
+    "deleting": "جاري الحذف...",
+    "confirmDelete": {
+      "title": "تأكيد الحذف",
+      "subtitle": "هذا الإجراء لا يمكن التراجع عنه.",
+      "confirm": "حذف",
+      "message_one": "هل أنت متأكد من حذف {{entity}}؟ هذا الإجراء لا رجعة فيه.",
+      "message_other": "هل أنت متأكد من حذف {{count}} {{entity}}؟ هذا الإجراء لا رجعة فيه."
+    }
+  },
+  "entities": {
+    "destination": "وجهة",
+    "destinations": "وجهات"
   },
   "home": {
     "hero": {
@@ -200,7 +212,7 @@
     "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
     "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
   ],
-  "destinations": {
+  "packages": {
     "title": "وجهاتنا",
     "subtitle": "اكتشف رحلات لا تُنسى حول العالم",
     "search": "البحث...",
@@ -241,5 +253,78 @@
     "viewDetails": "عرض",
     "packageType": "نوع الرحلة",
     "allTypes": "جميع الأنواع"
+  },
+  "destinations": {
+    "title": "إدارة الوجهات",
+    "search": "البحث عن وجهات...",
+    "create": "إنشاء وجهة",
+    "delete": "حذف",
+    "deleteSelected": "حذف ({{count}})",
+    "noDestinations": "لم يتم العثور على وجهات",
+    "modifySearch": "حاول تعديل بحثك",
+    "columns": {
+      "name": "الاسم",
+      "country": "البلد",
+      "city": "المدينة",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف",
+      "activate": "تفعيل",
+      "deactivate": "تعطيل"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط"
+    },
+    "create": {
+      "title": "إنشاء وجهة",
+      "save": "إنشاء",
+      "saving": "جاري الإنشاء...",
+      "cancel": "إلغاء",
+      "success": "تم إنشاء الوجهة بنجاح!",
+      "error": "خطأ في إنشاء الوجهة"
+    },
+    "edit": {
+      "title": "تعديل الوجهة",
+      "save": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "cancel": "إلغاء",
+      "success": "تم تحديث الوجهة بنجاح!",
+      "error": "خطأ في تحديث الوجهة",
+      "loadError": "خطأ في تحميل الوجهة"
+    },
+    "fields": {
+      "name": "الاسم",
+      "country": "البلد",
+      "city": "المدينة",
+      "description": "الوصف",
+      "imageUrl": "رابط الصورة",
+      "status": "الحالة",
+      "namePlaceholder": "مثال: جولات باريس",
+      "countryPlaceholder": "مثال: فرنسا",
+      "cityPlaceholder": "مثال: باريس",
+      "descriptionPlaceholder": "أدخل وصف الوجهة...",
+      "imageUrlPlaceholder": "https://example.com/image.jpg"
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف الوجهة بنجاح!",
+      "deleteError": "خطأ في حذف الوجهة",
+      "deleteManySuccess": "تم حذف الوجهات بنجاح!",
+      "deleteManyError": "خطأ في حذف الوجهات",
+      "activateSuccess": "تم تفعيل الوجهة بنجاح!",
+      "deactivateSuccess": "تم تعطيل الوجهة بنجاح!",
+      "toggleError": "خطأ في تحديث حالة الوجهة"
+    },
+    "pagination": {
+      "showing": "عرض",
+      "perPage": "لكل صفحة",
+      "results": "نتيجة",
+      "results_plural": "نتائج",
+      "previous": "السابق",
+      "next": "التالي"
+    }
   }
 }

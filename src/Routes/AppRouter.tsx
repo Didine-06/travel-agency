@@ -31,6 +31,9 @@ import EditConsultation from "../Pages/client/consultations/EditConsultation";
 import AgentDashboard from "../Pages/agent/Dashboard";
 import AgentBookings from "../Pages/agent/Bookings";
 import AgentProfile from "../Pages/agent/Profile";
+import AgentDestinations from "../Pages/agent/destinations/Destination";
+import CreateDestination from "../Pages/agent/destinations/CreateDestination";
+import EditDestination from "../Pages/agent/destinations/EditDestination";
 
 // Admin Pages
 import AdminDashboard from "../Pages/admin/Dashboard";
@@ -93,6 +96,13 @@ const AppRouter = () => {
       >
         <Route index element={<Navigate to="/agent/dashboard" replace />} />
         <Route path="dashboard" element={<AgentDashboard />} />
+        
+        {/* Destinations parent */}
+        <Route path="destinations" element={<AgentDestinations />}>
+          <Route index element={<CreateDestination />} />
+          <Route path=":id" element={<EditDestination />} />
+        </Route>
+        
         <Route path="bookings" element={<AgentBookings />} />
         <Route path="profile" element={<AgentProfile />} />
       </Route>

@@ -269,7 +269,9 @@
     "ticket": "ticket",
     "tickets": "tickets",
     "consultation": "consultation",
-    "consultations": "consultations"
+    "consultations": "consultations",
+    "destination": "destination",
+    "destinations": "destinations"
   },
   "reservations": {
     "title": "My Reservations",
@@ -541,7 +543,9 @@
     "July", "August", "September", "October", "November", "December"
   ],
   "destinations": {
-    "title": "Our Destinations",
+      
+    "title": "Destinations",
+
     "subtitle": "Discover unforgettable journeys around the world",
     "search": "Search...",
     "filters": "Filters",
@@ -580,7 +584,76 @@
     "from": "From",
     "viewDetails": "View",
     "packageType": "Trip type",
-    "allTypes": "All types"
+    "allTypes": "All types",
+
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noDestinations": "No destinations found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "name": "Name",
+      "country": "Country",
+      "city": "City",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "create": {
+      "title": "Create Destination",
+      "save": "Create",
+      "saving": "Creating...",
+      "cancel": "Cancel",
+      "success": "Destination created successfully!",
+      "error": "Error creating destination"
+    },
+    "edit": {
+      "title": "Edit Destination",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "success": "Destination updated successfully!",
+      "error": "Error updating destination",
+      "loadError": "Error loading destination"
+    },
+    "fields": {
+      "name": "Name",
+      "country": "Country",
+      "city": "City",
+      "description": "Description",
+      "imageUrl": "Image URL",
+      "status": "Status",
+      "namePlaceholder": "e.g., Paris Tours",
+      "countryPlaceholder": "e.g., France",
+      "cityPlaceholder": "e.g., Paris",
+      "descriptionPlaceholder": "Enter destination description...",
+      "imageUrlPlaceholder": "https://example.com/image.jpg"
+    },
+    "messages": {
+      "deleteSuccess": "Destination deleted successfully!",
+      "deleteError": "Error deleting destination",
+      "deleteManySuccess": "Destinations deleted successfully!",
+      "deleteManyError": "Error deleting destinations",
+      "activateSuccess": "Destination activated successfully!",
+      "deactivateSuccess": "Destination deactivated successfully!",
+      "toggleError": "Error updating destination status"
+    },
+    "pagination": {
+      "showing": "Showing",
+      "perPage": "per page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    }
   }
 }
 

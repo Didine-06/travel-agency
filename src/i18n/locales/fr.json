@@ -250,7 +250,9 @@
     "ticket": "billet",
     "tickets": "billets",
     "consultation": "consultation",
-    "consultations": "consultations"
+    "consultations": "consultations",
+    "destination": "destination",
+    "destinations": "destinations"
   },
   "booking": {
     "details": "Détails de la réservation",
@@ -553,7 +555,6 @@
     "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
   ],
   "destinations": {
-    "title": "Nos destinations",
     "subtitle": "Découvrez des voyages inoubliables à travers le monde",
     "search": "Rechercher...",
     "filters": "Filtres",
@@ -592,6 +593,75 @@
     "from": "À partir de",
     "viewDetails": "Voir",
     "packageType": "Type de voyage",
-    "allTypes": "Tous les types"
+    "allTypes": "Tous les types",
+    "title": "Destinations",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noDestinations": "Aucune destination trouvée",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "name": "Nom",
+      "country": "Pays",
+      "city": "Ville",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "activate": "Activer",
+      "deactivate": "Désactiver"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "create": {
+      "title": "Créer une Destination",
+      "save": "Créer",
+      "saving": "Création...",
+      "cancel": "Annuler",
+      "success": "Destination créée avec succès !",
+      "error": "Erreur lors de la création de la destination"
+    },
+    "edit": {
+      "title": "Modifier la Destination",
+      "save": "Enregistrer les modifications",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "success": "Destination mise à jour avec succès !",
+      "error": "Erreur lors de la mise à jour de la destination",
+      "loadError": "Erreur lors du chargement de la destination"
+    },
+    "fields": {
+      "name": "Nom",
+      "country": "Pays",
+      "city": "Ville",
+      "description": "Description",
+      "imageUrl": "URL de l'image",
+      "status": "Statut",
+      "namePlaceholder": "ex: Paris Tours",
+      "countryPlaceholder": "ex: France",
+      "cityPlaceholder": "ex: Paris",
+      "descriptionPlaceholder": "Entrez la description de la destination...",
+      "imageUrlPlaceholder": "https://exemple.com/image.jpg"
+    },
+    "messages": {
+      "deleteSuccess": "Destination supprimée avec succès !",
+      "deleteError": "Erreur lors de la suppression de la destination",
+      "deleteManySuccess": "Destinations supprimées avec succès !",
+      "deleteManyError": "Erreur lors de la suppression des destinations",
+      "activateSuccess": "Destination activée avec succès !",
+      "deactivateSuccess": "Destination désactivée avec succès !",
+      "toggleError": "Erreur lors de la mise à jour du statut de la destination"
+    },
+    "pagination": {
+      "showing": "Affichage de",
+      "perPage": "par page",
+      "results": "résultat",
+      "results_plural": "résultats",
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
   }
 }

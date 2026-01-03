@@ -9,3 +9,22 @@ export interface DestinationResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CreateDestinationDto {
+  name: string;
+  country: string;
+  city: string;
+  description: string;
+  imageUrl: string;
+}
+
+export interface UpdateDestinationDto {
+  name?: string;
+  country?: string;
+  city?: string;
+  description?: string;
+  imageUrl?: string;
+  isActive?: boolean;
+}
+
+export type Destination = DestinationResponse;

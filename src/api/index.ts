@@ -23,6 +23,7 @@ import type {
   UpdateConsultationDto,
   CancelConsultationDto,
 } from "../types/consultation-models";
+import { destinationsApi } from "./destinationsApi";
 
 export type UpdateMyBookingDto = {
   numberOfAdults: number;
@@ -159,20 +160,9 @@ export const api = {
     },
   },
 
-  destinations: {
-    getAll: async (): Promise<ApiResponse<DestinationResponse[]>> => {
-      const response = await axiosClient.get<
-        ApiResponse<DestinationResponse[]>
-      >("/destinations");
-      return response.data;
-    },
-    getById: async (id: string): Promise<ApiResponse<DestinationResponse>> => {
-      const response = await axiosClient.get<ApiResponse<DestinationResponse>>(
-        `/destinations/${id}`
-      );
-      return response.data;
-    },
-  },
+  // Destinations API
+  destinations: destinationsApi,
+
 
   packages: {
     getAll: async (): Promise<ApiResponse<PackageResponse[]>> => {
@@ -367,6 +357,7 @@ export const api = {
       return response.data;
     },
   },
+
 };
 
 // Export axios client for custom requests if needed
