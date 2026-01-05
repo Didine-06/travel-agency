@@ -197,7 +197,9 @@
     "bookings": "Réservations",
     "profile": "Profil",
     "plane": "Vols",
-    "visa": "Visas"
+    "visa": "Visas",
+    "flightTickets": "Billetterie",
+    "destinations": "Destinations"
   },
   "dashboard": {
     "welcome": "Bonjour",
@@ -252,7 +254,9 @@
     "consultation": "consultation",
     "consultations": "consultations",
     "destination": "destination",
-    "destinations": "destinations"
+    "destinations": "destinations",
+    "flightTicket": "billet d'avion",
+    "flightTickets": "billets d'avion"
   },
   "booking": {
     "details": "Détails de la réservation",
@@ -654,6 +658,86 @@
       "activateSuccess": "Destination activée avec succès !",
       "deactivateSuccess": "Destination désactivée avec succès !",
       "toggleError": "Erreur lors de la mise à jour du statut de la destination"
+    },
+    "pagination": {
+      "showing": "Affichage de",
+      "perPage": "par page",
+      "results": "résultat",
+      "results_plural": "résultats",
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
+  },
+  "flightTickets": {
+    "title": "Billetterie",
+    "subtitle": "Gérer les réservations de billets d'avion",
+    "search": "Rechercher par nom de client, email, statut...",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noTickets": "Aucun billet d'avion trouvé",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "customer": "Client",
+      "departure": "Départ",
+      "arrival": "Arrivée",
+      "seatClass": "Classe",
+      "price": "Prix",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "markAsPaid": "Marquer comme payé"
+    },
+    "status": {
+      "reserved": "Réservé",
+      "paid": "Payé",
+      "cancelled": "Annulé"
+    },
+    "seatClass": {
+      "economy": "Économique",
+      "business": "Affaires",
+      "first": "Première Classe"
+    },
+    "create": {
+      "title": "Créer un billet d'avion",
+      "save": "Créer",
+      "saving": "Création...",
+      "cancel": "Annuler",
+      "success": "Billet d'avion créé avec succès !",
+      "error": "Erreur lors de la création du billet d'avion"
+    },
+    "edit": {
+      "title": "Modifier le billet d'avion",
+      "save": "Enregistrer les modifications",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "success": "Billet d'avion mis à jour avec succès !",
+      "error": "Erreur lors de la mise à jour du billet d'avion",
+      "loadError": "Erreur lors du chargement du billet d'avion"
+    },
+    "fields": {
+      "bookingId": "ID de réservation",
+      "customerId": "ID du client",
+      "departure": "Départ",
+      "arrival": "Arrivée",
+      "seatClass": "Classe de siège",
+      "price": "Prix (DZD)",
+      "status": "Statut",
+      "bookingIdPlaceholder": "Entrez l'ID de réservation",
+      "customerIdPlaceholder": "Entrez l'ID du client",
+      "pricePlaceholder": "0.00"
+    },
+    "messages": {
+      "deleteSuccess": "Billet d'avion supprimé avec succès !",
+      "deleteError": "Erreur lors de la suppression du billet d'avion",
+      "deleteManySuccess": "Billets d'avion supprimés avec succès !",
+      "deleteManyError": "Erreur lors de la suppression des billets d'avion",
+      "statusUpdateSuccess": "Statut du billet mis à jour avec succès !",
+      "statusUpdateError": "Erreur lors de la mise à jour du statut du billet",
+      "markAsPaidSuccess": "Billet marqué comme payé avec succès !",
+      "markAsPaidError": "Erreur lors du marquage du billet comme payé"
     },
     "pagination": {
       "showing": "Affichage de",

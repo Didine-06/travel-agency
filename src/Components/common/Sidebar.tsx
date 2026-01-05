@@ -10,6 +10,7 @@ import {
   FileText,
   ChevronLeft,
   LayoutDashboard,
+  Ticket,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -29,7 +30,9 @@ type SidebarLabelKey =
   | "bookings"
   | "profile"
   | "plane"
-  | "visa";
+  | "visa"
+  | "flightTickets"
+  | "destinations";
 
 const labelToKey: Record<string, SidebarLabelKey> = {
   Dashboard: "dashboard",
@@ -38,6 +41,8 @@ const labelToKey: Record<string, SidebarLabelKey> = {
   Profile: "profile",
   Planes: "plane",
   Visas: "visa",
+  "Flight Tickets": "flightTickets",
+  Destinations: "destinations",
 };
 
 // Lucide icon mapping
@@ -56,6 +61,10 @@ const getIcon = (key: SidebarLabelKey) => {
       return <Plane className={className} />;
     case "visa":
       return <FileText className={className} />;
+    case "flightTickets":
+      return <Ticket className={className} />;
+    case "destinations":
+      return <Calendar className={className} />;
     default:
       return <Home className={className} />;
   }

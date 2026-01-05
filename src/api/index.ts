@@ -24,6 +24,7 @@ import type {
   CancelConsultationDto,
 } from "../types/consultation-models";
 import { destinationsApi } from "./destinationsApi";
+import { flightTicketsApi } from "./flightTicketsApi";
 
 export type UpdateMyBookingDto = {
   numberOfAdults: number;
@@ -163,6 +164,8 @@ export const api = {
   // Destinations API
   destinations: destinationsApi,
 
+  // Flight Tickets API
+  flightTickets: flightTicketsApi,
 
   packages: {
     getAll: async (): Promise<ApiResponse<PackageResponse[]>> => {

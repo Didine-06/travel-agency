@@ -16,7 +16,9 @@
   },
   "entities": {
     "destination": "وجهة",
-    "destinations": "وجهات"
+    "destinations": "وجهات",
+    "flightTicket": "تذكرة طيران",
+    "flightTickets": "تذاكر طيران"
   },
   "home": {
     "hero": {
@@ -112,7 +114,9 @@
     "bookings": "الحجوزات",
     "profile": "الملف الشخصي",
     "plane": "الرحلات",
-    "visa": "التأشيرات"
+    "visa": "التأشيرات",
+    "flightTickets": "تذاكر الطيران",
+    "destinations": "الوجهات"
   },
   "dashboard": {
     "welcome": "مرحبا",
@@ -317,6 +321,86 @@
       "activateSuccess": "تم تفعيل الوجهة بنجاح!",
       "deactivateSuccess": "تم تعطيل الوجهة بنجاح!",
       "toggleError": "خطأ في تحديث حالة الوجهة"
+    },
+    "pagination": {
+      "showing": "عرض",
+      "perPage": "لكل صفحة",
+      "results": "نتيجة",
+      "results_plural": "نتائج",
+      "previous": "السابق",
+      "next": "التالي"
+    }
+  },
+  "flightTickets": {
+    "title": "تذاكر الطيران",
+    "subtitle": "إدارة حجوزات تذاكر الطيران",
+    "search": "البحث باسم العميل، البريد الإلكتروني، الحالة...",
+    "delete": "حذف",
+    "deleteSelected": "حذف ({{count}})",
+    "noTickets": "لم يتم العثور على تذاكر طيران",
+    "modifySearch": "حاول تعديل البحث",
+    "columns": {
+      "customer": "العميل",
+      "departure": "المغادرة",
+      "arrival": "الوصول",
+      "seatClass": "الدرجة",
+      "price": "السعر",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف",
+      "markAsPaid": "وضع علامة كمدفوع"
+    },
+    "status": {
+      "reserved": "محجوز",
+      "paid": "مدفوع",
+      "cancelled": "ملغى"
+    },
+    "seatClass": {
+      "economy": "الدرجة الاقتصادية",
+      "business": "درجة الأعمال",
+      "first": "الدرجة الأولى"
+    },
+    "create": {
+      "title": "إنشاء تذكرة طيران",
+      "save": "إنشاء",
+      "saving": "جاري الإنشاء...",
+      "cancel": "إلغاء",
+      "success": "تم إنشاء تذكرة الطيران بنجاح!",
+      "error": "خطأ في إنشاء تذكرة الطيران"
+    },
+    "edit": {
+      "title": "تعديل تذكرة الطيران",
+      "save": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "cancel": "إلغاء",
+      "success": "تم تحديث تذكرة الطيران بنجاح!",
+      "error": "خطأ في تحديث تذكرة الطيران",
+      "loadError": "خطأ في تحميل تذكرة الطيران"
+    },
+    "fields": {
+      "bookingId": "معرف الحجز",
+      "customerId": "معرف العميل",
+      "departure": "المغادرة",
+      "arrival": "الوصول",
+      "seatClass": "درجة المقعد",
+      "price": "السعر (دج)",
+      "status": "الحالة",
+      "bookingIdPlaceholder": "أدخل معرف الحجز",
+      "customerIdPlaceholder": "أدخل معرف العميل",
+      "pricePlaceholder": "0.00"
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف تذكرة الطيران بنجاح!",
+      "deleteError": "خطأ في حذف تذكرة الطيران",
+      "deleteManySuccess": "تم حذف تذاكر الطيران بنجاح!",
+      "deleteManyError": "خطأ في حذف تذاكر الطيران",
+      "statusUpdateSuccess": "تم تحديث حالة التذكرة بنجاح!",
+      "statusUpdateError": "خطأ في تحديث حالة التذكرة",
+      "markAsPaidSuccess": "تم وضع علامة على التذكرة كمدفوعة بنجاح!",
+      "markAsPaidError": "خطأ في وضع علامة على التذكرة كمدفوعة"
     },
     "pagination": {
       "showing": "عرض",

@@ -216,7 +216,9 @@
     "bookings": "Bookings",
     "profile": "Profile",
     "plane": "Flights",
-    "visa": "Visas"
+    "visa": "Visas",
+    "flightTickets": "Flight Tickets",
+    "destinations": "Destinations"
   },
   "dashboard": {
     "welcome": "Hello",
@@ -271,7 +273,9 @@
     "consultation": "consultation",
     "consultations": "consultations",
     "destination": "destination",
-    "destinations": "destinations"
+    "destinations": "destinations",
+    "flightTicket": "flight ticket",
+    "flightTickets": "flight tickets"
   },
   "reservations": {
     "title": "My Reservations",
@@ -645,6 +649,86 @@
       "activateSuccess": "Destination activated successfully!",
       "deactivateSuccess": "Destination deactivated successfully!",
       "toggleError": "Error updating destination status"
+    },
+    "pagination": {
+      "showing": "Showing",
+      "perPage": "per page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "flightTickets": {
+    "title": "Flight Tickets",
+    "subtitle": "Manage flight ticket reservations",
+    "search": "Search by customer name, email, status...",
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noTickets": "No flight tickets found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "customer": "Customer",
+      "departure": "Departure",
+      "arrival": "Arrival",
+      "seatClass": "Seat Class",
+      "price": "Price",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "markAsPaid": "Mark as Paid"
+    },
+    "status": {
+      "reserved": "Reserved",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    },
+    "seatClass": {
+      "economy": "Economy",
+      "business": "Business",
+      "first": "First Class"
+    },
+    "create": {
+      "title": "Create Flight Ticket",
+      "save": "Create",
+      "saving": "Creating...",
+      "cancel": "Cancel",
+      "success": "Flight ticket created successfully!",
+      "error": "Error creating flight ticket"
+    },
+    "edit": {
+      "title": "Edit Flight Ticket",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "success": "Flight ticket updated successfully!",
+      "error": "Error updating flight ticket",
+      "loadError": "Error loading flight ticket"
+    },
+    "fields": {
+      "bookingId": "Booking ID",
+      "customerId": "Customer ID",
+      "departure": "Departure",
+      "arrival": "Arrival",
+      "seatClass": "Seat Class",
+      "price": "Price (DZD)",
+      "status": "Status",
+      "bookingIdPlaceholder": "Enter booking ID",
+      "customerIdPlaceholder": "Enter customer ID",
+      "pricePlaceholder": "0.00"
+    },
+    "messages": {
+      "deleteSuccess": "Flight ticket deleted successfully!",
+      "deleteError": "Error deleting flight ticket",
+      "deleteManySuccess": "Flight tickets deleted successfully!",
+      "deleteManyError": "Error deleting flight tickets",
+      "statusUpdateSuccess": "Ticket status updated successfully!",
+      "statusUpdateError": "Error updating ticket status",
+      "markAsPaidSuccess": "Ticket marked as paid successfully!",
+      "markAsPaidError": "Error marking ticket as paid"
     },
     "pagination": {
       "showing": "Showing",

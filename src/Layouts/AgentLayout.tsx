@@ -6,6 +6,7 @@ const AgentLayout = () => {
   const menuItems = [
     { path: '/agent/dashboard', label: 'Dashboard' },
     { path: '/agent/destinations', label: 'Destinations' },
+    { path: '/agent/flight-tickets', label: 'Flight Tickets' },
     { path: '/agent/bookings', label: 'Bookings' }
   ];
 

@@ -34,6 +34,9 @@ import AgentProfile from "../Pages/agent/Profile";
 import AgentDestinations from "../Pages/agent/destinations/Destination";
 import CreateDestination from "../Pages/agent/destinations/CreateDestination";
 import EditDestination from "../Pages/agent/destinations/EditDestination";
+import AgentFlightTickets from "../Pages/agent/flight-tickets/FlightTicket";
+import CreateFlightTicket from "../Pages/agent/flight-tickets/CreateFlightTicket";
+import EditFlightTicket from "../Pages/agent/flight-tickets/EditFlightTicket";
 
 // Admin Pages
 import AdminDashboard from "../Pages/admin/Dashboard";
@@ -101,6 +104,12 @@ const AppRouter = () => {
         <Route path="destinations" element={<AgentDestinations />}>
           <Route index element={<CreateDestination />} />
           <Route path=":id" element={<EditDestination />} />
+        </Route>
+        
+        {/* Flight Tickets parent */}
+        <Route path="flight-tickets" element={<AgentFlightTickets />}>
+          <Route index element={<CreateFlightTicket />} />
+          <Route path=":id" element={<EditFlightTicket />} />
         </Route>
         
         <Route path="bookings" element={<AgentBookings />} />
