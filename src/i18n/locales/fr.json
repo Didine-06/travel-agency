@@ -720,6 +720,8 @@
     "fields": {
       "bookingId": "ID de réservation",
       "customerId": "ID du client",
+      "customer": "Client",
+      "booking": "Réservation",
       "departure": "Départ",
       "arrival": "Arrivée",
       "seatClass": "Classe de siège",
@@ -727,7 +729,11 @@
       "status": "Statut",
       "bookingIdPlaceholder": "Entrez l'ID de réservation",
       "customerIdPlaceholder": "Entrez l'ID du client",
-      "pricePlaceholder": "0.00"
+      "customerPlaceholder": "Sélectionnez un client",
+      "bookingPlaceholder": "Sélectionnez une réservation",
+      "pricePlaceholder": "0.00",
+      "selectCustomerFirst": "Veuillez d'abord sélectionner un client pour voir ses réservations",
+      "noBookingsForCustomer": "Ce client n'a pas encore de réservations"
     },
     "messages": {
       "deleteSuccess": "Billet d'avion supprimé avec succès !",

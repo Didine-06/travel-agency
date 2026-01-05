@@ -25,6 +25,7 @@ import type {
 } from "../types/consultation-models";
 import { destinationsApi } from "./destinationsApi";
 import { flightTicketsApi } from "./flightTicketsApi";
+import { customersApi } from "./customersApi";
 
 export type UpdateMyBookingDto = {
   numberOfAdults: number;
@@ -167,6 +168,9 @@ export const api = {
   // Flight Tickets API
   flightTickets: flightTicketsApi,
 
+  // Customers API
+  customers: customersApi,
+
   packages: {
     getAll: async (): Promise<ApiResponse<PackageResponse[]>> => {
       const response = await axiosClient.get<ApiResponse<PackageResponse[]>>(
@@ -193,6 +197,14 @@ export const api = {
     getMyBookingById: async (id: string): Promise<ApiResponse<Booking>> => {
       const response = await axiosClient.get<ApiResponse<Booking>>(
         `/bookings/my-booking/${id}`
+      );
+      return response.data;
+    },
+
+    // Get bookings for a specific customer (Admin/Agent)
+    getCustomerBookings: async (customerId: string): Promise<ApiResponse<Booking[]>> => {
+      const response = await axiosClient.get<ApiResponse<Booking[]>>(
+        `/bookings/customer/${customerId}`
       );
       return response.data;
     },

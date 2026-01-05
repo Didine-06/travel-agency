@@ -5,6 +5,10 @@ import { X } from 'lucide-react';
 import { flightTicketsApi } from '../../../api/flightTicketsApi';
 import { useFlightTicketContext } from './FlightTicketContext';
 import { useOutletContext } from 'react-router-dom';
+import { api } from '../../../api';
+import type { Customer } from '../../../types/customer-models';
+import type { Booking } from '../../../types/booking-models';
+import SearchableSelect from '../../../Components/common/SearchableSelect';
 
 type OutletContext = {
   createModalOpen: boolean;
@@ -19,6 +23,11 @@ export default function CreateFlightTicket() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>('');
 
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loadingCustomers, setLoadingCustomers] = useState(false);
+  const [loadingBookings, setLoadingBookings] = useState(false);
+
   const [form, setForm] = useState({
     bookingId: '',
     customerId: '',
@@ -30,6 +39,57 @@ export default function CreateFlightTicket() {
   });
 
   const [open, setOpen] = useState(false);
+
+  // Load customers when modal opens
+  useEffect(() => {
+    if (createModalOpen) {
+      loadCustomers();
+    }
+  }, [createModalOpen]);
+
+  // Load bookings when customer is selected
+  useEffect(() => {
+    if (form.customerId) {
+      loadBookings(form.customerId);
+    } else {
+      setBookings([]);
+      setForm(prev => ({ ...prev, bookingId: '' }));
+    }
+  }, [form.customerId]);
+
+  const loadCustomers = async () => {
+    try {
+      setLoadingCustomers(true);
+      const response = await api.customers.getAllCustomers();
+      if (response.isSuccess && response.data) {
+        setCustomers(response.data);
+      } else {
+        toast.error(response.message || 'Error loading customers');
+      }
+    } catch (err) {
+      toast.error('Error loading customers');
+    } finally {
+      setLoadingCustomers(false);
+    }
+  };
+
+  const loadBookings = async (customerId: string) => {
+    try {
+      setLoadingBookings(true);
+      const response = await api.bookings.getCustomerBookings(customerId);
+      if (response.isSuccess && response.data) {
+        setBookings(response.data);
+      } else {
+        setBookings([]);
+        toast.error(response.message || 'Error loading bookings');
+      }
+    } catch (err) {
+      setBookings([]);
+      toast.error('Error loading bookings');
+    } finally {
+      setLoadingBookings(false);
+    }
+  };
 
   useEffect(() => {
     if (createModalOpen) {
@@ -142,35 +202,48 @@ export default function CreateFlightTicket() {
           )}
 
           <div className="grid grid-cols-1 gap-4">
-            {/* Booking ID */}
-            <label className="block">
-              <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('flightTickets.fields.bookingId')} <span className="text-red-500">*</span>
-              </span>
-              <input
-                type="text"
-                value={form.bookingId}
-                onChange={(e) => setForm({ ...form, bookingId: e.target.value })}
-                placeholder={t('flightTickets.fields.bookingIdPlaceholder')}
-                required
-                className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </label>
+            {/* Customer Selection */}
+            <SearchableSelect
+              label={t('flightTickets.fields.customer')}
+              placeholder={t('flightTickets.fields.customerPlaceholder')}
+              value={form.customerId}
+              onChange={(value) => setForm({ ...form, customerId: value, bookingId: '' })}
+              options={customers.map(customer => ({
+                value: customer.id,
+                label: `${customer.user.firstName} ${customer.user.lastName}`,
+                subtitle: customer.user.email,
+              }))}
+              required
+              loading={loadingCustomers}
+            />
 
-            {/* Customer ID */}
-            <label className="block">
-              <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t('flightTickets.fields.customerId')} <span className="text-red-500">*</span>
-              </span>
-              <input
-                type="text"
-                value={form.customerId}
-                onChange={(e) => setForm({ ...form, customerId: e.target.value })}
-                placeholder={t('flightTickets.fields.customerIdPlaceholder')}
-                required
-                className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </label>
+            {/* Booking Selection */}
+            <SearchableSelect
+              label={t('flightTickets.fields.booking')}
+              placeholder={t('flightTickets.fields.bookingPlaceholder')}
+              value={form.bookingId}
+              onChange={(value) => setForm({ ...form, bookingId: value })}
+              options={bookings.map(booking => ({
+                value: booking.id,
+                label: `Booking #${booking.id.slice(0, 8)} - ${booking.package?.title || 'N/A'}`,
+                subtitle: `${booking.numberOfAdults} adults, ${booking.numberOfChildren} children - ${booking.totalPrice} DZD`,
+              }))}
+              required
+              disabled={!form.customerId}
+              loading={loadingBookings}
+            />
+            
+            {!form.customerId && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 -mt-2">
+                {t('flightTickets.fields.selectCustomerFirst')}
+              </p>
+            )}
+
+            {form.customerId && bookings.length === 0 && !loadingBookings && (
+              <p className="text-xs text-amber-600 dark:text-amber-400 -mt-2">
+                {t('flightTickets.fields.noBookingsForCustomer')}
+              </p>
+            )}
 
             {/* Departure and Arrival DateTime */}
             <div className="grid grid-cols-2 gap-3">

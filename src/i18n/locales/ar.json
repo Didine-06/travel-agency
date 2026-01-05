@@ -383,6 +383,8 @@
     "fields": {
       "bookingId": "معرف الحجز",
       "customerId": "معرف العميل",
+      "customer": "العميل",
+      "booking": "الحجز",
       "departure": "المغادرة",
       "arrival": "الوصول",
       "seatClass": "درجة المقعد",
@@ -390,7 +392,11 @@
       "status": "الحالة",
       "bookingIdPlaceholder": "أدخل معرف الحجز",
       "customerIdPlaceholder": "أدخل معرف العميل",
-      "pricePlaceholder": "0.00"
+      "customerPlaceholder": "اختر عميلاً",
+      "bookingPlaceholder": "اختر حجزاً",
+      "pricePlaceholder": "0.00",
+      "selectCustomerFirst": "يرجى اختيار عميل أولاً لرؤية حجوزاته",
+      "noBookingsForCustomer": "هذا العميل ليس لديه حجوزات بعد"
     },
     "messages": {
       "deleteSuccess": "تم حذف تذكرة الطيران بنجاح!",

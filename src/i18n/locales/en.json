@@ -711,6 +711,8 @@
     "fields": {
       "bookingId": "Booking ID",
       "customerId": "Customer ID",
+      "customer": "Customer",
+      "booking": "Booking",
       "departure": "Departure",
       "arrival": "Arrival",
       "seatClass": "Seat Class",
@@ -718,7 +720,11 @@
       "status": "Status",
       "bookingIdPlaceholder": "Enter booking ID",
       "customerIdPlaceholder": "Enter customer ID",
-      "pricePlaceholder": "0.00"
+      "customerPlaceholder": "Select a customer",
+      "bookingPlaceholder": "Select a booking",
+      "pricePlaceholder": "0.00",
+      "selectCustomerFirst": "Please select a customer first to see their bookings",
+      "noBookingsForCustomer": "This customer has no bookings yet"
     },
     "messages": {
       "deleteSuccess": "Flight ticket deleted successfully!",
