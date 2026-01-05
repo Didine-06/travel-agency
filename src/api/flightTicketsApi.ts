@@ -82,4 +82,65 @@ export const flightTicketsApi = {
     const response = await axiosClient.patch(`/flight-tickets/${id}/mark-as-paid`);
     return response.data;
   },
+
+  // ===== Client-specific endpoints =====
+
+  // Get my flight tickets (Client)
+  getMyTickets: async (): Promise<ApiResponse<FlightTicket[]>> => {
+    const response = await axiosClient.get("/flight-tickets/my-tickets");
+    return response.data;
+  },
+
+  // Create my flight ticket (Client)
+  createMyTicket: async (data: {
+    bookingId: string;
+    departureDateTime: string;
+    arrivalDateTime: string;
+    seatClass: "ECONOMY" | "BUSINESS" | "FIRST";
+    ticketPrice: number;
+  }): Promise<ApiResponse<FlightTicket>> => {
+    const response = await axiosClient.post("/flight-tickets/my-tickets", data);
+    return response.data;
+  },
+
+  // Update my flight ticket (Client)
+  updateMyTicket: async (
+    id: string,
+    data: UpdateFlightTicketDto
+  ): Promise<ApiResponse<FlightTicket>> => {
+    const response = await axiosClient.patch(`/flight-tickets/my-tickets/${id}`, data);
+    return response.data;
+  },
+
+  // Delete single my flight ticket (Client)
+  deleteMyTicket: async (id: string): Promise<ApiResponse<FlightTicket>> => {
+    const response = await axiosClient.delete(`/flight-tickets/my-tickets/${id}`);
+    return response.data;
+  },
+
+  // Delete multiple my flight tickets (Client)
+  deleteMyTickets: async (ids: string[]): Promise<ApiResponse<any>> => {
+    const response = await axiosClient.delete("/flight-tickets/my-tickets", {
+      data: { ids },
+    });
+    return response.data;
+  },
+
+  // Cancel my flight ticket (Client)
+  cancelMyTicket: async (
+    id: string,
+    data: { cancelReason: string }
+  ): Promise<ApiResponse<FlightTicket>> => {
+    const response = await axiosClient.patch(`/flight-tickets/my-tickets/${id}/cancel`, data);
+    return response.data;
+  },
+
+
+    // Get a specific flight ticket by ID
+    getMyTicketById: async (id: string): Promise<ApiResponse<FlightTicket>> => {
+      const response = await axiosClient.get<ApiResponse<FlightTicket>>(
+        `/flight-tickets/my-tickets/${id}`
+      );
+      return response.data;
+    },
 };

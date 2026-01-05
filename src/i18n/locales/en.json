@@ -667,10 +667,13 @@
     "deleteSelected": "Delete ({{count}})",
     "noTickets": "No flight tickets found",
     "modifySearch": "Try modifying your search",
+    "requestFlight": "Request a Flight",
     "columns": {
       "customer": "Customer",
+      "flight": "Flight",
       "departure": "Departure",
       "arrival": "Arrival",
+      "class": "Class",
       "seatClass": "Seat Class",
       "price": "Price",
       "status": "Status",
@@ -679,7 +682,19 @@
     "actions": {
       "edit": "Edit",
       "delete": "Delete",
+      "cancel": "Cancel",
       "markAsPaid": "Mark as Paid"
+    },
+    "form": {
+      "booking": "Booking",
+      "selectBooking": "Select a booking",
+      "noBookings": "You have no bookings yet",
+      "departureDateTime": "Departure Date & Time",
+      "arrivalDateTime": "Arrival Date & Time",
+      "seatClass": "Seat Class",
+      "ticketPriceEstimation": "Ticket Price Estimation",
+      "submit": "Request Flight",
+      "fillAllFields": "Please fill all required fields"
     },
     "status": {
       "reserved": "Reserved",
@@ -731,6 +746,11 @@
       "deleteError": "Error deleting flight ticket",
       "deleteManySuccess": "Flight tickets deleted successfully!",
       "deleteManyError": "Error deleting flight tickets",
+      "cancelSuccess": "Flight ticket cancelled successfully!",
+      "cancelError": "Error cancelling flight ticket",
+      "createSuccess": "Flight ticket requested successfully!",
+      "createError": "Error requesting flight ticket",
+      "fillAllFields": "Please fill all required fields",
       "statusUpdateSuccess": "Ticket status updated successfully!",
       "statusUpdateError": "Error updating ticket status",
       "markAsPaidSuccess": "Ticket marked as paid successfully!",

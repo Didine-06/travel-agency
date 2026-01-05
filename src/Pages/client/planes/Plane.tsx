@@ -15,6 +15,7 @@ import { api } from "../../../api";
 import type { FlightTicket } from "../../../types/flight-ticket-models";
 import ConfirmDeleteModal from "../../../Components/common/ConfirmDeleteModal";
 import ConfirmCancelModal from "../../../Components/common/ConfirmCancelModal";
+import CreateFlightRequestModal from "../../../Components/common/CreateFlightRequestModal";
 import { LoadingSpinner } from "../../../Components/common/LoadingSpinner";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -51,6 +52,8 @@ function ClientPlane() {
   const [confirmCancelOpen, setConfirmCancelOpen] = useState(false);
   const [cancelTargetId, setCancelTargetId] = useState<string | null>(null);
   const [cancelBusy, setCancelBusy] = useState(false);
+
+  const [createFlightModalOpen, setCreateFlightModalOpen] = useState(false);
 
   useEffect(() => {
     loadTickets();
@@ -271,6 +274,13 @@ function ClientPlane() {
           {t('flightTickets.title')}
         </h1>
         <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => setCreateFlightModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Plane className="w-4 h-4" />
+            {t('flightTickets.requestFlight')}
+          </button>
           {selectedCount > 0 && (
             <button
               onClick={requestBulkDelete}
@@ -296,7 +306,14 @@ function ClientPlane() {
       </div>
 
       {/* Mobile Search */}
-      <div className="md:hidden px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-20">
+      <div className="md:hidden px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-20 space-y-3">
+        <button
+          onClick={() => setCreateFlightModalOpen(true)}
+          className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          <Plane className="w-4 h-4" />
+          {t('flightTickets.requestFlight')}
+        </button>
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
           <input
@@ -716,6 +733,12 @@ function ClientPlane() {
         onConfirm={cancelTicket}
         entityLabel="le billet"
         loading={cancelBusy}
+      />
+
+      <CreateFlightRequestModal
+        open={createFlightModalOpen}
+        onClose={() => setCreateFlightModalOpen(false)}
+        onSuccess={() => loadTickets(true)}
       />
 
       {/* Child route renders the drawer */}
