@@ -24,7 +24,8 @@ function EditPlane() {
 
   const [formData, setFormData] = useState({
     departureDateTime: '',
-    arrivalDateTime: '',
+    returnDate: '',
+    isRoundTrip: false,
     seatClass: 'ECONOMY' as SeatClass,
     ticketPrice: '',
   });
@@ -47,9 +48,25 @@ function EditPlane() {
       const response = await api.flightTickets.getMyTicketById(ticketId);
       if (response.isSuccess && response.data) {
         setTicket(response.data);
+        
+        // Convert ISO datetime to datetime-local format
+        const departureDate = new Date(response.data.departureDateTime);
+        const departureLocal = new Date(departureDate.getTime() - departureDate.getTimezoneOffset() * 60000)
+          .toISOString()
+          .slice(0, 16);
+        
+        let returnLocal = '';
+        if (response.data.returnDate) {
+          const returnDate = new Date(response.data.returnDate);
+          returnLocal = new Date(returnDate.getTime() - returnDate.getTimezoneOffset() * 60000)
+            .toISOString()
+            .slice(0, 16);
+        }
+        
         setFormData({
-          departureDateTime: new Date(response.data.departureDateTime).toISOString().slice(0, 16),
-          arrivalDateTime: new Date(response.data.arrivalDateTime).toISOString().slice(0, 16),
+          departureDateTime: departureLocal,
+          returnDate: returnLocal,
+          isRoundTrip: response.data.isRoundTrip,
           seatClass: response.data.seatClass,
           ticketPrice: response.data.ticketPrice.toString(),
         });
@@ -85,10 +102,14 @@ function EditPlane() {
       setSaving(true);
       const updateData: any = {
         departureDateTime: new Date(formData.departureDateTime).toISOString(),
-        arrivalDateTime: new Date(formData.arrivalDateTime).toISOString(),
+        isRoundTrip: formData.isRoundTrip,
         seatClass: formData.seatClass,
         ticketPrice: parseFloat(formData.ticketPrice),
       };
+      
+      if (formData.isRoundTrip && formData.returnDate) {
+        updateData.returnDate = new Date(formData.returnDate).toISOString();
+      }
 
       if (attachment) {
         updateData.attachment = attachment;
@@ -195,6 +216,9 @@ function EditPlane() {
                     {ticket.seatClass}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {t('flightTickets.fields.tripType')}: {ticket.isRoundTrip ? t('flightTickets.form.roundTrip') : t('flightTickets.form.oneWay')}
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
                     {t('flightTickets.columns.status')}: {ticket.status}
                   </div>
                   {ticket.status === 'PAID' && (
@@ -224,6 +248,41 @@ function EditPlane() {
               )}
 
               <div className="grid grid-cols-1 gap-4">
+                {/* Trip Type */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('flightTickets.fields.tripType')}
+                  </span>
+                  <div className="flex gap-4 mt-1">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="tripType"
+                        checked={!formData.isRoundTrip}
+                        onChange={() => setFormData({ ...formData, isRoundTrip: false, returnDate: '' })}
+                        disabled={ticket?.status !== 'RESERVED'}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        {t('flightTickets.form.oneWay')}
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="tripType"
+                        checked={formData.isRoundTrip}
+                        onChange={() => setFormData({ ...formData, isRoundTrip: true })}
+                        disabled={ticket?.status !== 'RESERVED'}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        {t('flightTickets.form.roundTrip')}
+                      </span>
+                    </label>
+                  </div>
+                </label>
+
                 {/* Departure DateTime */}
                 <label className="block">
                   <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -239,20 +298,23 @@ function EditPlane() {
                   />
                 </label>
 
-                {/* Arrival DateTime */}
-                <label className="block">
-                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {t('flightTickets.edit.fields.arrivalDateTime')}
-                  </span>
-                  <input
-                    type="datetime-local"
-                    name="arrivalDateTime"
-                    value={formData.arrivalDateTime}
-                    onChange={handleChange}
-                    disabled={ticket?.status !== 'RESERVED'}
-                    className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                </label>
+                {/* Return Date - Only show if round trip */}
+                {formData.isRoundTrip && (
+                  <label className="block">
+                    <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {t('flightTickets.fields.return')}
+                    </span>
+                    <input
+                      type="datetime-local"
+                      name="returnDate"
+                      value={formData.returnDate}
+                      min={formData.departureDateTime}
+                      onChange={handleChange}
+                      disabled={ticket?.status !== 'RESERVED'}
+                      className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                  </label>
+                )}
 
                 {/* Seat Class */}
                 <label className="block">

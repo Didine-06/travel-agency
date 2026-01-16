@@ -26,7 +26,8 @@ export default function EditFlightTicket() {
 
   const [form, setForm] = useState({
     departureDateTime: '',
-    arrivalDateTime: '',
+    returnDate: '',
+    isRoundTrip: false,
     seatClass: 'ECONOMY' as 'ECONOMY' | 'BUSINESS' | 'FIRST',
     ticketPrice: '',
     status: 'RESERVED' as 'RESERVED' | 'PAID' | 'CANCELLED',
@@ -47,13 +48,19 @@ export default function EditFlightTicket() {
       setBusy(true);
       setError('');
 
-      const response = await flightTicketsApi.updateFlightTicket(ticketId, {
-        departureDateTime: form.departureDateTime,
-        arrivalDateTime: form.arrivalDateTime,
+      const payload: any = {
+        departureDateTime: new Date(form.departureDateTime).toISOString(),
+        isRoundTrip: form.isRoundTrip,
         seatClass: form.seatClass,
         ticketPrice: parseFloat(form.ticketPrice),
         status: form.status,
-      });
+      };
+      
+      if (form.isRoundTrip && form.returnDate) {
+        payload.returnDate = new Date(form.returnDate).toISOString();
+      }
+      
+      const response = await flightTicketsApi.updateFlightTicket(ticketId, payload);
 
       if (response.isSuccess) {
         toast.success(response.message || t('flightTickets.edit.success'));
@@ -85,8 +92,10 @@ export default function EditFlightTicket() {
         setLoading(true);
         setError('');
         const response = await flightTicketsApi.getFlightTicketById(ticketId);
-        if (cancelled) return;
+        
+        console.log('Loaded ticket:', response);
 
+        if (cancelled) return;
         if (!response.isSuccess || !response.data) {
           setError(response.message || t('flightTickets.edit.loadError'));
           setTicket(null);
@@ -96,13 +105,24 @@ export default function EditFlightTicket() {
         const ticketData = response.data;
         setTicket(ticketData);
         
-        // Convert ISO datetime to datetime-local format
-        const departureLocal = ticketData.departureDateTime.slice(0, 16);
-        const arrivalLocal = ticketData.arrivalDateTime.slice(0, 16);
+        // Convert ISO datetime to datetime-local format (YYYY-MM-DDTHH:mm)
+        const departureDate = new Date(ticketData.departureDateTime);
+        const departureLocal = new Date(departureDate.getTime() - departureDate.getTimezoneOffset() * 60000)
+          .toISOString()
+          .slice(0, 16);
+        
+        let returnLocal = '';
+        if (ticketData.returnDate) {
+          const returnDate = new Date(ticketData.returnDate);
+          returnLocal = new Date(returnDate.getTime() - returnDate.getTimezoneOffset() * 60000)
+            .toISOString()
+            .slice(0, 16);
+        }
         
         setForm({
           departureDateTime: departureLocal,
-          arrivalDateTime: arrivalLocal,
+          returnDate: returnLocal,
+          isRoundTrip: ticketData.isRoundTrip,
           seatClass: ticketData.seatClass,
           ticketPrice: ticketData.ticketPrice.toString(),
           status: ticketData.status,
@@ -193,50 +213,93 @@ export default function EditFlightTicket() {
               {ticket && (
                 <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/40 space-y-2">
                   <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {ticket.customer?.firstName} {ticket.customer?.lastName}
+                    {ticket.customer?.user?.firstName} {ticket.customer?.user?.lastName}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {ticket.customer?.email}
+                    {ticket.customer?.user?.email}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {t('flightTickets.fields.departure')}: {formatDate(ticket.departureDateTime)}
+                    <span className="font-medium">{t('flightTickets.fields.airline')}:</span> {ticket.airline}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {t('flightTickets.fields.arrival')}: {formatDate(ticket.arrivalDateTime)}
+                    <span className="font-medium">{t('flightTickets.fields.departure')}:</span> {formatDate(ticket.departureDateTime)}
+                  </div>
+                  {ticket.isRoundTrip && ticket.returnDate && (
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="font-medium">{t('flightTickets.fields.return')}:</span> {formatDate(ticket.returnDate)}
+                    </div>
+                  )}
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="font-medium">{t('flightTickets.fields.tripType')}:</span> {ticket.isRoundTrip ? t('flightTickets.form.roundTrip') : t('flightTickets.form.oneWay')}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {t('flightTickets.columns.status')}: {t(`flightTickets.status.${ticket.status.toLowerCase()}`)}
+                    <span className="font-medium">{t('flightTickets.columns.status')}:</span> {t(`flightTickets.status.${ticket.status.toLowerCase()}`)}
                   </div>
                 </div>
               )}
 
               <div className="grid grid-cols-1 gap-4">
-                {/* Departure and Arrival DateTime */}
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="block">
-                    <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      {t('flightTickets.fields.departure')}
-                    </span>
-                    <input
-                      type="datetime-local"
-                      value={form.departureDateTime}
-                      onChange={(e) => setForm({ ...form, departureDateTime: e.target.value })}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </label>
+                {/* Trip Type */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    {t('flightTickets.fields.tripType')}
+                  </span>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="tripType"
+                        checked={!form.isRoundTrip}
+                        onChange={() => setForm({ ...form, isRoundTrip: false, returnDate: '' })}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        {t('flightTickets.form.oneWay')}
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="tripType"
+                        checked={form.isRoundTrip}
+                        onChange={() => setForm({ ...form, isRoundTrip: true })}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        {t('flightTickets.form.roundTrip')}
+                      </span>
+                    </label>
+                  </div>
+                </label>
 
+                {/* Departure DateTime */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    {t('flightTickets.fields.departure')}
+                  </span>
+                  <input
+                    type="datetime-local"
+                    value={form.departureDateTime}
+                    onChange={(e) => setForm({ ...form, departureDateTime: e.target.value })}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </label>
+
+                {/* Return Date - Only show if round trip */}
+                {form.isRoundTrip && (
                   <label className="block">
                     <span className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      {t('flightTickets.fields.arrival')}
+                      {t('flightTickets.fields.return')}
                     </span>
                     <input
                       type="datetime-local"
-                      value={form.arrivalDateTime}
-                      onChange={(e) => setForm({ ...form, arrivalDateTime: e.target.value })}
+                      value={form.returnDate}
+                      min={form.departureDateTime}
+                      onChange={(e) => setForm({ ...form, returnDate: e.target.value })}
                       className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </label>
-                </div>
+                )}
 
                 {/* Seat Class */}
                 <label className="block">
