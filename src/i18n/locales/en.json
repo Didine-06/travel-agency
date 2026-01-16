@@ -671,6 +671,7 @@
     "columns": {
       "customer": "Customer",
       "flight": "Flight",
+      "airline": "Airline",
       "departure": "Departure",
       "arrival": "Arrival",
       "class": "Class",
@@ -690,11 +691,20 @@
       "selectBooking": "Select a booking",
       "noBookings": "You have no bookings yet",
       "departureDateTime": "Departure Date & Time",
-      "arrivalDateTime": "Arrival Date & Time",
+      "returnDate": "Return Date & Time",
+      "tripType": "Trip Type",
+      "oneWay": "One Way",
+      "roundTrip": "Round Trip",
+      "airline": "Airline",
+      "airlinePlaceholder": "e.g., Air France, Emirates",
       "seatClass": "Seat Class",
       "ticketPriceEstimation": "Ticket Price Estimation",
       "submit": "Request Flight",
-      "fillAllFields": "Please fill all required fields"
+      "fillAllFields": "Please fill all required fields",
+      "attachment": "Attachment (Visa/Passport)",
+      "attachmentOptional": "optional",
+      "attachmentPlaceholder": "Click to upload visa or passport (JPEG, PNG, PDF, max 5MB)",
+      "attachmentHint": "Upload your visa or passport document (JPEG, PNG or PDF, max 5MB)"
     },
     "status": {
       "reserved": "Reserved",
@@ -721,7 +731,17 @@
       "cancel": "Cancel",
       "success": "Flight ticket updated successfully!",
       "error": "Error updating flight ticket",
-      "loadError": "Error loading flight ticket"
+      "loadError": "Error loading flight ticket",
+      "cannotEditPaid": "Cannot edit a paid ticket",
+      "restrictionWarning": "Some fields may be restricted",
+      "viewAttachment": "View Attachment",
+      "attachmentChangeHint": "Upload a new file to replace the existing attachment",
+      "fields": {
+        "departureDateTime": "Departure Date & Time",
+        "arrivalDateTime": "Arrival Date & Time",
+        "seatClass": "Seat Class",
+        "ticketPrice": "Ticket Price"
+      }
     },
     "fields": {
       "bookingId": "Booking ID",
@@ -751,10 +771,14 @@
       "createSuccess": "Flight ticket requested successfully!",
       "createError": "Error requesting flight ticket",
       "fillAllFields": "Please fill all required fields",
+      "returnDateRequired": "Return date is required for round trip",
+      "returnDateMustBeAfterDeparture": "Return date must be after departure date",
       "statusUpdateSuccess": "Ticket status updated successfully!",
       "statusUpdateError": "Error updating ticket status",
       "markAsPaidSuccess": "Ticket marked as paid successfully!",
-      "markAsPaidError": "Error marking ticket as paid"
+      "markAsPaidError": "Error marking ticket as paid",
+      "fileTooLarge": "File size must be less than 5MB",
+      "invalidFileType": "Only JPEG, PNG and PDF files are allowed"
     },
     "pagination": {
       "showing": "Showing",

@@ -339,10 +339,14 @@
     "deleteSelected": "حذف ({{count}})",
     "noTickets": "لم يتم العثور على تذاكر طيران",
     "modifySearch": "حاول تعديل البحث",
+    "requestFlight": "طلب رحلة",
     "columns": {
       "customer": "العميل",
+      "flight": "الرحلة",
+      "airline": "شركة الطيران",
       "departure": "المغادرة",
       "arrival": "الوصول",
+      "class": "الدرجة",
       "seatClass": "الدرجة",
       "price": "السعر",
       "status": "الحالة",
@@ -351,7 +355,28 @@
     "actions": {
       "edit": "تعديل",
       "delete": "حذف",
+      "cancel": "إلغاء",
       "markAsPaid": "وضع علامة كمدفوع"
+    },
+    "form": {
+      "booking": "الحجز",
+      "selectBooking": "اختر حجزاً",
+      "noBookings": "ليس لديك حجوزات بعد",
+      "departureDateTime": "تاريخ ووقت المغادرة",
+      "returnDate": "تاريخ ووقت العودة",
+      "tripType": "نوع الرحلة",
+      "oneWay": "ذهاب فقط",
+      "roundTrip": "ذهاب وعودة",
+      "airline": "شركة الطيران",
+      "airlinePlaceholder": "مثال: الخطوط الجوية الجزائرية، طيران الإمارات",
+      "seatClass": "درجة المقعد",
+      "ticketPriceEstimation": "تقدير سعر التذكرة",
+      "submit": "طلب الرحلة",
+      "fillAllFields": "يرجى ملء جميع الحقول المطلوبة",
+      "attachment": "المرفق (تأشيرة/جواز سفر)",
+      "attachmentOptional": "اختياري",
+      "attachmentPlaceholder": "انقر لتحميل التأشيرة أو جواز السفر (JPEG، PNG، PDF، بحد أقصى 5 ميجابايت)",
+      "attachmentHint": "حمّل وثيقة التأشيرة أو جواز السفر (JPEG أو PNG أو PDF، بحد أقصى 5 ميجابايت)"
     },
     "status": {
       "reserved": "محجوز",
@@ -378,7 +403,17 @@
       "cancel": "إلغاء",
       "success": "تم تحديث تذكرة الطيران بنجاح!",
       "error": "خطأ في تحديث تذكرة الطيران",
-      "loadError": "خطأ في تحميل تذكرة الطيران"
+      "loadError": "خطأ في تحميل تذكرة الطيران",
+      "cannotEditPaid": "لا يمكن تعديل تذكرة مدفوعة",
+      "restrictionWarning": "قد تكون بعض الحقول محدودة",
+      "viewAttachment": "عرض المرفق",
+      "attachmentChangeHint": "حمّل ملفًا جديدًا لاستبدال المرفق الحالي",
+      "fields": {
+        "departureDateTime": "تاريخ ووقت المغادرة",
+        "arrivalDateTime": "تاريخ ووقت الوصول",
+        "seatClass": "درجة المقعد",
+        "ticketPrice": "سعر التذكرة"
+      }
     },
     "fields": {
       "bookingId": "معرف الحجز",
@@ -403,10 +438,19 @@
       "deleteError": "خطأ في حذف تذكرة الطيران",
       "deleteManySuccess": "تم حذف تذاكر الطيران بنجاح!",
       "deleteManyError": "خطأ في حذف تذاكر الطيران",
+      "cancelSuccess": "تم إلغاء تذكرة الطيران بنجاح!",
+      "cancelError": "خطأ في إلغاء تذكرة الطيران",
+      "createSuccess": "تم طلب الرحلة بنجاح!",
+      "createError": "خطأ في طلب الرحلة",
+      "fillAllFields": "يرجى ملء جميع الحقول المطلوبة",
+      "returnDateRequired": "تاريخ العودة مطلوب لرحلة ذهاب وعودة",
+      "returnDateMustBeAfterDeparture": "يجب أن يكون تاريخ العودة بعد تاريخ المغادرة",
       "statusUpdateSuccess": "تم تحديث حالة التذكرة بنجاح!",
       "statusUpdateError": "خطأ في تحديث حالة التذكرة",
       "markAsPaidSuccess": "تم وضع علامة على التذكرة كمدفوعة بنجاح!",
-      "markAsPaidError": "خطأ في وضع علامة على التذكرة كمدفوعة"
+      "markAsPaidError": "خطأ في وضع علامة على التذكرة كمدفوعة",
+      "fileTooLarge": "يجب أن يكون حجم الملف أقل من 5 ميجابايت",
+      "invalidFileType": "فقط ملفات JPEG وPNG وPDF مسموح بها"
     },
     "pagination": {
       "showing": "عرض",

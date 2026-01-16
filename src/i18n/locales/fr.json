@@ -676,10 +676,14 @@
     "deleteSelected": "Supprimer ({{count}})",
     "noTickets": "Aucun billet d'avion trouvé",
     "modifySearch": "Essayez de modifier votre recherche",
+    "requestFlight": "Demander un vol",
     "columns": {
       "customer": "Client",
+      "flight": "Vol",
+      "airline": "Compagnie aérienne",
       "departure": "Départ",
       "arrival": "Arrivée",
+      "class": "Classe",
       "seatClass": "Classe",
       "price": "Prix",
       "status": "Statut",
@@ -688,7 +692,28 @@
     "actions": {
       "edit": "Modifier",
       "delete": "Supprimer",
+      "cancel": "Annuler",
       "markAsPaid": "Marquer comme payé"
+    },
+    "form": {
+      "booking": "Réservation",
+      "selectBooking": "Sélectionner une réservation",
+      "noBookings": "Vous n'avez pas encore de réservations",
+      "departureDateTime": "Date et heure de départ",
+      "returnDate": "Date et heure de retour",
+      "tripType": "Type de voyage",
+      "oneWay": "Aller simple",
+      "roundTrip": "Aller-retour",
+      "airline": "Compagnie aérienne",
+      "airlinePlaceholder": "ex: Air France, Emirates",
+      "seatClass": "Classe de siège",
+      "ticketPriceEstimation": "Estimation du prix du billet",
+      "submit": "Demander le vol",
+      "fillAllFields": "Veuillez remplir tous les champs obligatoires",
+      "attachment": "Pièce jointe (Visa/Passeport)",
+      "attachmentOptional": "optionnel",
+      "attachmentPlaceholder": "Cliquez pour téléverser votre visa ou passeport (JPEG, PNG, PDF, max 5MB)",
+      "attachmentHint": "Téléversez votre document de visa ou passeport (JPEG, PNG ou PDF, max 5MB)"
     },
     "status": {
       "reserved": "Réservé",
@@ -715,7 +740,17 @@
       "cancel": "Annuler",
       "success": "Billet d'avion mis à jour avec succès !",
       "error": "Erreur lors de la mise à jour du billet d'avion",
-      "loadError": "Erreur lors du chargement du billet d'avion"
+      "loadError": "Erreur lors du chargement du billet d'avion",
+      "cannotEditPaid": "Impossible de modifier un billet payé",
+      "restrictionWarning": "Certains champs peuvent être restreints",
+      "viewAttachment": "Voir la pièce jointe",
+      "attachmentChangeHint": "Téléversez un nouveau fichier pour remplacer la pièce jointe existante",
+      "fields": {
+        "departureDateTime": "Date et heure de départ",
+        "arrivalDateTime": "Date et heure d'arrivée",
+        "seatClass": "Classe de siège",
+        "ticketPrice": "Prix du billet"
+      }
     },
     "fields": {
       "bookingId": "ID de réservation",
@@ -740,10 +775,19 @@
       "deleteError": "Erreur lors de la suppression du billet d'avion",
       "deleteManySuccess": "Billets d'avion supprimés avec succès !",
       "deleteManyError": "Erreur lors de la suppression des billets d'avion",
+      "cancelSuccess": "Billet d'avion annulé avec succès !",
+      "cancelError": "Erreur lors de l'annulation du billet d'avion",
+      "createSuccess": "Demande de vol effectuée avec succès !",
+      "createError": "Erreur lors de la demande de vol",
+      "fillAllFields": "Veuillez remplir tous les champs obligatoires",
+      "returnDateRequired": "La date de retour est requise pour un aller-retour",
+      "returnDateMustBeAfterDeparture": "La date de retour doit être après la date de départ",
       "statusUpdateSuccess": "Statut du billet mis à jour avec succès !",
       "statusUpdateError": "Erreur lors de la mise à jour du statut du billet",
       "markAsPaidSuccess": "Billet marqué comme payé avec succès !",
-      "markAsPaidError": "Erreur lors du marquage du billet comme payé"
+      "markAsPaidError": "Erreur lors du marquage du billet comme payé",
+      "fileTooLarge": "La taille du fichier doit être inférieure à 5MB",
+      "invalidFileType": "Seuls les fichiers JPEG, PNG et PDF sont autorisés"
     },
     "pagination": {
       "showing": "Affichage de",
