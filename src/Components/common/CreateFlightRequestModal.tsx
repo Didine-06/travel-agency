@@ -1,22 +1,9 @@
-import { useState, useEffect } from "react";
-import { X, Plane } from "lucide-react";
+import { useState } from "react";
+import { X, Plane, Upload } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { api } from "../../api";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { toast } from "sonner";
-
-interface Booking {
-  id: string;
-  package: {
-    id: string;
-    title: string;
-    destination?: {
-      city: string;
-    };
-  };
-  startDate: string;
-  endDate: string;
-}
 
 interface CreateFlightRequestModalProps {
   open: boolean;
@@ -33,54 +20,52 @@ export default function CreateFlightRequestModal({
 }: CreateFlightRequestModalProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [bookingsLoading, setBookingsLoading] = useState(false);
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [attachment, setAttachment] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
-    bookingId: "",
     departureDateTime: "",
-    arrivalDateTime: "",
+    returnDate: "",
+    isRoundTrip: false,
+    airline: "",
     seatClass: "ECONOMY" as (typeof SEAT_CLASSES)[number],
     ticketPrice: "",
   });
 
-  useEffect(() => {
-    if (open) {
-      loadBookings();
-    }
-  }, [open]);
-
-  const loadBookings = async () => {
-    setBookingsLoading(true);
-    // Assuming there's a bookings API endpoint - adjust if needed
-    const response = await api.bookings?.getMyBookings?.();
-    setBookingsLoading(false);
-
-    if (response?.isSuccess && response.data) {
-      const bookingsData = Array.isArray(response.data) ? response.data : [];
-      setBookings(bookingsData);
-    } else {
-      setBookings([]);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.bookingId || !formData.departureDateTime || !formData.arrivalDateTime || !formData.ticketPrice) {
+    if (!formData.departureDateTime || !formData.airline || !formData.ticketPrice) {
       toast.error(t('flightTickets.messages.fillAllFields'));
+      return;
+    }
+
+    if (formData.isRoundTrip && !formData.returnDate) {
+      toast.error(t('flightTickets.messages.returnDateRequired'));
+      return;
+    }
+
+    if (formData.isRoundTrip && formData.returnDate && new Date(formData.returnDate) <= new Date(formData.departureDateTime)) {
+      toast.error(t('flightTickets.messages.returnDateMustBeAfterDeparture'));
       return;
     }
 
     setLoading(true);
 
-    const response = await api.flightTickets.createMyTicket({
-      bookingId: formData.bookingId,
+    const payload: any = {
       departureDateTime: new Date(formData.departureDateTime).toISOString(),
-      arrivalDateTime: new Date(formData.arrivalDateTime).toISOString(),
+      arrivalDateTime: formData.isRoundTrip && formData.returnDate 
+        ? new Date(formData.returnDate).toISOString()
+        : new Date(new Date(formData.departureDateTime).getTime() + 2 * 60 * 60 * 1000).toISOString(), // +2 hours default
+      airline: formData.airline,
       seatClass: formData.seatClass,
       ticketPrice: parseFloat(formData.ticketPrice),
-    });
+    };
+
+    if (attachment) {
+      payload.attachment = attachment;
+    }
+
+    const response = await api.flightTickets.createMyTicket(payload);
 
     setLoading(false);
 
@@ -96,18 +81,38 @@ export default function CreateFlightRequestModal({
 
   const resetForm = () => {
     setFormData({
-      bookingId: "",
       departureDateTime: "",
-      arrivalDateTime: "",
+      returnDate: "",
+      isRoundTrip: false,
+      airline: "",
       seatClass: "ECONOMY",
       ticketPrice: "",
     });
+    setAttachment(null);
   };
 
   const handleClose = () => {
     if (loading) return;
     resetForm();
     onClose();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(t('flightTickets.messages.fileTooLarge'));
+        return;
+      }
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error(t('flightTickets.messages.invalidFileType'));
+        return;
+      }
+      setAttachment(file);
+    }
   };
 
   if (!open) return null;
@@ -139,38 +144,22 @@ export default function CreateFlightRequestModal({
 
         {/* Body */}
         <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
-          {/* Booking Selection */}
+          {/* Airline */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('flightTickets.form.booking')} <span className="text-red-500">*</span>
+              {t('flightTickets.form.airline')} <span className="text-red-500">*</span>
             </label>
-            {bookingsLoading ? (
-              <div className="flex items-center justify-center py-4">
-                <LoadingSpinner />
-              </div>
-            ) : (
-              <select
-                value={formData.bookingId}
-                onChange={(e) =>
-                  setFormData({ ...formData, bookingId: e.target.value })
-                }
-                required
-                disabled={loading}
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-              >
-                <option value="">{t('flightTickets.form.selectBooking')}</option>
-                {bookings.map((booking) => (
-                  <option key={booking.id} value={booking.id}>
-                    {booking.package?.title || 'N/A'} - {booking.package?.destination?.city || 'N/A'}
-                  </option>
-                ))}
-              </select>
-            )}
-            {bookings.length === 0 && !bookingsLoading && (
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {t('flightTickets.form.noBookings')}
-              </p>
-            )}
+            <input
+              type="text"
+              value={formData.airline}
+              onChange={(e) =>
+                setFormData({ ...formData, airline: e.target.value })
+              }
+              required
+              disabled={loading}
+              placeholder={t('flightTickets.form.airlinePlaceholder')}
+              className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            />
           </div>
 
           {/* Departure Date Time */}
@@ -190,19 +179,75 @@ export default function CreateFlightRequestModal({
             />
           </div>
 
-          {/* Arrival Date Time */}
+          {/* Trip Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('flightTickets.form.arrivalDateTime')} <span className="text-red-500">*</span>
+              {t('flightTickets.form.tripType')} <span className="text-red-500">*</span>
+            </label>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="tripType"
+                  checked={!formData.isRoundTrip}
+                  onChange={() => setFormData({ ...formData, isRoundTrip: false, returnDate: "" })}
+                  disabled={loading}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  {t('flightTickets.form.oneWay')}
+                </span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="tripType"
+                  checked={formData.isRoundTrip}
+                  onChange={() => setFormData({ ...formData, isRoundTrip: true })}
+                  disabled={loading}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  {t('flightTickets.form.roundTrip')}
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* Return Date Time - Only show if round trip */}
+          {formData.isRoundTrip && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                {t('flightTickets.form.returnDate')} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="datetime-local"
+                value={formData.returnDate}
+                min={formData.departureDateTime}
+                onChange={(e) =>
+                  setFormData({ ...formData, returnDate: e.target.value })
+                }
+                required={formData.isRoundTrip}
+                disabled={loading}
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              />
+            </div>
+          )}
+
+          {/* Airline */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              {t('flightTickets.form.airline')} <span className="text-red-500">*</span>
             </label>
             <input
-              type="datetime-local"
-              value={formData.arrivalDateTime}
+              type="text"
+              value={formData.airline}
               onChange={(e) =>
-                setFormData({ ...formData, arrivalDateTime: e.target.value })
+                setFormData({ ...formData, airline: e.target.value })
               }
               required
               disabled={loading}
+              placeholder={t('flightTickets.form.airlinePlaceholder')}
               className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
             />
           </div>
@@ -257,6 +302,37 @@ export default function CreateFlightRequestModal({
             </div>
           </div>
 
+          {/* Attachment Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              {t('flightTickets.form.attachment')} ({t('flightTickets.form.attachmentOptional')})
+            </label>
+            <div className="relative">
+              <input
+                type="file"
+                id="attachment-upload"
+                onChange={handleFileChange}
+                disabled={loading}
+                accept="image/jpeg,image/png,image/jpg,application/pdf"
+                className="hidden"
+              />
+              <label
+                htmlFor="attachment-upload"
+                className={`flex items-center justify-center gap-2 w-full px-4 py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 transition-colors ${
+                  loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                <Upload className="w-5 h-5 text-gray-400" />
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  {attachment ? attachment.name : t('flightTickets.form.attachmentPlaceholder')}
+                </span>
+              </label>
+            </div>
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              {t('flightTickets.form.attachmentHint')}
+            </p>
+          </div>
+
           {/* Footer Actions */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
@@ -269,7 +345,7 @@ export default function CreateFlightRequestModal({
             </button>
             <button
               type="submit"
-              disabled={loading || bookings.length === 0}
+              disabled={loading}
               className="px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {loading && <LoadingSpinner />}

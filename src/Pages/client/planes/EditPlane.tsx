@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { X, Calendar, DollarSign, Loader2 } from 'lucide-react';
+import { X, Calendar, DollarSign, Loader2, Upload, FileText } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../../api';
@@ -17,6 +17,7 @@ function EditPlane() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [attachment, setAttachment] = useState<File | null>(null);
 
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
@@ -74,14 +75,26 @@ function EditPlane() {
     e.preventDefault();
     if (!id) return;
 
+    // Block editing if ticket is PAID
+    if (ticket?.status === 'PAID') {
+      toast.error(t('flightTickets.edit.cannotEditPaid'));
+      return;
+    }
+
     try {
       setSaving(true);
-      const response = await api.flightTickets.updateMyTicket(id, {
+      const updateData: any = {
         departureDateTime: new Date(formData.departureDateTime).toISOString(),
         arrivalDateTime: new Date(formData.arrivalDateTime).toISOString(),
         seatClass: formData.seatClass,
         ticketPrice: parseFloat(formData.ticketPrice),
-      });
+      };
+
+      if (attachment) {
+        updateData.attachment = attachment;
+      }
+
+      const response = await api.flightTickets.updateMyTicket(id, updateData);
 
       if (response.isSuccess) {
         toast.success(response.message || t('flightTickets.edit.updateSuccess'));
@@ -100,6 +113,24 @@ function EditPlane() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(t('flightTickets.messages.fileTooLarge'));
+        return;
+      }
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error(t('flightTickets.messages.invalidFileType'));
+        return;
+      }
+      setAttachment(file);
+    }
   };
 
   if (!mounted) return null;
@@ -158,17 +189,35 @@ function EditPlane() {
               {ticket && (
                 <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800/40">
                   <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {ticket.booking?.package?.title || 'N/A'}
+                    {ticket.airline || 'N/A'}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {ticket.booking?.package?.destination?.city || 'N/A'}
+                    {ticket.seatClass}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    {t('flightTickets.edit.status')} {ticket.status}
+                    {t('flightTickets.columns.status')}: {ticket.status}
                   </div>
-                  {ticket.status !== 'RESERVED' && (
-                    <div className="text-xs text-red-600 dark:text-red-400 mt-2">
+                  {ticket.status === 'PAID' && (
+                    <div className="text-xs text-red-600 dark:text-red-400 mt-2 font-medium">
+                      {t('flightTickets.edit.cannotEditPaid')}
+                    </div>
+                  )}
+                  {ticket.status !== 'RESERVED' && ticket.status !== 'PAID' && (
+                    <div className="text-xs text-orange-600 dark:text-orange-400 mt-2">
                       {t('flightTickets.edit.restrictionWarning')}
+                    </div>
+                  )}
+                  {ticket.attachmentPath && (
+                    <div className="mt-2">
+                      <a
+                        href={ticket.attachmentPath}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        <FileText className="w-3 h-3" />
+                        {t('flightTickets.edit.viewAttachment')}
+                      </a>
                     </div>
                   )}
                 </div>
@@ -239,6 +288,37 @@ function EditPlane() {
                     className="mt-1 w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </label>
+
+                {/* Attachment Upload */}
+                <label className="block">
+                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {t('flightTickets.form.attachment')} ({t('flightTickets.form.attachmentOptional')})
+                  </span>
+                  <div className="mt-1">
+                    <input
+                      type="file"
+                      id="edit-attachment-upload"
+                      onChange={handleFileChange}
+                      disabled={ticket?.status === 'PAID' || loading}
+                      accept="image/jpeg,image/png,image/jpg,application/pdf"
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="edit-attachment-upload"
+                      className={`flex items-center justify-center gap-2 w-full px-3 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 transition-colors text-sm ${
+                        ticket?.status === 'PAID' || loading ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      <Upload className="w-4 h-4 text-gray-400" />
+                      <span className="text-gray-600 dark:text-gray-400">
+                        {attachment ? attachment.name : t('flightTickets.form.attachmentPlaceholder')}
+                      </span>
+                    </label>
+                  </div>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    {t('flightTickets.edit.attachmentChangeHint')}
+                  </p>
+                </label>
               </div>
             </>
           )}
@@ -248,7 +328,7 @@ function EditPlane() {
         <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-start gap-3">
           <button
             onClick={handleSubmit}
-            disabled={saving || loading || ticket?.status !== 'RESERVED'}
+            disabled={saving || loading || ticket?.status === 'PAID'}
             className="px-4 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {saving ? t('flightTickets.edit.saving') : t('flightTickets.edit.save')}

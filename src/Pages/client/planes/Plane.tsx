@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Search,
   MoreVertical,
@@ -66,7 +66,7 @@ function ClientPlane() {
       return (
         ticket.seatClass.toLowerCase().includes(searchLower) ||
         ticket.status.toLowerCase().includes(searchLower) ||
-        ticket.booking?.package?.title.toLowerCase().includes(searchLower) ||
+        (ticket.airline && ticket.airline.toLowerCase().includes(searchLower)) ||
         ticket.customer?.firstName.toLowerCase().includes(searchLower) ||
         ticket.customer?.lastName.toLowerCase().includes(searchLower) ||
         ticket.customer?.email.toLowerCase().includes(searchLower)
@@ -138,6 +138,8 @@ function ClientPlane() {
     } else {
       const errorMessage = response?.message || t('flightTickets.messages.cancelError');
       toast.error(errorMessage);
+      setConfirmCancelOpen(false);
+      setCancelTargetId(null);
     }
   };
 
@@ -204,6 +206,8 @@ function ClientPlane() {
     } else {
       const errorMessage = response?.message || t('flightTickets.messages.deleteError');
       toast.error(errorMessage);
+      setConfirmDeleteOpen(false);
+      setDeleteTargetIds([]);
     }
   };
 
@@ -224,6 +228,8 @@ function ClientPlane() {
     } else {
       const errorMessage = response?.message || t('flightTickets.messages.deleteManyError');
       toast.error(errorMessage);
+      setConfirmDeleteOpen(false);
+      setDeleteTargetIds([]);
     }
   };
 
@@ -365,7 +371,7 @@ function ClientPlane() {
                           />
                         </th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
-                          {t('flightTickets.columns.flight')}
+                          {t('flightTickets.columns.airline')}
                         </th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider bg-gray-100 dark:bg-gray-800">
                           {t('flightTickets.columns.departure')}
@@ -414,11 +420,10 @@ function ClientPlane() {
                             </td>
                             <td className="px-4 py-4">
                               <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                {ticket.booking?.package?.title || "N/A"}
+                                {ticket.airline || "N/A"}
                               </div>
                               <div className="text-xs text-gray-500 dark:text-gray-400">
-                                {ticket.booking?.package?.destination?.city ||
-                                  "N/A"}
+                                {ticket.seatClass}
                               </div>
                             </td>
                             <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">
@@ -495,10 +500,10 @@ function ClientPlane() {
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base">
-                          {ticket.booking?.package?.title || "N/A"}
+                          {ticket.airline || "N/A"}
                         </h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                          {ticket.booking?.package?.destination?.city || "N/A"}
+                          {ticket.seatClass}
                         </p>
                       </div>
                       <div className="relative">
