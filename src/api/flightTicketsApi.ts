@@ -14,7 +14,8 @@ export interface CreateFlightTicketDto {
 
 export interface UpdateFlightTicketDto {
   departureDateTime?: string;
-  arrivalDateTime?: string;
+  returnDate?: string;
+  isRoundTrip?: boolean;
   seatClass?: "ECONOMY" | "BUSINESS" | "FIRST";
   ticketPrice?: number;
   status?: "RESERVED" | "PAID" | "CANCELLED";
@@ -92,21 +93,29 @@ export const flightTicketsApi = {
   },
 
   // Create my flight ticket (Client)
-  createMyTicket: async (data: {
+  createMyTicket: async (data: FormData | {
     departureDateTime: string;
-    arrivalDateTime: string;
+    returnDate?: string;
+    isRoundTrip: boolean;
     seatClass: "ECONOMY" | "BUSINESS" | "FIRST";
     ticketPrice: number;
-    airline?: string;
+    airline: string;
     attachment?: File;
   }): Promise<ApiResponse<FlightTicket>> => {
-    const formData = new FormData();
-    formData.append('departureDateTime', data.departureDateTime);
-    formData.append('arrivalDateTime', data.arrivalDateTime);
-    formData.append('seatClass', data.seatClass);
-    formData.append('ticketPrice', data.ticketPrice.toString());
-    if (data.airline) formData.append('airline', data.airline);
-    if (data.attachment) formData.append('attachment', data.attachment);
+    let formData: FormData;
+    
+    if (data instanceof FormData) {
+      formData = data;
+    } else {
+      formData = new FormData();
+      formData.append('departureDateTime', data.departureDateTime);
+      formData.append('isRoundTrip', data.isRoundTrip.toString());
+      if (data.returnDate) formData.append('returnDate', data.returnDate);
+      formData.append('seatClass', data.seatClass);
+      formData.append('ticketPrice', data.ticketPrice.toString());
+      formData.append('airline', data.airline);
+      if (data.attachment) formData.append('attachment', data.attachment);
+    }
 
     const response = await axiosClient.post("/flight-tickets/my-tickets", formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
@@ -121,7 +130,8 @@ export const flightTicketsApi = {
   ): Promise<ApiResponse<FlightTicket>> => {
     const formData = new FormData();
     if (data.departureDateTime) formData.append('departureDateTime', data.departureDateTime);
-    if (data.arrivalDateTime) formData.append('arrivalDateTime', data.arrivalDateTime);
+    if (data.returnDate) formData.append('returnDate', data.returnDate);
+    if (data.isRoundTrip !== undefined) formData.append('isRoundTrip', data.isRoundTrip.toString());
     if (data.seatClass) formData.append('seatClass', data.seatClass);
     if (data.ticketPrice !== undefined) formData.append('ticketPrice', data.ticketPrice.toString());
     if (data.status) formData.append('status', data.status);

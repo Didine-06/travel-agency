@@ -13,6 +13,20 @@ interface CreateFlightRequestModalProps {
 
 const SEAT_CLASSES = ["ECONOMY", "BUSINESS", "FIRST"] as const;
 
+const AIRLINES = [
+  "Air Algérie",
+  "Air France",
+  "Emirates",
+  "Qatar Airways",
+  "Turkish Airlines",
+  "Lufthansa",
+  "British Airways",
+  "Etihad Airways",
+  "Saudi Arabian Airlines",
+  "American Airlines",
+  "United Airlines",
+] as const;
+
 export default function CreateFlightRequestModal({
   open,
   onClose,
@@ -51,21 +65,23 @@ export default function CreateFlightRequestModal({
 
     setLoading(true);
 
-    const payload: any = {
-      departureDateTime: new Date(formData.departureDateTime).toISOString(),
-      arrivalDateTime: formData.isRoundTrip && formData.returnDate 
-        ? new Date(formData.returnDate).toISOString()
-        : new Date(new Date(formData.departureDateTime).getTime() + 2 * 60 * 60 * 1000).toISOString(), // +2 hours default
-      airline: formData.airline,
-      seatClass: formData.seatClass,
-      ticketPrice: parseFloat(formData.ticketPrice),
-    };
-
+    const apiFormData = new FormData();
+    apiFormData.append('departureDateTime', new Date(formData.departureDateTime).toISOString());
+    apiFormData.append('isRoundTrip', formData.isRoundTrip.toString());
+    
+    if (formData.isRoundTrip && formData.returnDate) {
+      apiFormData.append('returnDate', new Date(formData.returnDate).toISOString());
+    }
+    
+    apiFormData.append('airline', formData.airline);
+    apiFormData.append('seatClass', formData.seatClass);
+    apiFormData.append('ticketPrice', formData.ticketPrice);
+    
     if (attachment) {
-      payload.attachment = attachment;
+      apiFormData.append('attachment', attachment);
     }
 
-    const response = await api.flightTickets.createMyTicket(payload);
+    const response = await api.flightTickets.createMyTicket(apiFormData);
 
     setLoading(false);
 
@@ -149,17 +165,22 @@ export default function CreateFlightRequestModal({
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {t('flightTickets.form.airline')} <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
+            <select
               value={formData.airline}
               onChange={(e) =>
                 setFormData({ ...formData, airline: e.target.value })
               }
               required
               disabled={loading}
-              placeholder={t('flightTickets.form.airlinePlaceholder')}
               className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-            />
+            >
+              <option value="">{t('flightTickets.form.airlinePlaceholder')}</option>
+              {AIRLINES.map((airline) => (
+                <option key={airline} value={airline}>
+                  {airline}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Departure Date Time */}
@@ -233,24 +254,6 @@ export default function CreateFlightRequestModal({
               />
             </div>
           )}
-
-          {/* Airline */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('flightTickets.form.airline')} <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              value={formData.airline}
-              onChange={(e) =>
-                setFormData({ ...formData, airline: e.target.value })
-              }
-              required
-              disabled={loading}
-              placeholder={t('flightTickets.form.airlinePlaceholder')}
-              className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-            />
-          </div>
 
           {/* Seat Class */}
           <div>

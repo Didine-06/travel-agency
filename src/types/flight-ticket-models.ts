@@ -5,11 +5,12 @@ export interface FlightTicket {
   id: string;
   customerId: string;
   departureDateTime: string;
-  arrivalDateTime: string;
+  returnDate: string | null;
+  isRoundTrip: boolean;
   seatClass: SeatClass;
   ticketPrice: string;
   status: TicketStatus;
-  airline?: string;
+  airline: string;
   attachmentPath?: string;
   issuedAt?: string;
   cancelledAt?: string;
@@ -18,9 +19,20 @@ export interface FlightTicket {
   updatedBy?: string;
   customer?: {
     id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
+    userId: string;
+    phone: string;
+    address: string;
+    city: string;
+    country: string;
+    dateOfBirth: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+    };
   };
 }
 
