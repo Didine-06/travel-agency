@@ -3,12 +3,12 @@ import type { ApiResponse } from "./ApiResponse";
 import type { FlightTicket } from "../types/flight-ticket-models";
 
 export interface CreateFlightTicketDto {
-  bookingId: string;
   customerId: string;
   departureDateTime: string;
   arrivalDateTime: string;
   seatClass: "ECONOMY" | "BUSINESS" | "FIRST";
   ticketPrice: number;
+  airline?: string;
   status?: "RESERVED" | "PAID" | "CANCELLED";
 }
 
@@ -93,22 +93,43 @@ export const flightTicketsApi = {
 
   // Create my flight ticket (Client)
   createMyTicket: async (data: {
-    bookingId: string;
     departureDateTime: string;
     arrivalDateTime: string;
     seatClass: "ECONOMY" | "BUSINESS" | "FIRST";
     ticketPrice: number;
+    airline?: string;
+    attachment?: File;
   }): Promise<ApiResponse<FlightTicket>> => {
-    const response = await axiosClient.post("/flight-tickets/my-tickets", data);
+    const formData = new FormData();
+    formData.append('departureDateTime', data.departureDateTime);
+    formData.append('arrivalDateTime', data.arrivalDateTime);
+    formData.append('seatClass', data.seatClass);
+    formData.append('ticketPrice', data.ticketPrice.toString());
+    if (data.airline) formData.append('airline', data.airline);
+    if (data.attachment) formData.append('attachment', data.attachment);
+
+    const response = await axiosClient.post("/flight-tickets/my-tickets", formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
     return response.data;
   },
 
   // Update my flight ticket (Client)
   updateMyTicket: async (
     id: string,
-    data: UpdateFlightTicketDto
+    data: UpdateFlightTicketDto & { attachment?: File }
   ): Promise<ApiResponse<FlightTicket>> => {
-    const response = await axiosClient.patch(`/flight-tickets/my-tickets/${id}`, data);
+    const formData = new FormData();
+    if (data.departureDateTime) formData.append('departureDateTime', data.departureDateTime);
+    if (data.arrivalDateTime) formData.append('arrivalDateTime', data.arrivalDateTime);
+    if (data.seatClass) formData.append('seatClass', data.seatClass);
+    if (data.ticketPrice !== undefined) formData.append('ticketPrice', data.ticketPrice.toString());
+    if (data.status) formData.append('status', data.status);
+    if (data.attachment) formData.append('attachment', data.attachment);
+
+    const response = await axiosClient.patch(`/flight-tickets/my-tickets/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
     return response.data;
   },
 
