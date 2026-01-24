@@ -68,12 +68,40 @@
     },
     "blog": {
       "badge": "RÉCITS DE VOYAGE",
-      "title": "Dernières Nouvelles du Blog",
-      "subtitle": "Découvrez des histoires inspirantes et des conseils d'experts de nos aventures de voyage",
+      "title": "Récits de Voyage & Inspiration",
+      "subtitle": "Explorez des destinations à couper le souffle à travers notre collection d'expériences de voyage et de guides d'experts",
       "readFull": "Lire l'Histoire Complète",
       "readMore": "Lire Plus",
+      "viewAll": "Voir Tous les Récits",
       "guide": "Guide de Voyage",
-      "minRead": "min de lecture"
+      "minRead": "min de lecture",
+      "featured": {
+        "tag": "Histoire Vedette",
+        "readTime": "8 min de lecture",
+        "date": "15 décembre 2025",
+        "title": "Découvrir les Majestueuses Montagnes du Cachemire",
+        "excerpt": "Voyagez à travers les vallées immaculées et les sommets enneigés du Cachemire, où les traditions anciennes rencontrent une beauté naturelle à couper le souffle. Vivez la chaleur de l'hospitalité locale et la sérénité de l'Himalaya."
+      },
+      "posts": [
+        {
+          "title": "Trésors Cachés de la Côte Méditerranéenne",
+          "date": "10 janvier 2026",
+          "category": "Évasions Plage",
+          "excerpt": "Découvrez des plages secrètes et des villages côtiers le long du magnifique littoral méditerranéen"
+        },
+        {
+          "title": "Aventures Culturelles à Travers les Cités Anciennes",
+          "date": "5 janvier 2026",
+          "category": "Visites de Villes",
+          "excerpt": "Marchez à travers l'histoire dans certaines des civilisations anciennes les plus fascinantes du monde"
+        },
+        {
+          "title": "Rêves de Safari: Rencontres avec la Faune en Afrique",
+          "date": "28 décembre 2025",
+          "category": "Aventure",
+          "excerpt": "Vivez des rencontres inoubliables avec la faune au cœur de la savane africaine"
+        }
+      ]
     },
     "newsletter": {
       "title": "Prêt pour Votre Prochaine Aventure ?",

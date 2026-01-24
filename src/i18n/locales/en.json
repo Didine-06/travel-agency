@@ -68,12 +68,40 @@
     },
     "blog": {
       "badge": "TRAVEL STORIES",
-      "title": "Latest from Our Blog",
-      "subtitle": "Discover inspiring stories and expert tips from our travel adventures",
+      "title": "Travel Stories & Inspiration",
+      "subtitle": "Explore breathtaking destinations through our curated collection of travel experiences and expert guides",
       "readFull": "Read Full Story",
       "readMore": "Read More",
+      "viewAll": "View All Stories",
       "guide": "Travel Guide",
-      "minRead": "min read"
+      "minRead": "min read",
+      "featured": {
+        "tag": "Featured Story",
+        "readTime": "8 min read",
+        "date": "December 15, 2025",
+        "title": "Discovering the Majestic Mountains of Kashmir",
+        "excerpt": "Journey through the pristine valleys and snow-capped peaks of Kashmir, where ancient traditions meet breathtaking natural beauty. Experience the warmth of local hospitality and the serenity of the Himalayas."
+      },
+      "posts": [
+        {
+          "title": "Hidden Gems of the Mediterranean Coast",
+          "date": "January 10, 2026",
+          "category": "Beach Escapes",
+          "excerpt": "Uncover secret beaches and coastal villages along the stunning Mediterranean shoreline"
+        },
+        {
+          "title": "Cultural Adventures Through Ancient Cities",
+          "date": "January 5, 2026",
+          "category": "City Tours",
+          "excerpt": "Walk through history in some of the world's most fascinating ancient civilizations"
+        },
+        {
+          "title": "Safari Dreams: Wildlife Encounters in Africa",
+          "date": "December 28, 2025",
+          "category": "Adventure",
+          "excerpt": "Experience unforgettable wildlife encounters in the heart of the African savanna"
+        }
+      ]
     },
     "newsletter": {
       "title": "Ready for Your Next Adventure?",
