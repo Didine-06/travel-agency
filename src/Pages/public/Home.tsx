@@ -538,129 +538,151 @@ export default function TravelHomepage() {
       </section>
 
       {/* Blog Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+      <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+          {/* Section Header */}
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-block mb-4">
+              <span className="text-xs sm:text-sm font-bold tracking-widest text-cyan-600 dark:text-cyan-400 uppercase bg-cyan-50 dark:bg-cyan-900/20 px-4 py-2 rounded-full">
+                {t("home.blog.badge")}
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 px-4">
               {t("home.blog.title")}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
               {t("home.blog.subtitle")}
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
-            {/* Featured Post - Enhanced */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-3xl transition-all duration-500 mb-12">
-              <div className="grid md:grid-cols-2 gap-0">
-                <div className="relative h-80 md:h-auto overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            {/* Featured Post - Mobile-First Responsive */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl shadow-xl hover:shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-500 mb-8 sm:mb-12">
+              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-0">
+                {/* Image Section */}
+                <div className="relative h-64 sm:h-80 lg:h-auto overflow-hidden order-1">
                   <img
-                    src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800"
-                    alt="Kashmir Mountains"
+                    src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80"
+                    alt={t("home.blog.featured.title")}
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
                   />
-                  <div className="absolute top-6 left-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
-                    <Star className="w-4 h-4 fill-white" />
-                    {t("home.blog.featured.tag")}
+                  <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg flex items-center gap-1.5 sm:gap-2">
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-white" />
+                    <span className="hidden xs:inline">{t("home.blog.featured.tag")}</span>
+                    <span className="xs:hidden">Featured</span>
                   </div>
-                  <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                    <Clock className="w-4 h-4 inline mr-1" />
+                  <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-lg flex items-center gap-1">
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                     {t("home.blog.featured.readTime")}
                   </div>
                 </div>
 
-                <div className="p-10 md:p-12 flex flex-col justify-center">
-                  <div className="flex items-center gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {t("home.blog.featured.date")}
+                {/* Content Section */}
+                <div className="p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-center order-2">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 sm:mb-6 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    <span className="flex items-center gap-1.5 sm:gap-2">
+                      <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      <span className="truncate">{t("home.blog.featured.date")}</span>
                     </span>
-                    <span className="text-cyan-500">•</span>
+                    <span className="text-cyan-500 hidden sm:inline">•</span>
                     <span className="flex items-center gap-1">
-                      <Eye className="w-4 h-4" />
-                      2.3K views
+                      <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      2.3K
                     </span>
                   </div>
 
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 lg:mb-6 leading-tight">
                     {t("home.blog.featured.title")}
                   </h3>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed line-clamp-3 sm:line-clamp-4">
                     {t("home.blog.featured.excerpt")}
                   </p>
 
-                  <button className="group self-start px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 flex items-center gap-3 hover:scale-105">
+                  <button className="group w-full sm:w-auto self-start px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold text-sm sm:text-base hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 hover:scale-105 active:scale-95">
                     {t("home.blog.readMore")}
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform" />
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Additional Blog Posts Grid - Enhanced */}
-            <div className="grid md:grid-cols-3 gap-8">
+            {/* Blog Posts Grid - Mobile-First Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[
                 {
-                  image:
-                    "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500",
+                  image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80",
                   title: t("home.blog.posts.0.title"),
                   date: t("home.blog.posts.0.date"),
                   category: t("home.blog.posts.0.category"),
-                  readTime: "5 min read",
+                  excerpt: t("home.blog.posts.0.excerpt"),
+                  readTime: "5 min",
                   views: "1.8K",
                 },
                 {
-                  image:
-                    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500",
+                  image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80",
                   title: t("home.blog.posts.1.title"),
                   date: t("home.blog.posts.1.date"),
                   category: t("home.blog.posts.1.category"),
-                  readTime: "4 min read",
+                  excerpt: t("home.blog.posts.1.excerpt"),
+                  readTime: "4 min",
                   views: "2.1K",
                 },
                 {
-                  image:
-                    "https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=500",
+                  image: "https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=600&q=80",
                   title: t("home.blog.posts.2.title"),
                   date: t("home.blog.posts.2.date"),
                   category: t("home.blog.posts.2.category"),
-                  readTime: "6 min read",
+                  excerpt: t("home.blog.posts.2.excerpt"),
+                  readTime: "6 min",
                   views: "1.5K",
                 },
               ].map((post, idx) => (
                 <div
                   key={idx}
-                  className="group bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 dark:border-gray-700 hover:-translate-y-3"
+                  className="group bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 dark:border-gray-700 hover:-translate-y-2 active:translate-y-0"
                 >
-                  <div className="relative h-56 overflow-hidden">
+                  {/* Image */}
+                  <div className="relative h-48 sm:h-56 overflow-hidden">
                     <img
                       src={post.image}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      loading="lazy"
                     />
-                    <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs font-bold shadow-lg">
                       {post.category}
                     </div>
-                    <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg flex items-center gap-1">
+                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-white/20 backdrop-blur-md text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold shadow-lg flex items-center gap-1">
                       <Clock className="w-3 h-3" />
-                      {post.readTime}
+                      <span className="hidden xs:inline">{post.readTime}</span>
+                      <span className="xs:hidden">{post.readTime.split(' ')[0]}</span>
                     </div>
                   </div>
-                  <div className="p-8">
-                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+
+                  {/* Content */}
+                  <div className="p-5 sm:p-6 lg:p-8">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 sm:mb-4">
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {post.date}
+                        <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="truncate">{post.date}</span>
                       </span>
+                      <span className="hidden xs:inline">•</span>
                       <span className="flex items-center gap-1">
-                        <Eye className="w-4 h-4" />
+                        <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                         {post.views}
                       </span>
                     </div>
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors leading-tight line-clamp-2">
+
+                    <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors leading-tight line-clamp-2 min-h-[3.5rem] sm:min-h-[4rem]">
                       {post.title}
                     </h4>
+
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+
                     <button className="text-cyan-600 dark:text-cyan-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all hover:text-cyan-700 dark:hover:text-cyan-300">
                       {t("home.blog.readMore")}
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -670,11 +692,11 @@ export default function TravelHomepage() {
               ))}
             </div>
 
-            {/* View All Blog Posts Button */}
-            <div className="text-center mt-12">
-              <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-full font-bold hover:border-cyan-500 hover:text-cyan-500 dark:hover:border-cyan-500 dark:hover:text-cyan-400 transition-all duration-300 hover:scale-105 flex items-center gap-2 mx-auto">
+            {/* View All Button - Mobile-First */}
+            <div className="text-center mt-10 sm:mt-12">
+              <button className="group w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-full font-bold hover:border-cyan-500 hover:text-cyan-500 dark:hover:border-cyan-500 dark:hover:text-cyan-400 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 sm:gap-3 mx-auto max-w-xs sm:max-w-none">
                 <BookOpen className="w-5 h-5" />
-                {t("home.blog.viewAll")}
+                <span className="text-sm sm:text-base">{t("home.blog.viewAll")}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
