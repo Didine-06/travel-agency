@@ -370,10 +370,10 @@ function AgentFlightTickets() {
                                 <User className="w-4 h-4 text-gray-400" />
                                 <div>
                                   <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                    {ticket.customer?.firstName} {ticket.customer?.lastName}
+                                    {ticket.customer?.user.firstName} {ticket.customer?.user.lastName}
                                   </div>
                                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                                    {ticket.customer?.email}
+                                    {ticket.customer?.user.email}
                                   </div>
                                 </div>
                               </div>
@@ -387,7 +387,7 @@ function AgentFlightTickets() {
                             <td className="px-4 py-4 text-sm text-gray-900 dark:text-gray-100">
                               <div className="flex items-center gap-1">
                                 <Calendar className="w-4 h-4 text-gray-400" />
-                                {formatDate(ticket.arrivalDateTime)}
+                                {formatDate(ticket.returnDate)}
                               </div>
                             </td>
                             <td className="px-4 py-4">
@@ -441,10 +441,10 @@ function AgentFlightTickets() {
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base flex items-center gap-2">
                           <User className="w-4 h-4" />
-                          {ticket.customer?.firstName} {ticket.customer?.lastName}
+                          {ticket.customer?.user.firstName} {ticket.customer?.user.lastName}
                         </h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                          {ticket.customer?.email}
+                          {ticket.customer?.user.email}
                         </p>
                       </div>
                       <div className="relative">
@@ -488,7 +488,7 @@ function AgentFlightTickets() {
                       <div className="flex items-center gap-2 text-sm">
                         <Calendar className="w-4 h-4 text-gray-400" />
                         <span className="text-gray-900 dark:text-gray-100">
-                          {formatDate(ticket.departureDateTime)} → {formatDate(ticket.arrivalDateTime)}
+                          {formatDate(ticket.departureDateTime)} → {formatDate(ticket.returnDate)}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
