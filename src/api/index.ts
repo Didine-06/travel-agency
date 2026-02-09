@@ -15,8 +15,8 @@ import type {
 } from "../types/user-models";
 import type { DestinationResponse } from "../types/Destination-models";
 import axiosClient from "./axiosClient";
-import type { PackageResponse } from "../types/Package-models";
-import type { Booking } from "../types/booking-models";
+import type { PackageResponse, CreatePackageDto, UpdatePackageDto } from "../types/Package-models";
+import type { Booking, CreateBookingDto, UpdateBookingDto, CancelBookingDto } from "../types/booking-models";
 import type { FlightTicket, SeatClass } from "../types/flight-ticket-models";
 import type {
   Consultation,
@@ -297,6 +297,160 @@ export const api = {
     deleteMyConsultations: async (ids: string[]): Promise<ApiResponse<void>> => {
       const response = await axiosClient.delete<ApiResponse<void>>(
         `/consultations/my-consultations`,
+        { data: { ids } }
+      );
+      return response.data;
+    },
+  },
+
+  // Agent Consultations API
+  agentConsultations: {
+    getPending: async (): Promise<ApiResponse<Consultation[]>> => {
+      const response = await axiosClient.get(
+        "/consultations/pending"
+      );
+      const body = response.data;
+      return {
+        ...body,
+        data: body.data?.data ?? body.data ?? [],
+      };
+    },
+
+    getAssignedToMe: async (): Promise<ApiResponse<Consultation[]>> => {
+      const response = await axiosClient.get(
+        "/consultations/assigned-to-me"
+      );
+      const body = response.data;
+      return {
+        ...body,
+        data: body.data?.data ?? body.data ?? [],
+      };
+    },
+
+    assignToMe: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.patch<ApiResponse<void>>(
+        `/consultations/${id}/assign-to-me`
+      );
+      return response.data;
+    },
+
+    complete: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.patch<ApiResponse<void>>(
+        `/consultations/${id}/complete`
+      );
+      return response.data;
+    },
+  },
+
+  // Agent Bookings API
+  agentBookings: {
+    getAll: async (): Promise<ApiResponse<Booking[]>> => {
+      const response = await axiosClient.get<ApiResponse<Booking[]>>(
+        "/bookings"
+      );
+      return response.data;
+    },
+
+    getById: async (id: string): Promise<ApiResponse<Booking>> => {
+      const response = await axiosClient.get<ApiResponse<Booking>>(
+        `/bookings/${id}`
+      );
+      return response.data;
+    },
+
+    create: async (data: CreateBookingDto): Promise<ApiResponse<Booking>> => {
+      const response = await axiosClient.post<ApiResponse<Booking>>(
+        "/bookings",
+        data
+      );
+      return response.data;
+    },
+
+    update: async (
+      id: string,
+      data: UpdateBookingDto
+    ): Promise<ApiResponse<Booking>> => {
+      const response = await axiosClient.patch<ApiResponse<Booking>>(
+        `/bookings/${id}`,
+        data
+      );
+      return response.data;
+    },
+
+    cancel: async (
+      id: string,
+      data: CancelBookingDto
+    ): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.patch<ApiResponse<void>>(
+        `/bookings/${id}/cancel`,
+        data
+      );
+      return response.data;
+    },
+
+    delete: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/bookings/${id}`
+      );
+      return response.data;
+    },
+
+    deleteMany: async (ids: string[]): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        "/bookings",
+        { data: { ids } }
+      );
+      return response.data;
+    },
+  },
+
+  // Agent Packages API
+  agentPackages: {
+    getAll: async (): Promise<ApiResponse<PackageResponse[]>> => {
+      const response = await axiosClient.get<ApiResponse<PackageResponse[]>>(
+        "/packages"
+      );
+      return response.data;
+    },
+
+    getById: async (id: string): Promise<ApiResponse<PackageResponse>> => {
+      const response = await axiosClient.get<ApiResponse<PackageResponse>>(
+        `/packages/${id}`
+      );
+      return response.data;
+    },
+
+    create: async (
+      data: CreatePackageDto
+    ): Promise<ApiResponse<PackageResponse>> => {
+      const response = await axiosClient.post<ApiResponse<PackageResponse>>(
+        "/packages",
+        data
+      );
+      return response.data;
+    },
+
+    update: async (
+      id: string,
+      data: UpdatePackageDto
+    ): Promise<ApiResponse<PackageResponse>> => {
+      const response = await axiosClient.patch<ApiResponse<PackageResponse>>(
+        `/packages/${id}`,
+        data
+      );
+      return response.data;
+    },
+
+    delete: async (id: string): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        `/packages/${id}`
+      );
+      return response.data;
+    },
+
+    deleteMany: async (ids: string[]): Promise<ApiResponse<void>> => {
+      const response = await axiosClient.delete<ApiResponse<void>>(
+        "/packages",
         { data: { ids } }
       );
       return response.data;
