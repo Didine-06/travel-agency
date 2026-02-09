@@ -284,7 +284,9 @@
     "destination": "destination",
     "destinations": "destinations",
     "flightTicket": "billet d'avion",
-    "flightTickets": "billets d'avion"
+    "flightTickets": "billets d'avion",
+    "package": "forfait",
+    "packages": "forfaits"
   },
   "booking": {
     "details": "Détails de la réservation",
@@ -828,5 +830,236 @@
       "previous": "Précédent",
       "next": "Suivant"
     }
+  },
+  "agentDashboard": {
+    "welcome": "Bienvenue, Agent",
+    "subtitle": "Apercu de votre activite",
+    "loading": "Chargement du tableau de bord...",
+    "error": {
+      "title": "Erreur de chargement",
+      "message": "Impossible de charger les donnees du tableau de bord. Veuillez reessayer.",
+      "retry": "Reessayer"
+    },
+    "noData": {
+      "title": "Aucune donnee disponible",
+      "message": "Les donnees du tableau de bord ne sont pas disponibles pour le moment. Veuillez rafraichir."
+    },
+    "stats": {
+      "pendingConsultations": "Consultations en attente",
+      "myConsultations": "Mes consultations",
+      "totalBookings": "Total reservations",
+      "activePackages": "Forfaits actifs",
+      "assignedToMe": "assignees",
+      "completed": "terminees",
+      "pending": "en attente",
+      "active": "actifs"
+    },
+    "nextAppointment": {
+      "customer": "Client"
+    },
+    "charts": {
+      "consultationsOverTime": "Mes consultations sur 6 mois",
+      "consultationsStatus": "Repartition des consultations",
+      "bookingsStatus": "Repartition des reservations",
+      "consultations": "Consultations",
+      "total": "Total"
+    }
+  },
+  "agentConsultations": {
+    "title": "Consultations",
+    "tabs": {
+      "pending": "En attente",
+      "assigned": "Mes consultations"
+    },
+    "search": "Rechercher par sujet, client...",
+    "noConsultations": "Aucune consultation trouvee",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "subject": "Sujet",
+      "customer": "Client",
+      "consultationDate": "Date",
+      "duration": "Duree",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "assignToMe": "Assigner a moi",
+      "complete": "Marquer comme terminee"
+    },
+    "messages": {
+      "assignSuccess": "Consultation assignee avec succes !",
+      "assignError": "Erreur lors de l'assignation",
+      "completeSuccess": "Consultation marquee comme terminee !",
+      "completeError": "Erreur lors de la completion"
+    },
+    "minutes": "min",
+    "noCustomer": "Aucun client",
+    "pagination": {
+      "showing": "Affichage",
+      "perPage": "par page",
+      "results": "resultat",
+      "results_plural": "resultats",
+      "previous": "Precedent",
+      "next": "Suivant"
+    }
+  },
+  "agentBookings": {
+    "title": "Gestion des reservations",
+    "search": "Rechercher par client, forfait, destination...",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noBookings": "Aucune reservation trouvee",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "customer": "Client",
+      "package": "Forfait",
+      "destination": "Destination",
+      "travelDate": "Date de voyage",
+      "travelers": "Voyageurs",
+      "totalPrice": "Prix total",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "status": {
+      "PENDING": "En attente",
+      "CONFIRMED": "Confirmee",
+      "CANCELLED": "Annulee",
+      "COMPLETED": "Terminee"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
+    },
+    "create": {
+      "title": "Creer une reservation",
+      "save": "Creer",
+      "saving": "Creation en cours...",
+      "cancel": "Annuler",
+      "success": "Reservation creee avec succes !",
+      "error": "Erreur lors de la creation"
+    },
+    "edit": {
+      "title": "Modifier la reservation",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "success": "Reservation modifiee avec succes !",
+      "error": "Erreur lors de la modification",
+      "loadError": "Erreur lors du chargement"
+    },
+    "fields": {
+      "customer": "Client",
+      "package": "Forfait",
+      "numberOfAdults": "Nombre d'adultes",
+      "numberOfChildren": "Nombre d'enfants",
+      "totalPrice": "Prix total",
+      "travelDate": "Date de voyage",
+      "status": "Statut",
+      "selectCustomer": "Selectionner un client",
+      "selectPackage": "Selectionner un forfait",
+      "cancellationReason": "Raison de l'annulation",
+      "cancellationReasonPlaceholder": "Entrez la raison de l'annulation..."
+    },
+    "messages": {
+      "deleteSuccess": "Reservation supprimee avec succes !",
+      "deleteError": "Erreur lors de la suppression",
+      "deleteManySuccess": "Reservations supprimees avec succes !",
+      "deleteManyError": "Erreur lors de la suppression",
+      "cancelSuccess": "Reservation annulee avec succes !",
+      "cancelError": "Erreur lors de l'annulation"
+    },
+    "pagination": {
+      "showing": "Affichage",
+      "perPage": "par page",
+      "results": "resultat",
+      "results_plural": "resultats",
+      "previous": "Precedent",
+      "next": "Suivant"
+    },
+    "travelers": {
+      "adults": "adultes",
+      "children": "enfants"
+    }
+  },
+  "agentPackages": {
+    "title": "Gestion des forfaits",
+    "search": "Rechercher par titre, destination...",
+    "delete": "Supprimer",
+    "deleteSelected": "Supprimer ({{count}})",
+    "noPackages": "Aucun forfait trouve",
+    "modifySearch": "Essayez de modifier votre recherche",
+    "columns": {
+      "title": "Titre",
+      "destination": "Destination",
+      "duration": "Duree",
+      "price": "Prix",
+      "capacity": "Capacite",
+      "availableFrom": "Disponible du",
+      "availableTo": "Disponible au",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "activate": "Activer",
+      "deactivate": "Desactiver"
+    },
+    "create": {
+      "title": "Creer un forfait",
+      "save": "Creer",
+      "saving": "Creation en cours...",
+      "cancel": "Annuler",
+      "success": "Forfait cree avec succes !",
+      "error": "Erreur lors de la creation"
+    },
+    "edit": {
+      "title": "Modifier le forfait",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "success": "Forfait modifie avec succes !",
+      "error": "Erreur lors de la modification",
+      "loadError": "Erreur lors du chargement"
+    },
+    "fields": {
+      "destination": "Destination",
+      "title": "Titre",
+      "description": "Description",
+      "duration": "Duree (jours)",
+      "price": "Prix",
+      "includedServices": "Services inclus",
+      "includedServicesPlaceholder": "Entrez les services separes par des virgules",
+      "imagesUrls": "URLs des images",
+      "imagesUrlsPlaceholder": "Entrez les URLs separees par des virgules",
+      "availableFrom": "Disponible du",
+      "availableTo": "Disponible au",
+      "maxCapacity": "Capacite maximale",
+      "isActive": "Actif",
+      "selectDestination": "Selectionner une destination"
+    },
+    "status": {
+      "active": "Actif",
+      "inactive": "Inactif"
+    },
+    "messages": {
+      "deleteSuccess": "Forfait supprime avec succes !",
+      "deleteError": "Erreur lors de la suppression",
+      "deleteManySuccess": "Forfaits supprimes avec succes !",
+      "deleteManyError": "Erreur lors de la suppression",
+      "activateSuccess": "Forfait active avec succes !",
+      "deactivateSuccess": "Forfait desactive avec succes !",
+      "toggleError": "Erreur lors de la mise a jour du statut"
+    },
+    "pagination": {
+      "showing": "Affichage",
+      "perPage": "par page",
+      "results": "resultat",
+      "results_plural": "resultats",
+      "previous": "Precedent",
+      "next": "Suivant"
+    },
+    "days": "jours"
   }
 }

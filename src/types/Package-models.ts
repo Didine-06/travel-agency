@@ -17,3 +17,31 @@ export interface PackageResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CreatePackageDto {
+  destinationId: string;
+  title: string;
+  description?: string;
+  duration: number;
+  price: number;
+  includedServices?: string[];
+  imagesUrls?: string[];
+  availableFrom: string;
+  availableTo: string;
+  maxCapacity: number;
+  isActive?: boolean;
+}
+
+export interface UpdatePackageDto {
+  destinationId?: string;
+  title?: string;
+  description?: string;
+  duration?: number;
+  price?: number;
+  includedServices?: string[];
+  imagesUrls?: string[];
+  availableFrom?: string;
+  availableTo?: string;
+  maxCapacity?: number;
+  isActive?: boolean;
+}

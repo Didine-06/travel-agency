@@ -303,7 +303,9 @@
     "destination": "destination",
     "destinations": "destinations",
     "flightTicket": "flight ticket",
-    "flightTickets": "flight tickets"
+    "flightTickets": "flight tickets",
+    "package": "package",
+    "packages": "packages"
   },
   "reservations": {
     "title": "My Reservations",
@@ -819,7 +821,236 @@
       "previous": "Previous",
       "next": "Next"
     }
+  },
+  "agentDashboard": {
+    "welcome": "Welcome, Agent",
+    "subtitle": "Overview of your activity",
+    "loading": "Loading dashboard...",
+    "error": {
+      "title": "Error Loading Dashboard",
+      "message": "Unable to load dashboard data. Please try again.",
+      "retry": "Try Again"
+    },
+    "noData": {
+      "title": "No Data Available",
+      "message": "Dashboard data is not available at the moment. Please try refreshing."
+    },
+    "stats": {
+      "pendingConsultations": "Pending Consultations",
+      "myConsultations": "My Consultations",
+      "totalBookings": "Total Bookings",
+      "activePackages": "Active Packages",
+      "assignedToMe": "assigned to me",
+      "completed": "completed",
+      "pending": "pending",
+      "active": "active"
+    },
+    "nextAppointment": {
+      "customer": "Customer"
+    },
+    "charts": {
+      "consultationsOverTime": "My Consultations Over 6 Months",
+      "consultationsStatus": "Consultations Distribution",
+      "bookingsStatus": "Bookings Distribution",
+      "consultations": "Consultations",
+      "total": "Total"
+    }
+  },
+  "agentConsultations": {
+    "title": "Consultations",
+    "tabs": {
+      "pending": "Pending",
+      "assigned": "My Consultations"
+    },
+    "search": "Search by subject, customer...",
+    "noConsultations": "No consultations found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "subject": "Subject",
+      "customer": "Customer",
+      "consultationDate": "Date",
+      "duration": "Duration",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "assignToMe": "Assign to me",
+      "complete": "Mark as completed"
+    },
+    "messages": {
+      "assignSuccess": "Consultation assigned to you successfully!",
+      "assignError": "Error assigning consultation",
+      "completeSuccess": "Consultation marked as completed!",
+      "completeError": "Error completing consultation"
+    },
+    "minutes": "min",
+    "noCustomer": "No customer",
+    "pagination": {
+      "showing": "Showing",
+      "perPage": "per page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "agentBookings": {
+    "title": "Bookings Management",
+    "search": "Search by customer, package, destination...",
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noBookings": "No bookings found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "customer": "Customer",
+      "package": "Package",
+      "destination": "Destination",
+      "travelDate": "Travel Date",
+      "travelers": "Travelers",
+      "totalPrice": "Total Price",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed"
+    },
+    "actions": {
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "create": {
+      "title": "Create Booking",
+      "save": "Create",
+      "saving": "Creating...",
+      "cancel": "Cancel",
+      "success": "Booking created successfully!",
+      "error": "Error creating booking"
+    },
+    "edit": {
+      "title": "Edit Booking",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "success": "Booking updated successfully!",
+      "error": "Error updating booking",
+      "loadError": "Error loading booking"
+    },
+    "fields": {
+      "customer": "Customer",
+      "package": "Package",
+      "numberOfAdults": "Number of Adults",
+      "numberOfChildren": "Number of Children",
+      "totalPrice": "Total Price",
+      "travelDate": "Travel Date",
+      "status": "Status",
+      "selectCustomer": "Select a customer",
+      "selectPackage": "Select a package",
+      "cancellationReason": "Cancellation Reason",
+      "cancellationReasonPlaceholder": "Enter the reason for cancellation..."
+    },
+    "messages": {
+      "deleteSuccess": "Booking deleted successfully!",
+      "deleteError": "Error deleting booking",
+      "deleteManySuccess": "Bookings deleted successfully!",
+      "deleteManyError": "Error deleting bookings",
+      "cancelSuccess": "Booking cancelled successfully!",
+      "cancelError": "Error cancelling booking"
+    },
+    "pagination": {
+      "showing": "Showing",
+      "perPage": "per page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "travelers": {
+      "adults": "adults",
+      "children": "children"
+    }
+  },
+  "agentPackages": {
+    "title": "Packages Management",
+    "search": "Search by title, destination...",
+    "delete": "Delete",
+    "deleteSelected": "Delete ({{count}})",
+    "noPackages": "No packages found",
+    "modifySearch": "Try modifying your search",
+    "columns": {
+      "title": "Title",
+      "destination": "Destination",
+      "duration": "Duration",
+      "price": "Price",
+      "capacity": "Capacity",
+      "availableFrom": "Available From",
+      "availableTo": "Available To",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
+    "create": {
+      "title": "Create Package",
+      "save": "Create",
+      "saving": "Creating...",
+      "cancel": "Cancel",
+      "success": "Package created successfully!",
+      "error": "Error creating package"
+    },
+    "edit": {
+      "title": "Edit Package",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "success": "Package updated successfully!",
+      "error": "Error updating package",
+      "loadError": "Error loading package"
+    },
+    "fields": {
+      "destination": "Destination",
+      "title": "Title",
+      "description": "Description",
+      "duration": "Duration (days)",
+      "price": "Price",
+      "includedServices": "Included Services",
+      "includedServicesPlaceholder": "Enter services separated by commas",
+      "imagesUrls": "Images URLs",
+      "imagesUrlsPlaceholder": "Enter image URLs separated by commas",
+      "availableFrom": "Available From",
+      "availableTo": "Available To",
+      "maxCapacity": "Max Capacity",
+      "isActive": "Active",
+      "selectDestination": "Select a destination"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "messages": {
+      "deleteSuccess": "Package deleted successfully!",
+      "deleteError": "Error deleting package",
+      "deleteManySuccess": "Packages deleted successfully!",
+      "deleteManyError": "Error deleting packages",
+      "activateSuccess": "Package activated successfully!",
+      "deactivateSuccess": "Package deactivated successfully!",
+      "toggleError": "Error updating package status"
+    },
+    "pagination": {
+      "showing": "Showing",
+      "perPage": "per page",
+      "results": "result",
+      "results_plural": "results",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "days": "days"
   }
 }
-
-
