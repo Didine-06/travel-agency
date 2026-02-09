@@ -4,7 +4,7 @@ export interface Booking {
   numberOfChildren: number;
   totalPrice: string;
   travelDate: string;
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
   bookingDate: string;
   package: {
     id: string;
@@ -17,6 +17,15 @@ export interface Booking {
       city: string;
     };
   };
+  customer?: {
+    id: string;
+    phone?: string;
+    user?: {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+    };
+  };
 }
 
 export interface BookingResponse {
@@ -25,4 +34,25 @@ export interface BookingResponse {
   isSuccess: boolean;
   isError: boolean;
   message: string;
+}
+
+export interface CreateBookingDto {
+  customerId: string;
+  packageId: string;
+  numberOfAdults: number;
+  numberOfChildren: number;
+  totalPrice: number;
+  travelDate: string;
+}
+
+export interface UpdateBookingDto {
+  numberOfAdults?: number;
+  numberOfChildren?: number;
+  totalPrice?: number;
+  travelDate?: string;
+  status?: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
+}
+
+export interface CancelBookingDto {
+  cancellationReason: string;
 }

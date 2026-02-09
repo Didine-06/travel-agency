@@ -5,9 +5,11 @@ import TopBar from '../Components/common/TopBar';
 const AgentLayout = () => {
   const menuItems = [
     { path: '/agent/dashboard', label: 'Dashboard' },
+    { path: '/agent/consultations', label: 'Consultations' },
+    { path: '/agent/bookings', label: 'Bookings' },
+    { path: '/agent/packages', label: 'Packages' },
     { path: '/agent/destinations', label: 'Destinations' },
-    { path: '/agent/flight-tickets', label: 'Flight Tickets' },
-    { path: '/agent/bookings', label: 'Bookings' }
+    { path: '/agent/flight-tickets', label: 'Flight Tickets' }
   ];
 
   return (
