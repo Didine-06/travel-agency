@@ -29,7 +29,10 @@ import EditConsultation from "../Pages/client/consultations/EditConsultation";
 
 // Agent Pages
 import AgentDashboard from "../Pages/agent/Dashboard";
-import AgentBookings from "../Pages/agent/Bookings";
+import AgentConsultations from "../Pages/agent/consultations/Consultation";
+import AgentBookings from "../Pages/agent/bookings/Booking";
+import CreateBooking from "../Pages/agent/bookings/CreateBooking";
+import AgentEditBooking from "../Pages/agent/bookings/EditBooking";
 import AgentProfile from "../Pages/agent/Profile";
 import AgentDestinations from "../Pages/agent/destinations/Destination";
 import CreateDestination from "../Pages/agent/destinations/CreateDestination";
@@ -37,6 +40,9 @@ import EditDestination from "../Pages/agent/destinations/EditDestination";
 import AgentFlightTickets from "../Pages/agent/flight-tickets/FlightTicket";
 import CreateFlightTicket from "../Pages/agent/flight-tickets/CreateFlightTicket";
 import EditFlightTicket from "../Pages/agent/flight-tickets/EditFlightTicket";
+import AgentPackages from "../Pages/agent/packages/Package";
+import CreatePackage from "../Pages/agent/packages/CreatePackage";
+import EditPackage from "../Pages/agent/packages/EditPackage";
 
 // Admin Pages
 import AdminDashboard from "../Pages/admin/Dashboard";
@@ -99,20 +105,34 @@ const AppRouter = () => {
       >
         <Route index element={<Navigate to="/agent/dashboard" replace />} />
         <Route path="dashboard" element={<AgentDashboard />} />
-        
+
+        {/* Consultations */}
+        <Route path="consultations" element={<AgentConsultations />} />
+
+        {/* Bookings parent */}
+        <Route path="bookings" element={<AgentBookings />}>
+          <Route index element={<CreateBooking />} />
+          <Route path=":id" element={<AgentEditBooking />} />
+        </Route>
+
+        {/* Packages parent */}
+        <Route path="packages" element={<AgentPackages />}>
+          <Route index element={<CreatePackage />} />
+          <Route path=":id" element={<EditPackage />} />
+        </Route>
+
         {/* Destinations parent */}
         <Route path="destinations" element={<AgentDestinations />}>
           <Route index element={<CreateDestination />} />
           <Route path=":id" element={<EditDestination />} />
         </Route>
-        
+
         {/* Flight Tickets parent */}
         <Route path="flight-tickets" element={<AgentFlightTickets />}>
           <Route index element={<CreateFlightTicket />} />
           <Route path=":id" element={<EditFlightTicket />} />
         </Route>
-        
-        <Route path="bookings" element={<AgentBookings />} />
+
         <Route path="profile" element={<AgentProfile />} />
       </Route>
 
